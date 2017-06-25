@@ -1,0 +1,17 @@
+{
+  "name": "mamba",
+  "version": "0.1.0",
+  "description": "A nodejs microservices frameworks using Koa, Monogodb, RabbitMQ, and Redis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
+  "license": "MIT",
+  "dependencies": {
+    "vorpal": "1.12.0"
+  },
+  "bin": {
+    "mamba": "bin/index.js"
+  }
+}
