@@ -1,0 +1,134 @@
+Requirements
+
+It would be nice if the core not only integrated w/ brahma but was also standalone.
+
+templater
+- creates:
+  - resources
+  - project scafolding (fetches scafolding remotely so u dont need to keep updaing the local brahma binary. this is important. the local binary will keep as little functionality remotely and request it externally so we can update independently)
+  - ???
+- resources/add
+- resources/remove
+- resources/rename
+
+---
+
+Ideas
+
+hot reload prod apps w/ jsmoves
+- server responsibility
+  - receive requests and call handler
+  - change handler on demand
+
+productions servers are autoupdating
+- there is a code server that we deploy to and configure.
+
+communication
+- property on $ctx (proptype property)
+- $ctx.handler
+- $ctx.call('ygl.apartments.status.change', 'method') // if in resources obj call directly, else use rabbit rpc. if method is empty, calls 'handler'
+- $ctx.get('ygl.apartments.status.change.config.field') // gets a field value.
+- we should make sure decorators dont fuck w/ these methods so maybe we can attach them last?
+
+resource validator
+- makes sure you don't have a get property or a call prop or anything that we are using elseware
+
+set ctx to null inside objs.
+
+integrations are namespaced
+- so we have the "realtime" addon, but we could have others, so u would do "namespace/realtime" (phase II)
+
+Resources have the following possible entry points:
+- restful HTTP interface
+- response to rabbitMQ task
+- cron
+* since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
+
+we define port in .env but it should be dynamic w/ a perference option.
+- mamba status makes sure you dont have conflicting ports
+- maybe we can run mamba status remotely too? it could tell us what ports are being used?
+
+---
+
+realtime
+- handshake
+  - client connects
+  - server asks for JWT
+  - server uses JWT to verify (via mamaba communication syntax)
+  - server asks client for subscriptions
+  - client sends subscriptions
+  - server associates subscriptions list w/ socket client ID.
+  - server listens for all events
+    - for each event, get each users subs w/ filters, check to see if each user
+    gets updated, and update
+
+  - maybe we can integrate a restful interface to add montioring/control
+
+mamba status
+- mamba status (runs all mamba statuses)
+- mamba status resources (validate resources objects)
+- mamba status resource RESOURCE_NAME (tells u what other resources are dependencies)
+- mamba status service SERVICE_NAME (tells u what resources are dependent)
+- mamba status decorator
+- mamba status middleware
+- mamba status config
+- mamba status dependencies APP_NAME lists all dependencies for a given app
+- mamba status deploy (makes sure you have git repos defined for each server)
+- makes sure all resources have a location entry in their mamba.config.js
+
+add npm package w/o restarting build
+
+create an integrations system
+- mongorules? and rabbit would be integrations.
+
+github integration
+- create repos if it does not exist
+
+should console.log what dependencies it needs running
+- rabbit broker
+- mongod
+- redis-server
+
+
+a way to generate local ssl certs via command line command
+
+---
+
+mamba watch
+- runs mamba build
+- run mamba serve --dev (nodemon)
+
+
+mamba build
+- runs mamba status
+- parses obj
+- cleans .build dir - of projects that shouldn't be there.
+- adds apps to build (if need be)
+- for each app (asynchrnously):
+  - updates package.json
+  - then
+    - runs npm i (asynchronusly)
+    - updates app/services, app/resources app/middleware app/decorators app/app app/config app/utils anything in app.
+
+
+mamba serve --dev
+- calls npm run dev in each app.
+
+
+mamba watch (updates)
+- file change - updates file in .build/app/...
+- dependency change:
+  - display waiting in terminal
+  - keeps server running.
+  - updates pack.json
+  - asynchrnously calls npm i
+  - when done -> restarts nodemon programatically
+
+---
+
+long todos
+
+mamba global dependencies
+- stmux
+
+remove harmony (when not needed)

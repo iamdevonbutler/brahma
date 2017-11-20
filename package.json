@@ -1,7 +1,7 @@
 {
-  "name": "mamba",
+  "name": "brahma",
   "version": "0.1.0",
-  "description": "A nodejs microservices frameworks using Koa, Monogodb, RabbitMQ, and Redis",
+  "description": "A nodejs omniservices framework leveraging Koa, Monogodb, RabbitMQ, and Redis",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,9 +9,18 @@
   "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
   "license": "MIT",
   "dependencies": {
+    "nodemon": "1.11.0",
+    "shelljs": "0.7.8",
     "vorpal": "1.12.0"
   },
   "bin": {
-    "mamba": "bin/index.js"
+    "brahma": "bin/index.js"
+  },
+  "engines": {
+    "node": ">= 9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamdevonbutler/brahma"
   }
 }

@@ -1,14 +1,16 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 
 const vorpal = require('vorpal')();
 const path = require('path');
-const {fileExists} = require('../lib/utils');
+const {fileExists, runBefore, log} = require('../lib/utils');
 const normalizeConfig = require('../lib/normalizeConfig');
 
 const status = require('../lib/commands/status');
+const serve = require('../lib/commands/serve');
 const watch = require('../lib/commands/watch');
 const build = require('../lib/commands/build');
 const deploy = require('../lib/commands/deploy');
+const scafold = require('../lib/commands/scafold');
 
 // Load config.
 const configPath = path.join(process.cwd(), 'mamba.config.js');
@@ -18,22 +20,38 @@ if (!fileExists(configPath)) {
 }
 const config = normalizeConfig(require(configPath));
 
+process.title = 'mamba-cli';
+const before = runBefore(vorpal);
+
 // Init vorpal.
 vorpal
   .command('status')
   .action(status);
 
 vorpal
+  .command('serve')
+  .action(before('build', serve));
+
+vorpal
   .command('watch')
-  .action(watch);
+  .action(before('serve', watch));
 
 vorpal
   .command('build')
-  .action(build);
+  .action(before('status', log(build, 'Build')));
 
 vorpal
   .command('deploy')
-  .action(deploy);
+  .action(before('build', log(deploy, 'Deploy')));
+
+vorpal
+  .command('scafold')
+  .action(scafold);
+
+// @todo runs tests
+// vorpal
+//   .command('test')
+//   .action(scafold);
 
 vorpal
   .delimiter(config.delimiter)
