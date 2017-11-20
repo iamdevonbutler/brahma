@@ -2,7 +2,7 @@ Requirements
 
 It would be nice if the core not only integrated w/ brahma but was also standalone.
 
-templater
+scafolding
 - creates:
   - resources
   - project scafolding (fetches scafolding remotely so u dont need to keep updaing the local brahma binary. this is important. the local binary will keep as little functionality remotely and request it externally so we can update independently)
@@ -13,7 +13,11 @@ templater
 
 ---
 
+dont use .env -> be consistent and use JS obj.
+
 Ideas
+
+gotta think about how to do tests w/ each resource and service/middleware/...
 
 hot reload prod apps w/ jsmoves
 - server responsibility

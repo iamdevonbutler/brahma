@@ -13,14 +13,14 @@ const deploy = require('../lib/commands/deploy');
 const scafold = require('../lib/commands/scafold');
 
 // Load config.
-const configPath = path.join(process.cwd(), 'mamba.config.js');
+const configPath = path.join(process.cwd(), 'brahma.config.js');
 if (!fileExists(configPath)) {
-  console.log('Add a "./mamba.config.js" file.');
+  console.log('Add a "./brahma.config.js" file.');
   return;
 }
 const config = normalizeConfig(require(configPath));
 
-process.title = 'mamba-cli';
+process.title = 'brahma';
 const before = runBefore(vorpal);
 
 // Init vorpal.
@@ -55,4 +55,5 @@ vorpal
 
 vorpal
   .delimiter(config.delimiter)
-  .show();
+  .show()
+  .exec('help');
