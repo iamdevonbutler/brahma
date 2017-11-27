@@ -15,6 +15,12 @@ listens and resonds to file io
 i think u can use tcp for remote communcation and ipc for local communication.
 
 ---
+
+lifecycle
+- startup
+- run
+- shutdown
+
 @todo autoupdating functionality for brahma -g
 
 

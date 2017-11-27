@@ -52,3 +52,9 @@ Philosophy
 
 Clustering
 Brahma uses throng. Assign env var `WEB_CONCURRENCY`.
+
+Lifecycles
+- prestartup (defines NODE_ENV, ) includes the preconditions needed to manifest the startup environment.
+- startup
+- run
+- shutdown

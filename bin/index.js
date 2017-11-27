@@ -39,6 +39,8 @@ const config = loadConfig(configPath);
 
 // Register commands w/ vorpal.
 const before = runBefore(vorpal);
+const buildAndLog = log(build(config), 'Build');
+const deployAndLog = log(deploy(config), 'Deploy');
 
 vorpal
   .command('status')
@@ -55,11 +57,12 @@ vorpal
 
 vorpal
   .command('build')
-  .action(before('status', log(build(config), 'Build')));
+  .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test]')
+  .action(before('status', buildAndLog));
 
 vorpal
   .command('deploy')
-  .action(before('build', log(deploy(config), 'Deploy')));
+  .action(before('build', 'test', deployAndLog));
 
 vorpal
   .command('scafold')
