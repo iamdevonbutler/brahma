@@ -9,7 +9,6 @@
   "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
   "license": "MIT",
   "dependencies": {
-    "nodemon": "1.11.0",
     "shelljs": "0.7.8",
     "vorpal": "1.12.0"
   },

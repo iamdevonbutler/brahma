@@ -36,10 +36,10 @@ cron and realtime? for free
 
 Documentation built in.
 
+zero downtime deployments.
+
 Terminology?
 resources are made up of ???? modules?
-
-Rabbit is abstracted away but can be used manually
 
 Philosophy
 - unix philosophy, do 1 thing, and decorate to do more. u want lots of little modules.
@@ -49,3 +49,6 @@ Philosophy
   - e.g. resources, application code for servers
 - no `this` (especially w/ function decoration)
 - as above so below
+
+Clustering
+Brahma uses throng. Assign env var `WEB_CONCURRENCY`.

@@ -1,21 +1,87 @@
-Requirements
+challenges
+
+dependency management
+server callback switch
+
+abstract out modules like rabbit? and make the their own github repos e.g. brahma-rabbit?, brahma-...
+
+do something for versioning that doesnt suck.
+
+---
+
+zmq
+xreq/xres intelligent req/res. it think it knows where to route a reply.
+listens and resonds to file io
+i think u can use tcp for remote communcation and ipc for local communication.
+
+---
+@todo autoupdating functionality for brahma -g
+
+
+communication w/ other services uses a message queue but shoult we also have a way that
+uses http for communication as well.
+
+dependencies need to use require and node_modules because that's what's used
+by the packages the,selves internally, and that shit would break if u
+fucked w/ it.
+
+set process.title = 'microserviceName'; for each ms.
+
+
+Philosophy
+- make modular as fuck. try to have most components be replaceable.
+
+
+/update
+/update/dependencies
+/update/resources
+
+/update/config
+/update/dbs/[dbName]/[add/remove/update/[custom]]
+/update/decorators/[decoratorName]/[add/remove/update]
+/update/docs?
+/update/integrations?
+/update/middleware/[name]/[add/remove/update]
+/update/services
+/update/utils
+/update/brahmaConfig
+
+/update/startup
+/update/shutdown
+
+
+
+docker containers?
+
+you should be able to update depenedncies live.
+not all of them tho. some of them will include breaking api changes
 
 It would be nice if the core not only integrated w/ brahma but was also standalone.
+
+I want to be able to list a dependency in a resource w/o needing to isntall it.
+installation should happen automatically.
+- 3 sources: local, github npm.
+- push endpoint to remote.
+  - reads dependencies
+  - installs dependencies to node_modules
+  - refetches dependencies by default
+  - idea - might not need to use node_modules at all if u can do this locally to each endopoint
+  - there shoudl be a naming collision check w/ dependencies. make sure we are not injecting another ygl object or something.
+- i want to be able to use koa1.x and koa2.x in the same project.
 
 scafolding
 - creates:
   - resources
+  - resource dependencies
   - project scafolding (fetches scafolding remotely so u dont need to keep updaing the local brahma binary. this is important. the local binary will keep as little functionality remotely and request it externally so we can update independently)
   - ???
 - resources/add
 - resources/remove
 - resources/rename
 
----
+dont use .env -> be consistent and use JS obj in app.js
 
-dont use .env -> be consistent and use JS obj.
-
-Ideas
+command to dump to console sample brahma.config.js file and maybe other files.
 
 gotta think about how to do tests w/ each resource and service/middleware/...
 
@@ -134,5 +200,3 @@ long todos
 
 mamba global dependencies
 - stmux
-
-remove harmony (when not needed)
