@@ -14,6 +14,9 @@ const deploy = require('../lib/commands/deploy');
 const scafold = require('../lib/commands/scafold');
 const test = require('../lib/commands/test');
 
+// Error handling.
+process.on('unhandledRejection', console.error);
+
 // Node version check.
 const majorVersion = +process.version.slice(1).split('.')[0];
 if (majorVersion < 9) {
@@ -36,6 +39,10 @@ if (!fileExists(configPath)) {
   return;
 }
 const config = loadConfig(configPath);
+if (!config) {
+  console.log('Add "apps" to your "brahma.config.js" file.');
+  return;
+}
 
 // Register commands w/ vorpal.
 const before = runBefore(vorpal);

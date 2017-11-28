@@ -9,9 +9,12 @@
   "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
   "license": "MIT",
   "dependencies": {
+    "command-exists": "1.2.2",
     "object-assign-deep": "0.3.1",
     "shelljs": "0.7.8",
+    "stmux": "1.4.18",
     "swig": "1.4.2",
+    "terminal-tab": "0.0.4",
     "vorpal": "1.12.0"
   },
   "bin": {
