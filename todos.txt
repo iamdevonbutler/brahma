@@ -7,6 +7,17 @@ abstract out modules like rabbit? and make the their own github repos e.g. brahm
 
 do something for versioning that doesnt suck.
 
+idea - we just use one remote github repo for built site. each microservice
+pulls from that repo, but based on the env vars, it run the proper service.
+
+app.brahma.js or
+brahma.app.js
+
+---
+
+integrate scafolding tools like rr-cli.
+rr-cli would be a plugin and u could have awhole library of project scafolding tools.
+
 ---
 
 zmq
@@ -15,6 +26,8 @@ listens and resonds to file io
 i think u can use tcp for remote communcation and ipc for local communication.
 
 ---
+
+rename bin/index to bin/start
 
 lifecycle
 - startup
