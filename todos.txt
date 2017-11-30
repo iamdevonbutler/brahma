@@ -13,6 +13,9 @@ pulls from that repo, but based on the env vars, it run the proper service.
 app.brahma.js or
 brahma.app.js
 
+build file
+- you can give it JSON as a blueprint rather than being so imperitive.
+
 ---
 
 integrate scafolding tools like rr-cli.
@@ -27,7 +30,7 @@ i think u can use tcp for remote communcation and ipc for local communication.
 
 ---
 
-rename bin/index to bin/start
+rename bin/index to bin/start?
 
 lifecycle
 - startup
@@ -164,6 +167,7 @@ mamba status
 - mamba status dependencies APP_NAME lists all dependencies for a given app
 - mamba status deploy (makes sure you have git repos defined for each server)
 - makes sure all resources have a location entry in their mamba.config.js
+- mamba stats ports  - make sure we are using unique ports.
 
 add npm package w/o restarting build
 

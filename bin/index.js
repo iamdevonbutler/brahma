@@ -46,8 +46,8 @@ if (!config) {
 
 // Register commands w/ vorpal.
 const before = runBefore(vorpal);
-const buildAndLog = log(build(config), 'Build');
-const deployAndLog = log(deploy(config), 'Deploy');
+const buildAndLog = log(build({config, settings}), 'Build');
+const deployAndLog = log(deploy({config, settings}), 'Deploy');
 
 vorpal
   .command('status')
@@ -55,7 +55,7 @@ vorpal
 
 vorpal
   .command('serve')
-  .action(before('build', serve(config)));
+  .action(before('build', serve({config, settings})));
 
 // @todo maybe its always in watch mode? - call watch on boot
 vorpal
