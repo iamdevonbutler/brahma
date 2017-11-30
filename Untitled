@@ -1,0 +1,12 @@
+where we left off:
+
+config (app config)
+- we validate config in `status` - called before build.
+- dont load config in vorpal boot.
+- do load config and validate in status - perhaps these are 2 files.-
+- dont validate config in /build/server in statup.js - we just did that. just load.
+
+
+config (env)
+- somewhere, maybe in startup.js, we need to validate the env. make sure appName is set.
+- keep in mind we are lazilly loading config. this is a feature of the forever server.

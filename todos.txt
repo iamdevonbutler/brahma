@@ -16,6 +16,11 @@ brahma.app.js
 build file
 - you can give it JSON as a blueprint rather than being so imperitive.
 
+remove dependency on obj assign deep and use a local module.
+
+i like the idea that build does no vaidation
+all validation is done by brahma status
+
 ---
 
 integrate scafolding tools like rr-cli.
@@ -156,18 +161,23 @@ realtime
 
   - maybe we can integrate a restful interface to add montioring/control
 
-mamba status
-- mamba status (runs all mamba statuses)
-- mamba status resources (validate resources objects)
-- mamba status resource RESOURCE_NAME (tells u what other resources are dependencies)
-- mamba status service SERVICE_NAME (tells u what resources are dependent)
-- mamba status decorator
-- mamba status middleware
-- mamba status config
-- mamba status dependencies APP_NAME lists all dependencies for a given app
-- mamba status deploy (makes sure you have git repos defined for each server)
-- makes sure all resources have a location entry in their mamba.config.js
-- mamba stats ports  - make sure we are using unique ports.
+brahma status
+- brahma status (runs all brahma statuses)
+- brahma status resources (validate resources objects)
+- brahma status resource RESOURCE_NAME (tells u what other resources are dependencies)
+- brahma status service SERVICE_NAME (tells u what resources are dependent)
+- brahma status decorator
+- brahma status middleware
+- brahma status config
+- brahma status dependencies APP_NAME lists all dependencies for a given app
+- brahma status deploy (makes sure you have git repos defined for each server)
+- makes sure all resources have a location entry in their brahma.config.js
+- brahma stats ports  - make sure we are using unique ports.
+
+brahma deploy
+- deploy config (then a series of questions is asked via command prompt)
+- deploy resources
+- deploy ...
 
 add npm package w/o restarting build
 
@@ -225,6 +235,13 @@ mamba watch (updates)
 // resources.update()
 // resources.remove()
 
+before updating env vars show a review screen.
+if we are doing a refresh, let the user know that will be happening.
+
+---
+
+advantages
+- you should be able to test remote configuations locally. e.g. test your dev build locally.
 
 ---
 
