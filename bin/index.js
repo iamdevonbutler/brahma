@@ -64,7 +64,7 @@ vorpal
 
 vorpal
   .command('build')
-  .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test]')
+  .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test|...]')
   .action(before('status', buildAndLog));
 
 vorpal
