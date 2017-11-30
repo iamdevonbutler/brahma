@@ -217,6 +217,15 @@ mamba watch (updates)
   - asynchrnously calls npm i
   - when done -> restarts nodemon programatically
 
+// const resources = new ResourceCollection();
+// resources.forEach
+// resources.get()
+// resources.get('resource.name')
+// resources.add()
+// resources.update()
+// resources.remove()
+
+
 ---
 
 long todos

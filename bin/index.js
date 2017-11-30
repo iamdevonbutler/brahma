@@ -3,8 +3,8 @@
 const vorpal = require('vorpal')();
 const path = require('path');
 const {fileExists, runBefore, log} = require('../lib/utils');
-const loadConfig = require('../lib/bootstrap/loadConfig');
-const loadSettings = require('../lib/bootstrap/loadSettings');
+const loadConfig = require('../lib/utils/loadConfig');
+const loadSettings = require('../lib/utils/loadSettings');
 
 const status = require('../lib/commands/status');
 const serve = require('../lib/commands/serve');
