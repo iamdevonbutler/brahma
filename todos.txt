@@ -11,7 +11,11 @@ idea - we just use one remote github repo for built site. each microservice
 pulls from that repo, but based on the env vars, it run the proper service.
 
 app.brahma.js or
-brahma.app.js
+brahma.app.js or
+
+brahma.config.js vs brahma.apps.js
+
+
 
 build file
 - you can give it JSON as a blueprint rather than being so imperitive.
@@ -33,9 +37,12 @@ xreq/xres intelligent req/res. it think it knows where to route a reply.
 listens and resonds to file io
 i think u can use tcp for remote communcation and ipc for local communication.
 
+doesnt seem to be a request/response pattern for the node module.
+to do ack or replys, in the message field include a replyTo address,
+and we can use either zmq or http to send a reply.
+
 ---
 
-rename bin/index to bin/start?
 
 lifecycle
 - startup
@@ -52,7 +59,6 @@ dependencies need to use require and node_modules because that's what's used
 by the packages the,selves internally, and that shit would break if u
 fucked w/ it.
 
-set process.title = 'microserviceName'; for each ms.
 
 
 Philosophy
@@ -240,12 +246,5 @@ if we are doing a refresh, let the user know that will be happening.
 
 ---
 
-advantages
+advantages (to be featured on readme, which also contains some advantages)
 - you should be able to test remote configuations locally. e.g. test your dev build locally.
-
----
-
-long todos
-
-mamba global dependencies
-- stmux

@@ -1,0 +1,1 @@
+make sure process.title sets appName for each microservice in activity monitor.
