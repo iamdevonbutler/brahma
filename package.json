@@ -9,7 +9,9 @@
   "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
   "license": "MIT",
   "dependencies": {
+    "chalk": "2.3.0",
     "object-assign-deep": "0.3.1",
+    "require-nocache": "1.0.0",
     "shelljs": "0.7.8",
     "swig": "1.4.2",
     "vorpal": "1.12.0"

@@ -3,8 +3,10 @@
 const vorpal = require('vorpal')();
 const path = require('path');
 const {fileExists, runBefore, log} = require('../lib/utils');
+
 const loadConfig = require('../lib/utils/loadConfig');
 const loadSettings = require('../lib/utils/loadSettings');
+const loadEnv = require('../lib/utils/loadEnv');
 
 const status = require('../lib/commands/status');
 const serve = require('../lib/commands/serve');
@@ -30,7 +32,7 @@ if (!fileExists(settingsPath)) {
   console.log('Add a "./brahma.config.js" file.');
   return;
 }
-const settings = loadSettings(settingsPath);
+var settings = loadSettings(settingsPath);
 
 // Load config.
 const configPath = path.join(process.cwd(), 'brahma.config.js');
@@ -38,16 +40,33 @@ if (!fileExists(configPath)) {
   console.log('Add a "./brahma.config.js" file.');
   return;
 }
-const config = loadConfig(configPath);
+var config = loadConfig(configPath);
 if (!config) {
   console.log('Add "apps" to your "brahma.config.js" file.');
   return;
 }
 
+// Load env.
+const envPath = path.join(process.cwd(), 'brahma.env.js');
+var env = loadEnv(envPath);
+
+// Proxy `config`, `settings`, and `env`, for live data over time.
+config = new Proxy(config, {
+  get: (t, name) => loadConfig(configPath)[name],
+});
+
+settings = new Proxy(settings, {
+  get: (t, name) => loadSettings(settingsPath)[name],
+});
+
+env = new Proxy(env, {
+  get: (t, name) => loadEnv(envPath)[name],
+});
+
 // Register commands w/ vorpal.
-const before = runBefore(vorpal);
-const buildAndLog = log(build({config, settings}), 'Build');
-const deployAndLog = log(deploy({config, settings}), 'Deploy');
+// const before = runBefore(vorpal);
+// const buildAndLog = log(build({config, settings}), 'Build');
+// const deployAndLog = log(deploy({config, settings}), 'Deploy');
 
 vorpal
   .command('status')
@@ -56,29 +75,37 @@ vorpal
 
 vorpal
   .command('serve')
-  .action(before('build', serve({config, settings})));
+  .action(serve({config, settings}))
+  .validate(async args => {
+    return await build({config, settings})(args);
+  });
 
-// @todo maybe its always in watch mode? - call watch on boot
-vorpal
-  .command('watch')
-  .action(before('serve', watch));
+// vorpal
+//   .command('watch')
+//   .action();
 
 vorpal
   .command('build')
-  .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test|...]')
-  .action(before('status', buildAndLog));
+  .option('-e, --environment <environment>', 'NODE_ENV=[development|...] (development)')
+  .action(build({config, settings}))
+  .validate(async args => {
+    return await status({config, settings})(args);
+  });
 
 vorpal
   .command('deploy')
-  .action(before('build', 'test', deployAndLog));
+  .action(deploy({config, settings}))
+  .validate(async args => {
+    return await build({config, settings})(args);
+  });
 
-vorpal
-  .command('scafold')
-  .action(scafold);
-
-vorpal
-  .command('test')
-  .action(test);
+// vorpal
+//   .command('scafold')
+//   .action(scafold);
+//
+// vorpal
+//   .command('test')
+//   .action(test);
 
 // Display vorpal in terminal.
 vorpal
