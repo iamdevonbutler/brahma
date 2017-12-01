@@ -22,14 +22,14 @@ process.on('unhandledRejection', console.error);
 // Node version check.
 const majorVersion = +process.version.slice(1).split('.')[0];
 if (majorVersion < 9) {
-  console.log('Brahma requires node version >= 9.0.0');
+  console.error('Brahma requires node version >= 9.0.0');
   return;
 }
 
 // Load Settings.
 const settingsPath = path.join(process.cwd(), 'brahma.settings.js');
 if (!fileExists(settingsPath)) {
-  console.log('Add a "./brahma.config.js" file.');
+  console.error('Add a "./brahma.config.js" file.');
   return;
 }
 var settings = loadSettings(settingsPath);
@@ -37,12 +37,12 @@ var settings = loadSettings(settingsPath);
 // Load config.
 const configPath = path.join(process.cwd(), 'brahma.config.js');
 if (!fileExists(configPath)) {
-  console.log('Add a "./brahma.config.js" file.');
+  console.error('Add a "./brahma.config.js" file.');
   return;
 }
 var config = loadConfig(configPath);
 if (!config) {
-  console.log('Add "apps" to your "brahma.config.js" file.');
+  console.error('Add "apps" to your "brahma.config.js" file.');
   return;
 }
 
@@ -63,41 +63,44 @@ env = new Proxy(env, {
   get: (t, name) => loadEnv(envPath)[name],
 });
 
-// Register commands w/ vorpal.
-// const before = runBefore(vorpal);
-// const buildAndLog = log(build({config, settings}), 'Build');
-// const deployAndLog = log(deploy({config, settings}), 'Deploy');
 
+// Register commands w/ vorpal.
 vorpal
   .command('status')
   .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test|...]')
-  .action(status({config, settings}));
+  .action(status({config, settings, env}));
+
+vorpal
+  .command('build')
+  .option('-e, --environment <environment>', 'NODE_ENV=[development|...] (development)')
+  .action(async args => {
+    var valid = await status({config, settings, env})(args);
+    if (valid) {
+      return await build({config, settings, env})(args);
+    }
+  });
+
+vorpal
+  .command('deploy')
+  .action(async args => {
+    var valid = await build({config, settings, env})(args);
+    if (valid) {
+      return deploy({config, settings, env})(args);
+    }
+  });
 
 vorpal
   .command('serve')
-  .action(serve({config, settings}))
-  .validate(async args => {
-    return await build({config, settings})(args);
+  .action(async args => {
+    var valid = await build({config, settings, env})(args);
+    if (valid) {
+      return await serve({config, settings, env})(args);
+    }
   });
 
 // vorpal
 //   .command('watch')
 //   .action();
-
-vorpal
-  .command('build')
-  .option('-e, --environment <environment>', 'NODE_ENV=[development|...] (development)')
-  .action(build({config, settings}))
-  .validate(async args => {
-    return await status({config, settings})(args);
-  });
-
-vorpal
-  .command('deploy')
-  .action(deploy({config, settings}))
-  .validate(async args => {
-    return await build({config, settings})(args);
-  });
 
 // vorpal
 //   .command('scafold')
