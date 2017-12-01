@@ -18,6 +18,7 @@ brahma.config.js vs brahma.apps.js
 
 build file
 - you can give it JSON as a blueprint rather than being so imperitive.
+- partial builds???? for perf...
 
 remove dependency on obj assign deep and use a local module.
 

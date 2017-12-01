@@ -1,5 +1,4 @@
 {
-  "dependencies": {
-    "object-assign-deep": "0.3.1"
-  }
+  "name": "{{appName}}",
+  "version": "{{version}}",
 }

@@ -5,8 +5,9 @@ const path = require('path');
 const {fileExists, runBefore, log} = require('../lib/utils');
 const chalk = require('chalk');
 
-const loadConfig = require('../lib/utils/loadConfig');
+const loadAppsConfig = require('../lib/utils/loadAppsConfig');
 const loadSettings = require('../lib/utils/loadSettings');
+const loadVariables = require('../lib/utils/loadVariables');
 const loadEnv = require('../lib/utils/loadEnv');
 
 const status = require('../lib/commands/status');
@@ -30,7 +31,7 @@ if (majorVersion < 9) {
 // Load Settings.
 const settingsPath = path.join(process.cwd(), 'brahma.settings.js');
 if (!fileExists(settingsPath)) {
-  console.error('Add a "./brahma.config.js" file.');
+  console.error('Add a "./brahma.settings.js" file.');
   return;
 }
 var settings = loadSettings(settingsPath);
@@ -40,25 +41,24 @@ const activeEnv = process.argv[2] || settings.localEnvironment;
 console.log(chalk.yellow(`Active environment: "${activeEnv}".`));
 
 // Load config.
-const configPath = path.join(process.cwd(), 'brahma.config.js');
+const configPath = path.join(process.cwd(), 'brahma.apps.js');
 if (!fileExists(configPath)) {
-  console.error('Add a "./brahma.config.js" file.');
+  console.error('Add a "./brahma.apps.js" file.');
   return;
 }
-var config = loadConfig(configPath, activeEnv);
-if (!config) {
-  console.error('Add "apps" to your "brahma.config.js" file.');
-  return;
-}
+var config = loadAppsConfig(configPath, activeEnv);
 
 // Load env.
 const envPath = path.join(process.cwd(), 'brahma.env.js');
 var env = loadEnv(envPath, activeEnv, config);
-console.log(env);
+
+// Load variables.
+const variablesPath = path.join(process.cwd(), 'brahma.config.js');
+var variables = loadVariables(variablesPath);
 
 // Proxy `config`, `settings`, and `env`, for live data over time.
 config = new Proxy(config, {
-  get: (t, name) => loadConfig(configPath, activeEnv)[name],
+  get: (t, name) => loadAppsConfig(configPath, activeEnv)[name],
 });
 
 settings = new Proxy(settings, {
@@ -67,6 +67,10 @@ settings = new Proxy(settings, {
 
 env = new Proxy(env, {
   get: (t, name) => loadEnv(envPath)[name],
+});
+
+variables = new Proxy(variables, {
+  get: (t, name) => loadVariables(variablesPath),
 });
 
 
