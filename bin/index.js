@@ -3,6 +3,7 @@
 const vorpal = require('vorpal')();
 const path = require('path');
 const {fileExists, runBefore, log} = require('../lib/utils');
+const chalk = require('chalk');
 
 const loadConfig = require('../lib/utils/loadConfig');
 const loadSettings = require('../lib/utils/loadSettings');
@@ -36,7 +37,7 @@ var settings = loadSettings(settingsPath);
 
 // Get active env.
 const activeEnv = process.argv[2] || settings.localEnvironment;
-console.log(`Active environment: "${activeEnv}".`);
+console.log(chalk.yellow(`Active environment: "${activeEnv}".`));
 
 // Load config.
 const configPath = path.join(process.cwd(), 'brahma.config.js');
@@ -72,12 +73,10 @@ env = new Proxy(env, {
 // Register commands w/ vorpal.
 vorpal
   .command('status')
-  .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test|...]')
   .action(status({config, settings, env}));
 
 vorpal
   .command('build')
-  .option('-e, --environment <environment>', 'NODE_ENV=[development|...] (development)')
   .action(async args => {
     var valid = await status({config, settings, env})(args);
     if (valid) {
