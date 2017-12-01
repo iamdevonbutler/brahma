@@ -51,7 +51,8 @@ const deployAndLog = log(deploy({config, settings}), 'Deploy');
 
 vorpal
   .command('status')
-  .action(status);
+  .option('-e, --environment <environment>', 'NODE_ENV=[development|production|test|...]')
+  .action(status({config, settings}));
 
 vorpal
   .command('serve')
