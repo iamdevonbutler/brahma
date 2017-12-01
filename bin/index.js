@@ -34,13 +34,17 @@ if (!fileExists(settingsPath)) {
 }
 var settings = loadSettings(settingsPath);
 
+// Get active env.
+const activeEnv = process.argv[2] || settings.localEnvironment;
+console.log(`Active environment: "${activeEnv}".`);
+
 // Load config.
 const configPath = path.join(process.cwd(), 'brahma.config.js');
 if (!fileExists(configPath)) {
   console.error('Add a "./brahma.config.js" file.');
   return;
 }
-var config = loadConfig(configPath);
+var config = loadConfig(configPath, activeEnv);
 if (!config) {
   console.error('Add "apps" to your "brahma.config.js" file.');
   return;
@@ -48,11 +52,12 @@ if (!config) {
 
 // Load env.
 const envPath = path.join(process.cwd(), 'brahma.env.js');
-var env = loadEnv(envPath);
+var env = loadEnv(envPath, activeEnv, config);
+console.log(env);
 
 // Proxy `config`, `settings`, and `env`, for live data over time.
 config = new Proxy(config, {
-  get: (t, name) => loadConfig(configPath)[name],
+  get: (t, name) => loadConfig(configPath, activeEnv)[name],
 });
 
 settings = new Proxy(settings, {
