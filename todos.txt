@@ -4,6 +4,10 @@ dont compile too much. the idea is for deployment we want to just upload the con
 dependency management
 server callback switch
 
+tests
+- how to integrate tests into resources.
+- i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
+
 abstract out modules like rabbit? and make the their own github repos e.g. brahma-rabbit?, brahma-...
 
 do something for versioning that doesnt suck.
@@ -15,6 +19,9 @@ app.brahma.js or
 brahma.app.js or
 
 env var validation. make sure no one is throwing invalid types (object).
+
+static assets and ID caching.
+make sure this is a technique people will be able to implement.
 
 brahma.config.js vs brahma.apps.js
 

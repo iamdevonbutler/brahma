@@ -4,6 +4,7 @@ const vorpal = require('vorpal')();
 const path = require('path');
 const {fileExists, runBefore, log} = require('../lib/utils');
 const chalk = require('chalk');
+const chokidar = require('chokidar');
 
 const loadAppsConfig = require('../lib/utils/loadAppsConfig');
 const loadSettings = require('../lib/utils/loadSettings');
@@ -46,7 +47,7 @@ if (!fileExists(configPath)) {
   console.error('Add a "./brahma.apps.js" file.');
   return;
 }
-var config = loadAppsConfig(configPath, activeEnv);
+var config = loadAppsConfig(configPath, env);
 
 // Load env.
 const envPath = path.join(process.cwd(), 'brahma.env.js');
@@ -54,28 +55,82 @@ var env = loadEnv(envPath, config);
 
 // Load variables.
 const variablesPath = path.join(process.cwd(), 'brahma.config.js');
-var variables = loadVariables(variablesPath);
+var variables = loadVariables(variablesPath, env);
 
-// Proxy `config`, `settings`, and `env`, for live data over time.
+// Make `config`, `settings`, and `env`, `variables` update live during runtime.
+const updated = {
+  config: false,
+  varaibles: false,
+  env: false,
+  settings: false,
+};
+
+function changed(filename) {
+  return () => {
+    updated[filename] = true;
+  };
+};
+
+chokidar
+  .watch(path.join(process.cwd(), 'brahma.apps.js'))
+  .on('change', changed('config'));
+
+chokidar
+  .watch(path.join(process.cwd(), 'brahma.env.js'))
+  .on('change', changed('env'));
+
+chokidar
+  .watch(path.join(process.cwd(), 'brahma.settings.js'))
+  .on('change', changed('settings'));
+
+chokidar
+  .watch(path.join(process.cwd(), 'brahma.config.js'))
+  .on('change', changed('variables'));
+
+
 config = new Proxy(config, {
-  get: (t, name) => loadAppsConfig(configPath, activeEnv)[name],
+  get: (target, name) => {
+    if (updated.config) {
+      updated.config = false;
+      return name ? loadAppsConfig(configPath, env)[name] : loadAppsConfig(configPath, env);
+    }
+    return name ? target[name] : target;
+  },
 });
 
 settings = new Proxy(settings, {
-  get: (t, name) => loadSettings(settingsPath)[name],
+  get: (target, name) => {
+    if (updated.settings) {
+      updated.settings = false;
+      return name ? loadSettings(settingsPath)[name] : loadSettings(settingsPath);
+    }
+    return name ? target[name] : target;
+  },
 });
 
 env = new Proxy(env, {
-  get: (t, name) => loadEnv(envPath, config)[name],
+  get: (target, name) => {
+    if (updated.env) {
+      updated.env = false;
+      return name ? loadEnv(envPath, config)[name] : loadEnv(envPath, config);
+    }
+    return name ? target[name] : target;
+  },
 });
 
 variables = new Proxy(variables, {
-  get: (t, name) => loadVariables(variablesPath),
+  get: (target, name) => {
+    if (updated.variables) {
+      updated.variables = false;
+      return name ? loadVariables(variablesPath, env)[name] : loadVariables(variablesPath, env);
+    }
+    return name ? target[name] : target;
+  },
 });
 
 
 // Register commands w/ vorpal.
-const data = {config, settings, env, variables};
+const data = {config, settings, env, activeEnv, variables};
 vorpal
   .command('status')
   .action(async args => {

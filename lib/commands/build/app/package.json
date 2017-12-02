@@ -4,15 +4,11 @@
   "description": "{{description}}",
   "main": "bin/start.js",
   "scripts": {
+    "start": "node ./bin/start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": "{{nodeVersion}}"
   },
-  "dependencies": {
-
-  },
-  "devDependencies": {
-
-  }
+  "dependencies": {{dependencies}}
 }
