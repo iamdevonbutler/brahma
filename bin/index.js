@@ -91,6 +91,7 @@ chokidar
 config = new Proxy(config, {
   get: (target, name) => {
     if (updated.config) {
+      console.log(111115, name);
       updated.config = false;
       return name ? loadAppsConfig(configPath, env)[name] : loadAppsConfig(configPath, env);
     }

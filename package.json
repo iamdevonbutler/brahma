@@ -11,6 +11,7 @@
   "dependencies": {
     "chalk": "2.3.0",
     "chokidar": "1.7.0",
+    "dirty-json": "0.5.0",
     "object-assign-deep": "0.3.1",
     "shelljs": "0.7.8",
     "stringify-object": "3.2.1",

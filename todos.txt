@@ -8,6 +8,9 @@ tests
 - how to integrate tests into resources.
 - i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
 
+we are passing env and config into out configs. this is more about env.
+we are passing the whole obj. is this ok? should we pass in a subset or at least include the key for active env.
+
 abstract out modules like rabbit? and make the their own github repos e.g. brahma-rabbit?, brahma-...
 
 do something for versioning that doesnt suck.

@@ -10,5 +10,7 @@
   "engines": {
     "node": "{{nodeVersion}}"
   },
-  "dependencies": {{dependencies}}
+  "dependencies": {
+    {{dependencies|raw}}
+  }
 }
