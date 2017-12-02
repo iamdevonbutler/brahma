@@ -10,9 +10,12 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "2.3.0",
+    "javascript-stringify": "1.6.0",
+    "node-stringify": "0.2.1",
     "object-assign-deep": "0.3.1",
     "require-nocache": "1.0.0",
     "shelljs": "0.7.8",
+    "stringify-object": "3.2.1",
     "swig": "1.4.2",
     "vorpal": "1.12.0"
   },

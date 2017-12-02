@@ -75,34 +75,37 @@ variables = new Proxy(variables, {
 
 
 // Register commands w/ vorpal.
+const data = {config, settings, env, variables};
 vorpal
   .command('status')
-  .action(status({config, settings, env}));
+  .action(async args => {
+    return await status(data)(args);
+  });
 
 vorpal
   .command('build')
   .action(async args => {
-    var valid = await status({config, settings, env})(args);
+    var valid = await status(data)(args);
     if (valid) {
-      return await build({config, settings, env})(args);
+      return await build(data)(args);
     }
   });
 
 vorpal
   .command('deploy')
   .action(async args => {
-    var valid = await build({config, settings, env})(args);
+    var valid = await build(data)(args);
     if (valid) {
-      return deploy({config, settings, env})(args);
+      return deploy(data)(args);
     }
   });
 
 vorpal
   .command('serve')
   .action(async args => {
-    var valid = await build({config, settings, env})(args);
+    var valid = await build(data)(args);
     if (valid) {
-      return await serve({config, settings, env})(args);
+      return await serve(data)(args);
     }
   });
 
