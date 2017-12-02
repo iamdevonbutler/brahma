@@ -40,7 +40,7 @@ if (!fileExists(settingsPath)) {
 state.settings = loadSettings(settingsPath);
 
 // Get active env.
-state.activeEnv = process.argv[2] || settings.localEnvironment;
+state.activeEnv = process.argv[2] || state.settings.localEnvironment;
 console.log(chalk.yellow(`Active environment: "${state.activeEnv}".`));
 
 // Load config.
@@ -132,6 +132,6 @@ vorpal
 
 // Display vorpal in terminal.
 vorpal
-  .delimiter(settings.delimiter)
+  .delimiter(state.settings.delimiter)
   .show()
   .exec('help');
