@@ -19,6 +19,8 @@ const deploy = require('../lib/commands/deploy');
 const scafold = require('../lib/commands/scafold');
 const test = require('../lib/commands/test');
 
+const state = {};
+
 // Error handling.
 process.on('unhandledRejection', console.error);
 
@@ -35,11 +37,11 @@ if (!fileExists(settingsPath)) {
   console.error('Add a "./brahma.settings.js" file.');
   return;
 }
-var settings = loadSettings(settingsPath);
+state.settings = loadSettings(settingsPath);
 
 // Get active env.
-const activeEnv = process.argv[2] || settings.localEnvironment;
-console.log(chalk.yellow(`Active environment: "${activeEnv}".`));
+state.activeEnv = process.argv[2] || settings.localEnvironment;
+console.log(chalk.yellow(`Active environment: "${state.activeEnv}".`));
 
 // Load config.
 const configPath = path.join(process.cwd(), 'brahma.apps.js');
@@ -47,119 +49,72 @@ if (!fileExists(configPath)) {
   console.error('Add a "./brahma.apps.js" file.');
   return;
 }
-var config = loadAppsConfig(configPath, env);
+state.config = loadAppsConfig(configPath, state.env);
 
 // Load env.
 const envPath = path.join(process.cwd(), 'brahma.env.js');
-var env = loadEnv(envPath, config);
+state.env = loadEnv(envPath, state.config);
 
 // Load variables.
 const variablesPath = path.join(process.cwd(), 'brahma.config.js');
-var variables = loadVariables(variablesPath, env);
+state.variables = loadVariables(variablesPath, state.env);
 
-// Make `config`, `settings`, and `env`, `variables` update live during runtime.
-const state = {
-  config: {updated: false, value: config},
-  varaibles: {updated: false, value: variables},
-  env: {updated: false, value: env},
-  settings: {updated: false, value: settings},
-};
-
-function changed(name) {
-  return () => {
-    state[name].updated = true;
-  };
-};
-
+// `state` live update during runtime.
 chokidar
   .watch(path.join(process.cwd(), 'brahma.apps.js'))
-  .on('change', changed('config'));
+  .on('change', () => {
+    state.config = loadAppsConfig(configPath, state.env);
+  });
 
 chokidar
   .watch(path.join(process.cwd(), 'brahma.env.js'))
-  .on('change', changed('env'));
+  .on('change', () => {
+    state.env = loadEnv(envPath, state.config);
+  });
 
 chokidar
   .watch(path.join(process.cwd(), 'brahma.settings.js'))
-  .on('change', changed('settings'));
+  .on('change', () => {
+    state.settings = loadSettings(settingsPath);
+  });
 
 chokidar
   .watch(path.join(process.cwd(), 'brahma.config.js'))
-  .on('change', changed('variables'));
-
-config = new Proxy(config, {
-  get: (target, name) => {
-    if (state.config.updated) {
-      state.config.updated = false;
-      state.config.value = loadAppsConfig(configPath, env);
-    }
-    return name ? state.config.value[name] : state.config.value;
-  },
-});
-
-settings = new Proxy(settings, {
-  get: (target, name) => {
-    if (state.settings.updated) {
-      state.settings.updated = false;
-      state.settings.value = loadSettings(settingsPath);
-    }
-    return name ? state.settings.value[name] : state.settings.value;
-  },
-});
-
-env = new Proxy(env, {
-  get: (target, name) => {
-    if (state.env.updated) {
-      state.env.updated = false;
-      state.env.value = loadEnv(envPath, config);
-    }
-    return name ? state.env.value[name] : state.env.value;
-  },
-});
-
-variables = new Proxy(variables, {
-  get: (target, name) => {
-    if (state.variables.updated) {
-      state.variables.updated = false;
-      state.variables.value = loadVariables(variablesPath, env);
-    }
-    return name ? state.variables.value[name] : state.variables.value;
-  },
-});
-
+  .on('change', () => {
+    state.variables = loadVariables(variablesPath, state.env);
+  });
 
 // Register commands w/ vorpal.
-const data = {config, settings, env, activeEnv, variables};
 vorpal
   .command('status')
   .action(async args => {
-    return await status(data)(args);
+    return await status(state)(args);
   });
 
 vorpal
   .command('build')
   .action(async args => {
-    var valid = await status(data)(args);
+    var valid = await status(state)(args);
     if (valid) {
-      return await build(data)(args);
+      return await build(state)(args);
     }
   });
 
 vorpal
   .command('deploy')
   .action(async args => {
-    var valid = await build(data)(args);
+    var valid = await build(state)(args);
     if (valid) {
-      return deploy(data)(args);
+      return deploy(state)(args);
     }
   });
 
 vorpal
   .command('serve')
   .action(async args => {
-    var valid = await build(data)(args);
+    var valid = await build(state)(args);
     if (valid) {
-      return await serve(data)(args);
+      return await serve(state)(args);
     }
   });
 
