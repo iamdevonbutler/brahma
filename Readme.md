@@ -58,3 +58,9 @@ Lifecycles
 - run
 - shutdown
 * process.env.lifecycles is not available.
+
+Env
+- @todo list required env.
+- PORT
+- NODE_ENV (default)
+- APP_NAME (default)

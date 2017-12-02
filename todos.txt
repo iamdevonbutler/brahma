@@ -14,6 +14,8 @@ pulls from that repo, but based on the env vars, it run the proper service.
 app.brahma.js or
 brahma.app.js or
 
+env var validation. make sure no one is throwing invalid types (object).
+
 brahma.config.js vs brahma.apps.js
 
 package.json build - add scripts

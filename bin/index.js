@@ -50,7 +50,7 @@ var config = loadAppsConfig(configPath, activeEnv);
 
 // Load env.
 const envPath = path.join(process.cwd(), 'brahma.env.js');
-var env = loadEnv(envPath, activeEnv, config);
+var env = loadEnv(envPath, config);
 
 // Load variables.
 const variablesPath = path.join(process.cwd(), 'brahma.config.js');
@@ -66,7 +66,7 @@ settings = new Proxy(settings, {
 });
 
 env = new Proxy(env, {
-  get: (t, name) => loadEnv(envPath)[name],
+  get: (t, name) => loadEnv(envPath, config)[name],
 });
 
 variables = new Proxy(variables, {
