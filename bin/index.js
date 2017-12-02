@@ -58,16 +58,16 @@ const variablesPath = path.join(process.cwd(), 'brahma.config.js');
 var variables = loadVariables(variablesPath, env);
 
 // Make `config`, `settings`, and `env`, `variables` update live during runtime.
-const updated = {
-  config: false,
-  varaibles: false,
-  env: false,
-  settings: false,
+const state = {
+  config: {updated: false, value: config},
+  varaibles: {updated: false, value: variables},
+  env: {updated: false, value: env},
+  settings: {updated: false, value: settings},
 };
 
-function changed(filename) {
+function changed(name) {
   return () => {
-    updated[filename] = true;
+    state[name].updated = true;
   };
 };
 
@@ -87,45 +87,43 @@ chokidar
   .watch(path.join(process.cwd(), 'brahma.config.js'))
   .on('change', changed('variables'));
 
-
 config = new Proxy(config, {
   get: (target, name) => {
-    if (updated.config) {
-      console.log(111115, name);
-      updated.config = false;
-      return name ? loadAppsConfig(configPath, env)[name] : loadAppsConfig(configPath, env);
+    if (state.config.updated) {
+      state.config.updated = false;
+      state.config.value = loadAppsConfig(configPath, env);
     }
-    return name ? target[name] : target;
+    return name ? state.config.value[name] : state.config.value;
   },
 });
 
 settings = new Proxy(settings, {
   get: (target, name) => {
-    if (updated.settings) {
-      updated.settings = false;
-      return name ? loadSettings(settingsPath)[name] : loadSettings(settingsPath);
+    if (state.settings.updated) {
+      state.settings.updated = false;
+      state.settings.value = loadSettings(settingsPath);
     }
-    return name ? target[name] : target;
+    return name ? state.settings.value[name] : state.settings.value;
   },
 });
 
 env = new Proxy(env, {
   get: (target, name) => {
-    if (updated.env) {
-      updated.env = false;
-      return name ? loadEnv(envPath, config)[name] : loadEnv(envPath, config);
+    if (state.env.updated) {
+      state.env.updated = false;
+      state.env.value = loadEnv(envPath, config);
     }
-    return name ? target[name] : target;
+    return name ? state.env.value[name] : state.env.value;
   },
 });
 
 variables = new Proxy(variables, {
   get: (target, name) => {
-    if (updated.variables) {
-      updated.variables = false;
-      return name ? loadVariables(variablesPath, env)[name] : loadVariables(variablesPath, env);
+    if (state.variables.updated) {
+      state.variables.updated = false;
+      state.variables.value = loadVariables(variablesPath, env);
     }
-    return name ? target[name] : target;
+    return name ? state.variables.value[name] : state.variables.value;
   },
 });
 
