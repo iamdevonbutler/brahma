@@ -4,6 +4,21 @@ dont compile too much. the idea is for deployment we want to just upload the con
 dependency management
 server callback switch
 
+
+
+trick for npm install result parsing.
+just grep all node_modules to seee what did and didnt install
+
+maybe there is `deploy` and `update`.
+deploy deploys server boilerplate that u dont update.
+update is how u update that boilerplate.
+
+only the module.exports = {} object itself gets moved to live server.
+will be a cause of unexpected bugs for some. test the praticality of this.
+
+add/remove/update dependencies while in watch mode.
+do for deploying remotely too.
+
 tests
 - how to integrate tests into resources.
 - i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
@@ -33,6 +48,9 @@ package.json build - add scripts
 should be able to override the .eslintrc and .jscsrc and all that (build)
 
 think about the impact deploying to a CI server would have on the architecuture here.
+
+build
+- do more async for perf.
 
 build file
 - you can give it JSON as a blueprint rather than being so imperitive.
@@ -197,6 +215,7 @@ brahma status
 - brahma status deploy (makes sure you have git repos defined for each server)
 - makes sure all resources have a location entry in their brahma.config.js
 - brahma stats ports  - make sure we are using unique ports.
+- have a status to log dependencies for a remote server. log pack.json
 
 brahma deploy
 - deploy config (then a series of questions is asked via command prompt)
