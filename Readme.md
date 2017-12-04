@@ -38,6 +38,8 @@ Documentation built in.
 
 zero downtime deployments.
 
+use the word "opinionated" somewhere.
+
 Terminology?
 resources are made up of ???? modules?
 
@@ -79,3 +81,7 @@ Conventions (explain conventions used)
 .jscsrc .eslintrc
 - has defaults, only really necessary if your viewing build in editor.
 - if you have these files in your site root, will use those instead.
+
+Breaking from convention
+- @todo list
+- e.g. no dev dependencies.

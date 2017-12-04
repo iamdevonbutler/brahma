@@ -1,3 +1,11 @@
+testing
+- @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
+
+working servers.
+
+no dev dependencies
+- dev dependencies intented to make remote builds faster. we are not doing remote builds.
+
 one of the things we do w/ microservices is create github repos for each service and
 sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
 these private github repos is a bit of work,
@@ -291,3 +299,9 @@ if we are doing a refresh, let the user know that will be happening.
 
 advantages (to be featured on readme, which also contains some advantages)
 - you should be able to test remote configuations locally. e.g. test your dev build locally.
+
+
+--
+
+functionality to list here and test later.
+- local npm i takes env into consideration. u do ur prod build here not on prod. make sure prod builds dont install devDependencies
