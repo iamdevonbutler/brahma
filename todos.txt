@@ -2,7 +2,8 @@ todo
 
 get serve working...
 build isn't building resources/middleware/...
-how to load config and env.
+how to load resources, middleware, config and env on the server
+use latest - if u put the * or latest for a dep version - run this command and it will update ur apps file w/ the latest version.
 
 ---
 
