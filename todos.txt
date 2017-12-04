@@ -7,7 +7,6 @@ use latest - if u put the * or latest for a dep version - run this command and i
 
 ssh into remote server. plugins for heroku? digitalocean?
 neo
-remove shell in build
 middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
 list resources via staTUS and see their routes.
 postdeploy - leave a hook so someone can write a docker integration.
@@ -79,7 +78,6 @@ env
 - env var validation. make sure no one is updating to invalid types (object).
 
 package.json
-
 
 lifecycle states
 - startup
