@@ -49,7 +49,7 @@ Philosophy
   - e.g. resources, application code for servers
 - no `this` (especially w/ function decoration)
 - as above so below (eslintrc, npmrc, ...)
--
+- flexibility for what you need. we are trying to enforce commonalities, standards, across our apps to make the more predictable for bug prevention.
 
 Clustering
 Brahma uses throng. Assign env var `WEB_CONCURRENCY`.
