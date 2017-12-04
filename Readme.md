@@ -48,7 +48,8 @@ Philosophy
   - e.g. dbs, config for dbs
   - e.g. resources, application code for servers
 - no `this` (especially w/ function decoration)
-- as above so below
+- as above so below (eslintrc, npmrc, ...)
+-
 
 Clustering
 Brahma uses throng. Assign env var `WEB_CONCURRENCY`.

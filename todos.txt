@@ -4,7 +4,8 @@ dont compile too much. the idea is for deployment we want to just upload the con
 dependency management
 server callback switch
 
-
+silent mode for each endpoint.
+when we build, pass silent=true into status so we dont console log shit.
 
 trick for npm install result parsing.
 just grep all node_modules to seee what did and didnt install
