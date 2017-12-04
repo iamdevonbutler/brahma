@@ -19,6 +19,15 @@ const deploy = require('../lib/commands/deploy');
 const scafold = require('../lib/commands/scafold');
 const test = require('../lib/commands/test');
 
+function logArray(obj, error = false) {
+  if (error) {
+    console.error(obj.map(item => chalk.red(item)).join('\n'));
+  }
+  else {
+    console.log(obj.join('\n'));
+  }
+};
+
 const state = {};
 
 // Error handling.
@@ -88,34 +97,58 @@ chokidar
 vorpal
   .command('status')
   .action(async args => {
-    return await status(state)(args);
+    var {errors, info} = await status(state)(args);
+    if (info) logArray(info);
+    if (errors) logArray(errors, true);
+    return errors;
   });
 
 vorpal
   .command('build')
   .action(async args => {
-    var valid = await status(state)(args);
-    if (valid) {
-      return await build(state)(args);
+    var {info, errors} = await status(state)(args);
+    if (errors) {
+      console.log('Status errors:');
+      logArray(errors, true);
     }
+    else {
+      var {info, errors} = await build(state)(args);
+      if (info) logArray(info);
+      if (errors) logArray(errors, true);
+    }
+    return errors;
   });
 
 vorpal
   .command('deploy')
   .action(async args => {
-    var valid = await build(state)(args);
-    if (valid) {
-      return deploy(state)(args);
+    var {info, errors} = await build(state)(args);
+    if (errors) {
+      console.log('Build errors:');
+      logArray(errors, true);
     }
+    else {
+      var {info, errors} = await deploy(state)(args);
+      if (info) logArray(info);
+      if (errors) logArray(errors, true);
+    }
+    return errors;
   });
 
 vorpal
   .command('serve')
   .action(async args => {
-    var valid = await build(state)(args);
-    if (valid) {
-      return await serve(state)(args);
+    var {info, errors} = await build(state)(args);
+    if (errors) {
+      console.log('Build errors:');
+      logArray(errors, true);
     }
+    else {
+      var {info, errors} = await serve(state)(args);
+      if (info) logArray(info);
+      if (errors) logArray(errors, true);
+    }
+    return errors;
   });
 
 // vorpal

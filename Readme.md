@@ -50,6 +50,13 @@ Philosophy
 - no `this` (especially w/ function decoration)
 - as above so below (eslintrc, npmrc, ...)
 - flexibility for what you need. we are trying to enforce commonalities, standards, across our apps to make the more predictable for bug prevention.
+- code sharing (makes it super easy to share your `decorators`, `middleware`, `config`, `services`, ...)
+
+Explaination of folder structure
+- ./services - services return an obj that provide a "service". and im using the word service literally and vaguely. in other words, its code that does stuff. it can be anything that contributes to the functionality of a service(s)
+- ./middleware
+- ./static - common static assets to all apps. all files will be copied over to each app.
+- ...
 
 Clustering
 Brahma uses throng. Assign env var `WEB_CONCURRENCY`.
@@ -58,10 +65,17 @@ Lifecycles
 - startup
 - run
 - shutdown
-* process.env.lifecycles is not available.
+* process.env.lifecycle is not available.
 
 Env
 - @todo list required env.
 - PORT
 - NODE_ENV (default)
 - APP_NAME (default)
+
+Conventions (explain conventions used)
+- $variableName $ sign indicates that the obj has been wrapped by function and its functionality has been extended/altered in some ways.
+
+.jscsrc .eslintrc
+- has defaults, only really necessary if your viewing build in editor.
+- if you have these files in your site root, will use those instead.

@@ -1,14 +1,15 @@
-the apps should be able to start themselves given an app.js file and other configs.
-dont compile too much. the idea is for deployment we want to just upload the configs and resources.
+one of the things we do w/ microservices is create github repos for each service and
+sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
+these private github repos is a bit of work,
+
+the apps should be able to start themselves given an brahma.app.js file and other configs.
+dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
 
 dependency management
 server callback switch
 
 silent mode for each endpoint.
 when we build, pass silent=true into status so we dont console log shit.
-
-trick for npm install result parsing.
-just grep all node_modules to seee what did and didnt install
 
 maybe there is `deploy` and `update`.
 deploy deploys server boilerplate that u dont update.
@@ -121,7 +122,7 @@ Philosophy
 
 
 
-docker containers?
+
 
 you should be able to update depenedncies live.
 not all of them tho. some of them will include breaking api changes
