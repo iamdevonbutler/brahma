@@ -5,6 +5,17 @@ build isn't building resources/middleware/...
 how to load resources, middleware, config and env on the server
 use latest - if u put the * or latest for a dep version - run this command and it will update ur apps file w/ the latest version.
 
+ssh into remote server. plugins for heroku? digitalocean?
+neo
+remove shell in build
+middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
+list resources via staTUS and see their routes.
+postdeploy - leave a hook so someone can write a docker integration.
+
+write your tests...last?
+- generate tests feature. generates tests for resources, ...,. if test does not yet exist.
+- list empty tests - you can keep calling generate tests as you continue to develope, eventually your will forget about some. this helps you get back to them.
+
 ---
 
 actions
@@ -68,7 +79,7 @@ env
 - env var validation. make sure no one is updating to invalid types (object).
 
 package.json
-- @todo add scripts obj
+
 
 lifecycle states
 - startup

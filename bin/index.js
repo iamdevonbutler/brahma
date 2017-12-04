@@ -16,8 +16,9 @@ const serve = require('../lib/commands/serve');
 const watch = require('../lib/commands/watch');
 const build = require('../lib/commands/build');
 const deploy = require('../lib/commands/deploy');
-const scafold = require('../lib/commands/scafold');
+const newProject = require('../lib/commands/new');
 const test = require('../lib/commands/test');
+const add = require('../lib/commands/add');
 
 const state = {};
 
@@ -43,17 +44,17 @@ state.settings = loadSettings(settingsPath);
 state.activeEnv = process.argv[2] || state.settings.localEnvironment;
 console.log(chalk.yellow(`Active environment: "${state.activeEnv}".`));
 
-// Load config.
+// Load apps config.
 const configPath = path.join(process.cwd(), 'brahma.apps.js');
 if (!fileExists(configPath)) {
   console.error('Add a "./brahma.apps.js" file.');
   return;
 }
-state.config = loadAppsConfig(configPath, state.env);
+state.apps = loadAppsConfig(configPath, state.env);
 
 // Load env.
 const envPath = path.join(process.cwd(), 'brahma.env.js');
-state.env = loadEnv(envPath, state.config);
+state.env = loadEnv(envPath, state.apps);
 
 // Load variables.
 const variablesPath = path.join(process.cwd(), 'brahma.config.js');
@@ -63,13 +64,13 @@ state.variables = loadVariables(variablesPath, state.env);
 chokidar
   .watch(path.join(process.cwd(), 'brahma.apps.js'))
   .on('change', () => {
-    state.config = loadAppsConfig(configPath, state.env);
+    state.apps = loadAppsConfig(configPath, state.env);
   });
 
 chokidar
   .watch(path.join(process.cwd(), 'brahma.env.js'))
   .on('change', () => {
-    state.env = loadEnv(envPath, state.config);
+    state.env = loadEnv(envPath, state.apps);
   });
 
 chokidar
@@ -159,12 +160,16 @@ vorpal
 //   .action();
 
 // vorpal
-//   .command('scafold')
-//   .action(scafold);
+//   .command('new')
+//   .action(new);
 //
 // vorpal
 //   .command('test')
 //   .action(test);
+
+//   // vorpal
+//   .command('add')
+//   .action(add);
 
 // Display vorpal in terminal.
 vorpal
