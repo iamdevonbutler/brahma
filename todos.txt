@@ -8,6 +8,10 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 dependency management
 server callback switch
 
+build file IO
+- async is a hack. needs to make sure all files are written before resolving main promise.
+- making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
+
 silent mode for each endpoint.
 when we build, pass silent=true into status so we dont console log shit.
 

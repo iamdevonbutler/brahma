@@ -19,15 +19,6 @@ const deploy = require('../lib/commands/deploy');
 const scafold = require('../lib/commands/scafold');
 const test = require('../lib/commands/test');
 
-function logArray(obj, error = false) {
-  if (error) {
-    console.error(obj.map(item => chalk.red(item)).join('\n'));
-  }
-  else {
-    console.log(obj.join('\n'));
-  }
-};
-
 const state = {};
 
 // Error handling.
@@ -93,6 +84,16 @@ chokidar
     state.variables = loadVariables(variablesPath, state.env);
   });
 
+// Utility functions.
+function logArray(obj, error = false) {
+  if (error) {
+    console.error(obj.map(item => '-> ' + chalk.red(item)).join('\n'));
+  }
+  else {
+    console.log(obj.map(item => '-> ' + item).join('\n'));
+  }
+};
+
 // Register commands w/ vorpal.
 vorpal
   .command('status')
@@ -106,6 +107,7 @@ vorpal
 vorpal
   .command('build')
   .action(async args => {
+    const startTime = Date.now();
     var {info, errors} = await status(state)(args);
     if (errors) {
       console.log('Status errors:');
@@ -115,6 +117,7 @@ vorpal
       var {info, errors} = await build(state)(args);
       if (info) logArray(info);
       if (errors) logArray(errors, true);
+      console.log(`-> Build time (${Date.now() - startTime}ms)`);
     }
     return errors;
   });
