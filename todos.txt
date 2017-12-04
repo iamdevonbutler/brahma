@@ -1,119 +1,160 @@
-testing
-- @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
+how to use koa1 and koa2 - use case, u want to do shit but not update your whole fucking app for 1 thing to work.
 
-working servers.
+should we deploy everything or be able to pick. lets just deploy new config.
 
-no dev dependencies
-- dev dependencies intented to make remote builds faster. we are not doing remote builds.
+---
 
-one of the things we do w/ microservices is create github repos for each service and
-sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
-these private github repos is a bit of work,
-
-the apps should be able to start themselves given an brahma.app.js file and other configs.
-dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
-
-dependency management
-server callback switch
-
-build file IO
-- async is a hack. needs to make sure all files are written before resolving main promise.
-- making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
-
-silent mode for each endpoint.
-when we build, pass silent=true into status so we dont console log shit.
-
-maybe there is `deploy` and `update`.
-deploy deploys server boilerplate that u dont update.
-update is how u update that boilerplate.
-
-only the module.exports = {} object itself gets moved to live server.
-will be a cause of unexpected bugs for some. test the praticality of this.
-
-add/remove/update dependencies while in watch mode.
-do for deploying remotely too.
-
-tests
-- how to integrate tests into resources.
-- i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
-
-we are passing env and config into out configs. this is more about env.
-we are passing the whole obj. is this ok? should we pass in a subset or at least include the key for active env.
-
-abstract out modules like rabbit? and make the their own github repos e.g. brahma-rabbit?, brahma-...
-
-do something for versioning that doesnt suck.
-
-idea - we just use one remote github repo for built site. each microservice
-pulls from that repo, but based on the env vars, it run the proper service.
-
-app.brahma.js or
-brahma.app.js or
-
-env var validation. make sure no one is throwing invalid types (object).
-
-static assets and ID caching.
-make sure this is a technique people will be able to implement.
-
-brahma.config.js vs brahma.apps.js
-
-package.json build - add scripts
-
-should be able to override the .eslintrc and .jscsrc and all that (build)
-
-think about the impact deploying to a CI server would have on the architecuture here.
+serve
+- @todo
+- /endpoint to return brahma.config.js, env, status, ...?, (ssh only)
 
 build
-- do more async for perf.
+- the async implementation is a hack. needs to make sure all files are written before resolving main promise.
+  - *making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
 
-build file
-- you can give it JSON as a blueprint rather than being so imperitive.
-- partial builds???? for perf...
+deploy
+- maybe there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
+- ideally you just run deploy, you see the manifest (whhats going to happen), you agree, and then shit happens.
+- deploy everything or select options? big con is you can fuck up w/ deploying select things. for selecting do one of those yeoman style option list things where you select what u wanna deploy (config, env,). but then you can fuck up, and not deploy needed env config.
+- ci server? see "breaking from convention - ci server"
 
-remove dependency on obj assign deep and use a local module.
+watch
+- @todo
 
-i like the idea that build does no vaidation
-all validation is done by brahma status
+testing
+- @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
+- i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
+
+scafold
+- like integrations, scafolding tools can be plugins. brahma-plugin-scafold
+- i want to scafold - resources, ...
+- should the tool be used to remove shit as well? remove resources? maybe this will be contrib plugin shit. a remove resource plugin should be able to do validation and make sure the removal wont break shit.
+
+status
+- @todo status makes sure you dont have conflicting ports in env.
 
 ---
 
-integrate scafolding tools like rr-cli.
-rr-cli would be a plugin and u could have awhole library of project scafolding tools.
+
+breaking from convention
+- no dev dependencies - intented to make remote builds faster. we are not doing remote builds.
+- one of the things we do w/ microservices is create github repos for each service and
+sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
+these private github repos is a bit of work,
+- ci server - the server has a tests endpoint that runs our tests in a forked process, and communicates the results. why use another server - its just worse?
+
+make sure...
+- the apps should be able to start themselves given an brahma.app.js file and other configs.
+dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
+- keep integrations modular. abstract out modules like mongorules and make the their own github repos e.g. brahma-mongorules?, brahma-...
+- static assets w/ ID caching. make sure this is a technique people will be able to implement.
+- should the app server be its own module? build it and see what it would take
+- try to connect to servers using ssh and ur ssh key.
 
 ---
+
+integrations
+- @todo
+- so we have the "realtime" addon, but we could have others, so u would do "namespace/realtime" (phase II)
+
+dependency management
+- builds (OK)
+- updates (@todo) - update live app, update running dev server (would be nice if we didnt need to do a server restart)
+
+versioning
+- i have an idea, i want to keep all apps w/ the same version. idk why. gotta flush this out.
+
+env
+- env var validation. make sure no one is updating to invalid types (object).
+
+package.json
+- @todo add scripts obj
+
+lifecycle states
+- startup
+- run
+- shutdown
+
+local and remote ssl
+- how we gonna do this? a way to generate local ssl certs via command line command?
+
+brahma advantages
+- to be featured on readme
+- you should be able to test remote configuations locally. e.g. test your dev build locally.
+
 
 zmq
 xreq/xres intelligent req/res. it think it knows where to route a reply.
 listens and resonds to file io
 i think u can use tcp for remote communcation and ipc for local communication.
-
 doesnt seem to be a request/response pattern for the node module.
 to do ack or replys, in the message field include a replyTo address,
 and we can use either zmq or http to send a reply.
 
+
 ---
 
+app
 
-lifecycle
-- startup
-- run
-- shutdown
+communication
+- property on $ctx (proptype property)
+- $ctx.handler
+- $ctx.call('ygl.apartments.status.change', 'method') // if in resources obj call directly, else use rabbit rpc. if method is empty, calls 'handler'
+- $ctx.get('ygl.apartments.status.change.config.field') // gets a field value.
+- we should make sure decorators dont fuck w/ these methods so maybe we can attach them last?
+set ctx to null inside objs?
 
-@todo autoupdating functionality for brahma -g
+resource validator
+- makes sure you don't have a get property or a call prop or anything that we are using elseware
 
+Resources have the following possible entry points:
+- restful HTTP interface
+- response to zmq task
+- cron
+* since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
 
-communication w/ other services uses a message queue but shoult we also have a way that
-uses http for communication as well.
+---
 
-dependencies need to use require and node_modules because that's what's used
-by the packages the,selves internally, and that shit would break if u
-fucked w/ it.
+realtime
+- handshake
+  - client connects
+  - server asks for JWT
+  - server uses JWT to verify (via mamaba communication syntax)
+  - server asks client for subscriptions
+  - client sends subscriptions
+  - server associates subscriptions list w/ socket client ID.
+  - server listens for all events
+    - for each event, get each users subs w/ filters, check to see if each user
+    gets updated, and update
+  - maybe we can integrate a restful interface to add montioring/control
 
+---
 
+brahma status
+- brahma status (runs all brahma statuses)
+- brahma status resources (validate resources objects)
+- brahma status resource RESOURCE_NAME (tells u what other resources are dependencies)
+- brahma status service SERVICE_NAME (tells u what resources are dependent)
+- brahma status decorator
+- brahma status middleware
+- brahma status config
+- brahma status dependencies APP_NAME lists all dependencies for a given app
+- brahma status deploy (makes sure you have git repos defined for each server)
+- makes sure all resources have a location entry in their brahma.config.js
+- brahma stats ports  - make sure we are using unique ports.
+- have a status to log dependencies for a remote server. log pack.json
 
-Philosophy
-- make modular as fuck. try to have most components be replaceable.
+---
 
+// const resources = new ResourceCollection();
+// resources.forEach
+// resources.get()
+// resources.get('resource.name')
+// resources.add()
+// resources.update()
+// resources.remove()
+
+--
 
 /update
 /update/dependencies
@@ -132,14 +173,11 @@ Philosophy
 /update/startup
 /update/shutdown
 
+---
 
+long todos
 
-
-
-you should be able to update depenedncies live.
-not all of them tho. some of them will include breaking api changes
-
-It would be nice if the core not only integrated w/ brahma but was also standalone.
+- auto updating `brahma` cli module (1.0?)
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.
 installation should happen automatically.
@@ -151,157 +189,3 @@ installation should happen automatically.
   - idea - might not need to use node_modules at all if u can do this locally to each endopoint
   - there shoudl be a naming collision check w/ dependencies. make sure we are not injecting another ygl object or something.
 - i want to be able to use koa1.x and koa2.x in the same project.
-
-scafolding
-- creates:
-  - resources
-  - resource dependencies
-  - project scafolding (fetches scafolding remotely so u dont need to keep updaing the local brahma binary. this is important. the local binary will keep as little functionality remotely and request it externally so we can update independently)
-  - ???
-- resources/add
-- resources/remove
-- resources/rename
-
-dont use .env -> be consistent and use JS obj in app.js
-
-command to dump to console sample brahma.config.js file and maybe other files.
-
-gotta think about how to do tests w/ each resource and service/middleware/...
-
-hot reload prod apps w/ jsmoves
-- server responsibility
-  - receive requests and call handler
-  - change handler on demand
-
-productions servers are autoupdating
-- there is a code server that we deploy to and configure.
-
-communication
-- property on $ctx (proptype property)
-- $ctx.handler
-- $ctx.call('ygl.apartments.status.change', 'method') // if in resources obj call directly, else use rabbit rpc. if method is empty, calls 'handler'
-- $ctx.get('ygl.apartments.status.change.config.field') // gets a field value.
-- we should make sure decorators dont fuck w/ these methods so maybe we can attach them last?
-
-resource validator
-- makes sure you don't have a get property or a call prop or anything that we are using elseware
-
-set ctx to null inside objs.
-
-integrations are namespaced
-- so we have the "realtime" addon, but we could have others, so u would do "namespace/realtime" (phase II)
-
-Resources have the following possible entry points:
-- restful HTTP interface
-- response to rabbitMQ task
-- cron
-* since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
-
-we define port in .env but it should be dynamic w/ a perference option.
-- mamba status makes sure you dont have conflicting ports
-- maybe we can run mamba status remotely too? it could tell us what ports are being used?
-
----
-
-realtime
-- handshake
-  - client connects
-  - server asks for JWT
-  - server uses JWT to verify (via mamaba communication syntax)
-  - server asks client for subscriptions
-  - client sends subscriptions
-  - server associates subscriptions list w/ socket client ID.
-  - server listens for all events
-    - for each event, get each users subs w/ filters, check to see if each user
-    gets updated, and update
-
-  - maybe we can integrate a restful interface to add montioring/control
-
-brahma status
-- brahma status (runs all brahma statuses)
-- brahma status resources (validate resources objects)
-- brahma status resource RESOURCE_NAME (tells u what other resources are dependencies)
-- brahma status service SERVICE_NAME (tells u what resources are dependent)
-- brahma status decorator
-- brahma status middleware
-- brahma status config
-- brahma status dependencies APP_NAME lists all dependencies for a given app
-- brahma status deploy (makes sure you have git repos defined for each server)
-- makes sure all resources have a location entry in their brahma.config.js
-- brahma stats ports  - make sure we are using unique ports.
-- have a status to log dependencies for a remote server. log pack.json
-
-brahma deploy
-- deploy config (then a series of questions is asked via command prompt)
-- deploy resources
-- deploy ...
-
-add npm package w/o restarting build
-
-create an integrations system
-- mongorules? and rabbit would be integrations.
-
-github integration
-- create repos if it does not exist
-
-should console.log what dependencies it needs running
-- rabbit broker
-- mongod
-- redis-server
-
-
-a way to generate local ssl certs via command line command
-
----
-
-mamba watch
-- runs mamba build
-- run mamba serve --dev (nodemon)
-
-
-mamba build
-- runs mamba status
-- parses obj
-- cleans .build dir - of projects that shouldn't be there.
-- adds apps to build (if need be)
-- for each app (asynchrnously):
-  - updates package.json
-  - then
-    - runs npm i (asynchronusly)
-    - updates app/services, app/resources app/middleware app/decorators app/app app/config app/utils anything in app.
-
-
-mamba serve --dev
-- calls npm run dev in each app.
-
-
-mamba watch (updates)
-- file change - updates file in .build/app/...
-- dependency change:
-  - display waiting in terminal
-  - keeps server running.
-  - updates pack.json
-  - asynchrnously calls npm i
-  - when done -> restarts nodemon programatically
-
-// const resources = new ResourceCollection();
-// resources.forEach
-// resources.get()
-// resources.get('resource.name')
-// resources.add()
-// resources.update()
-// resources.remove()
-
-before updating env vars show a review screen.
-if we are doing a refresh, let the user know that will be happening.
-
----
-
-advantages (to be featured on readme, which also contains some advantages)
-- you should be able to test remote configuations locally. e.g. test your dev build locally.
-
-
---
-
-functionality to list here and test later.
-- local npm i takes env into consideration. u do ur prod build here not on prod. make sure prod builds dont install devDependencies

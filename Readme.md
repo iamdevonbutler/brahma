@@ -53,6 +53,7 @@ Philosophy
 - as above so below (eslintrc, npmrc, ...)
 - flexibility for what you need. we are trying to enforce commonalities, standards, across our apps to make the more predictable for bug prevention.
 - code sharing (makes it super easy to share your `decorators`, `middleware`, `config`, `services`, ...)
+- modularity
 
 Explaination of folder structure
 - ./services - services return an obj that provide a "service". and im using the word service literally and vaguely. in other words, its code that does stuff. it can be anything that contributes to the functionality of a service(s)
@@ -63,11 +64,11 @@ Explaination of folder structure
 Clustering
 Brahma uses throng. Assign env var `WEB_CONCURRENCY`.
 
-Lifecycles
-- startup
-- run
-- shutdown
-* process.env.lifecycle is not available.
+Lifecycle states
+- `startup`
+- `run`
+- `shutdown`
+* process.env.lifecycle is not available to users (@todo validate peoples env).
 
 Env
 - @todo list required env.
@@ -85,3 +86,6 @@ Conventions (explain conventions used)
 Breaking from convention
 - @todo list
 - e.g. no dev dependencies.
+
+Env vs config
+- explain how to do this and the differences.
