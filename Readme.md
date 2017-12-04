@@ -89,3 +89,9 @@ Breaking from convention
 
 Env vs config
 - explain how to do this and the differences.
+
+## Potential functionality
+I encourage suggestions. What do u want to see brahma do? How should it do it?
+Does anyone care about:
+- license in app package.json
+- other package.json fields for apps.
