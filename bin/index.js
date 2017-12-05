@@ -97,6 +97,7 @@ function logArray(obj, error = false) {
   }
 };
 
+
 // Register commands w/ vorpal.
 mainPrompt
   .command('status [command]')

@@ -15,8 +15,9 @@ logdna and bunyan.
 
 main.js vs index.js
 
+status should log out everythign
 
-status command listing?
+
 
 ---
 
@@ -225,12 +226,12 @@ brahma status
 
 long todos
 
-- auto updating `brahma` cli module (1.0?)
+- https://github.com/yeoman/update-notifier
 - youtube video
 - use utils.each more.
 - tests
   - utils
-- vorpal autocompletion
+- read zmq codebase
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.
 installation should happen automatically.
