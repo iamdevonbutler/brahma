@@ -10,15 +10,6 @@ ssh into remote server. plugins for heroku? digitalocean?
 middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
 brahma status ITEM - right now not set up for that.
 
-neo {
-  main() {}
-  http() {}
-  cron() {}
-  custom() {}
-}
-
-_.each()
-
 https://github.com/mscdex/ssh2#connection-hopping
 
 ---
@@ -115,6 +106,13 @@ i think u can use tcp for remote communcation and ipc for local communication.
 doesnt seem to be a request/response pattern for the node module.
 to do ack or replys, in the message field include a replyTo address,
 and we can use either zmq or http to send a reply.
+
+neo {
+  main() {}
+  http() {}
+  cron() {}
+  custom() {}
+}
 
 ---
 
@@ -222,6 +220,9 @@ long todos
 
 - auto updating `brahma` cli module (1.0?)
 - youtube video
+- use utils.each more.
+- tests
+  - utils
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.
 installation should happen automatically.

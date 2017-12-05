@@ -2,7 +2,7 @@
 
 const vorpal = require('vorpal')();
 const path = require('path');
-const {fileExists} = require('../lib/utils');
+const {fileExists, forEach, map, reduce} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 
