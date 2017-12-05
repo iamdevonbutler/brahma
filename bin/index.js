@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-const vorpal = require('vorpal')();
+const Vorpal = require('vorpal');
 const path = require('path');
 const {fileExists, forEach, map, reduce} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 
-const loadAppsConfig = require('../lib/utils/loadAppsConfig');
-const loadSettings = require('../lib/utils/loadSettings');
-const loadVariables = require('../lib/utils/loadVariables');
-const loadEnv = require('../lib/utils/loadEnv');
+const loadAppsConfig = require('../lib/load/loadAppsConfig');
+const loadSettings = require('../lib/load/loadSettings');
+const loadVariables = require('../lib/load/loadVariables');
+const loadEnv = require('../lib/load/loadEnv');
 
 const status = require('../lib/commands/status');
 const serve = require('../lib/commands/serve');
@@ -19,6 +19,8 @@ const deploy = require('../lib/commands/deploy');
 const newProject = require('../lib/commands/new');
 const test = require('../lib/commands/test');
 const add = require('../lib/commands/add');
+
+const mainPrompt = Vorpal();
 
 const state = {};
 
@@ -60,7 +62,7 @@ state.env = loadEnv(envPath, state.apps);
 const variablesPath = path.join(process.cwd(), 'brahma.config.js');
 state.variables = loadVariables(variablesPath, state.env);
 
-// `state` live update during runtime.
+// live update `state` during runtime.
 chokidar
   .watch(path.join(process.cwd(), 'brahma.apps.js'))
   .on('change', () => {
@@ -88,7 +90,7 @@ chokidar
 // Utility functions.
 function logArray(obj, error = false) {
   if (error) {
-    console.error(obj.map(item => '-> ' + chalk.red(item)).join('\n'));
+    console.error(obj.map(item => chalk.red('-> ' + item)).join('\n'));
   }
   else {
     console.log(obj.map(item => '-> ' + item).join('\n'));
@@ -96,16 +98,17 @@ function logArray(obj, error = false) {
 };
 
 // Register commands w/ vorpal.
-vorpal
-  .command('status')
+mainPrompt
+  .command('status [command]')
+  .autocomplete(status.autocompleteOptions())
   .action(async args => {
-    var {errors, info} = await status(state)(args);
+    var {errors, info} = await status.main(state)(args);
     if (info) logArray(info);
     if (errors) logArray(errors, true);
     return errors;
   });
 
-vorpal
+mainPrompt
   .command('build')
   .option('-v, --verbose', '[optional]')
   .action(async args => {
@@ -114,13 +117,13 @@ vorpal
       ...args.options,
     };
     const startTime = Date.now();
-    var {info, errors} = await status(state)(args);
+    var {info, errors} = await status.main(state)(args);
     if (errors) {
       console.log('Status errors:');
       logArray(errors, true);
     }
     else {
-      var {info, errors} = await build(state)(args);
+      var {info, errors} = await build.main(state)(args);
       if (info) logArray(info);
       if (errors) logArray(errors, true);
       console.log(`-> Build time (${Date.now() - startTime}ms)`);
@@ -128,12 +131,10 @@ vorpal
     return errors;
   });
 
-vorpal
+mainPrompt
   .command('deploy')
   .action(async args => {
-      var {info, errors} = await deploy(state)(args);
-      return;
-    var {info, errors} = await build(state)(args);
+    var {info, errors} = await build.main(state)(args);
     if (errors) {
       console.log('Build errors:');
       logArray(errors, true);
@@ -146,10 +147,10 @@ vorpal
     return errors;
   });
 
-vorpal
+mainPrompt
   .command('serve')
   .action(async args => {
-    var {info, errors} = await build(state)(args);
+    var {info, errors} = await build.main(state)(args);
     if (errors) {
       console.log('Build errors:');
       logArray(errors, true);
@@ -162,15 +163,15 @@ vorpal
     return errors;
   });
 
-// vorpal
+// mainPrompt
 //   .command('watch')
 //   .action();
 
-// vorpal
+// mainPrompt
 //   .command('new')
 //   .action(new);
 //
-// vorpal
+// mainPrompt
 //   .command('test')
 //   .action(test);
 
@@ -179,7 +180,7 @@ vorpal
 //   .action(add);
 
 // Display vorpal in terminal.
-vorpal
+mainPrompt
   .delimiter(state.settings.delimiter)
   .show()
   .exec('help');
