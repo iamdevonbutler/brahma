@@ -21,8 +21,6 @@ _.each()
 
 https://github.com/mscdex/ssh2#connection-hopping
 
-change from WEB_CONCURRENCY to concurrency
-
 ---
 
 actions
