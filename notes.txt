@@ -1,1 +1,2 @@
-be careful w/ shelljs and it's cd command. it changes the value of process.cwd()
+https://github.com/yeoman/update-notifier
+- not using - would sacrifice consistency for users of the cli.

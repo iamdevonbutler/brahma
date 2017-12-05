@@ -1,19 +1,30 @@
-todo
+test ssh
 
-get serve working...
-build isn't building resources/middleware/...
-
-neo
-ssh into remote server. plugins for heroku? digitalocean?
 middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
 
 https://github.com/mscdex/ssh2#connection-hopping
 
-logdna and bunyan.
+presets and plugins (ok name, could be better)
+- presets are collections of plugins
+- plugins integrate into various aspects of brahma (multiple mounting points)
+- thinking of a {
+  cron: require('brahma-plugin-cron')
+}
 
-main.js vs index.js
+server.js
+- logdna and bunyan.
 
-presets and plugins
+The idea is that we dont have a ./apps dir, and that we keep everything generic
+in the way we code. our services, decorators, middleware, it's all generic.
+Services
+ - mwb a1 file (how would this work)
+
+People are going to do auth for sites, we want a modular way of using that same implemention across projects.
+
+When planning the client architecture, make sure chnages are fast.
+so if you change the name of your api server, make sure u dont need to update a million other things.
+add this to some architectural goals list in the readme.
+
 
 ---
 
@@ -21,6 +32,7 @@ actions
 
 helpers
 - @todo latestDependencies
+- plugin ecosystem, people can integrate help tasks.
 
 serve
 - @todo
@@ -50,6 +62,8 @@ testing
   - generate tests feature. generates tests for resources, ...,. if test does not yet exist.
   - list empty tests - you can keep calling generate tests as you continue to develope, eventually your will forget about some. this helps you get back to them.
   - remove tests for shit that doesnt exist (y/N prompt)
+- want ot be able to run all tests, one test, or match wildcard...so api.* all api tests
+- WILL WANT A WAY TO RUN TESTS ON SERVER - should be called automatically on update.
 
 scafold
 - like integrations, scafolding tools can be plugins. brahma-plugin-scafold
@@ -62,18 +76,21 @@ status
 
 ---
 
-cron
-- this is an integration. make sure people can roll their own shit.
-
-ratelimter
-- this is an integration. make sure people can roll their own shit.
-
-logger
-- @todo how to integrate logdna.
-
-integrations
-- @todo
-- so we have the "realtime" addon, but we could have others, so u would do "namespace/realtime" (phase II)
+plugins
+- just be sure someone can write a docker deploy plugin
+- mounting points:
+  - `helpers`
+  - `new`
+  - `deploy`
+  - logger
+  - ratelimiter
+  - database
+  - cron
+  - docs
+  - mail
+  - static asset cdn
+  - versioning?
+  - ...
 
 dependency management
 - builds (OK)
@@ -98,9 +115,6 @@ lifecycle states
 local and remote ssl
 - how we gonna do this? a way to generate local ssl certs via command line command?
 
-postdeploy
-- leave a hook so someone can write a docker integration.
-
 brahma advantages
 - to be featured on readme
 - you should be able to test remote configuations locally. e.g. test your dev build locally.
@@ -119,8 +133,13 @@ neo {
   http() {}
   cron() {}
   custom() {}
+  docs: []
 }
 idea - neo can be an architecture and a GH repo that uses its architecture. not everything needs to be its own framework.
+
+SSH commands
+- `neo status` - logs ?
+
 
 ---
 
@@ -131,6 +150,7 @@ sometimes set up hooks to deploy to webservers. lets find a way to not do this w
 these private github repos is a bit of work,
 - ci server - the server has a tests endpoint that runs our tests in a forked process, and communicates the results. why use another server - its just worse?
 - process.env uses jsmoves and can be any jsmoves type.
+- main.js > index.js
 
 make sure...
 - the apps should be able to start themselves given an brahma.app.js file and other configs.
@@ -226,9 +246,7 @@ brahma status
 
 long todos
 
-- https://github.com/yeoman/update-notifier
 - youtube video
-- use utils.each more.
 - tests
   - utils
 - read zmq codebase

@@ -92,6 +92,9 @@ Breaking from convention
 Env vs config
 - explain how to do this and the differences.
 
+List what functionality is modular and what is mandatory.
+- e.g. database is modular but message queue is baked in.
+
 ## Potential functionality
 I encourage suggestions. What do u want to see brahma do? How should it do it?
 Does anyone care about:
