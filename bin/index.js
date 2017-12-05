@@ -19,6 +19,7 @@ const deploy = require('../lib/commands/deploy');
 const newProject = require('../lib/commands/new');
 const test = require('../lib/commands/test');
 const add = require('../lib/commands/add');
+const helpers = require('../lib/commands/helpers');
 
 const mainPrompt = Vorpal();
 
@@ -169,6 +170,17 @@ mainPrompt
       var {info, errors} = await serve(state)(args);
       if (info) logArray(info);
       if (errors) logArray(errors, true);
+    }
+    return errors;
+  });
+
+mainPrompt
+  .command('helpers')
+  .action(async args => {
+    var {info, errors} = await helpers.main(state)(args);
+    if (errors) {
+      console.log('Helpers errors:');
+      logArray(errors, true);
     }
     return errors;
   });

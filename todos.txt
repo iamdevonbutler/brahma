@@ -2,8 +2,6 @@ todo
 
 get serve working...
 build isn't building resources/middleware/...
-how to load resources, middleware, config and env on the server (everything might have to be JSON)
-use latest - if u put the * or latest for a dep version - run this command and it will update ur apps file w/ the latest version.
 
 neo
 ssh into remote server. plugins for heroku? digitalocean?
@@ -15,13 +13,14 @@ logdna and bunyan.
 
 main.js vs index.js
 
-status should log out everythign
-
-
+presets and plugins
 
 ---
 
 actions
+
+helpers
+- @todo latestDependencies
 
 serve
 - @todo
@@ -121,6 +120,7 @@ neo {
   cron() {}
   custom() {}
 }
+idea - neo can be an architecture and a GH repo that uses its architecture. not everything needs to be its own framework.
 
 ---
 
