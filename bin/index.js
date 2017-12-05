@@ -107,7 +107,12 @@ vorpal
 
 vorpal
   .command('build')
+  .option('-v, --verbose', '[optional]')
   .action(async args => {
+    args.options = {
+      verbose: false,
+      ...args.options,
+    };
     const startTime = Date.now();
     var {info, errors} = await status(state)(args);
     if (errors) {
@@ -126,6 +131,8 @@ vorpal
 vorpal
   .command('deploy')
   .action(async args => {
+      var {info, errors} = await deploy(state)(args);
+      return;
     var {info, errors} = await build(state)(args);
     if (errors) {
       console.log('Build errors:');

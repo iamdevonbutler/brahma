@@ -12,6 +12,7 @@
     "chalk": "2.3.0",
     "chokidar": "1.7.0",
     "fs-extra": "4.0.2",
+    "node-ssh": "5.0.0",
     "stringify-object": "3.2.1",
     "swig": "1.4.2",
     "vorpal": "1.12.0"

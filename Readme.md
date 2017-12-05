@@ -36,6 +36,8 @@ cron and realtime? for free
 
 Documentation built in.
 
+use the word "distributed" somewhere.
+
 zero downtime deployments.
 
 use the word "opinionated" somewhere.

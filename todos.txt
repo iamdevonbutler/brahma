@@ -2,18 +2,26 @@ todo
 
 get serve working...
 build isn't building resources/middleware/...
-how to load resources, middleware, config and env on the server
+how to load resources, middleware, config and env on the server (everything might have to be JSON)
 use latest - if u put the * or latest for a dep version - run this command and it will update ur apps file w/ the latest version.
 
-ssh into remote server. plugins for heroku? digitalocean?
 neo
+ssh into remote server. plugins for heroku? digitalocean?
 middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
-list resources via staTUS and see their routes.
-postdeploy - leave a hook so someone can write a docker integration.
+brahma status ITEM - right now not set up for that.
 
-write your tests...last?
-- generate tests feature. generates tests for resources, ...,. if test does not yet exist.
-- list empty tests - you can keep calling generate tests as you continue to develope, eventually your will forget about some. this helps you get back to them.
+neo {
+  main() {}
+  http() {}
+  cron() {}
+  custom() {}
+}
+
+_.each()
+
+https://github.com/mscdex/ssh2#connection-hopping
+
+change from WEB_CONCURRENCY to concurrency
 
 ---
 
@@ -43,6 +51,10 @@ watch
 testing
 - @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
 - i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
+- write your tests...last?
+  - generate tests feature. generates tests for resources, ...,. if test does not yet exist.
+  - list empty tests - you can keep calling generate tests as you continue to develope, eventually your will forget about some. this helps you get back to them.
+  - remove tests for shit that doesnt exist (y/N prompt)
 
 scafold
 - like integrations, scafolding tools can be plugins. brahma-plugin-scafold
@@ -79,6 +91,9 @@ env
 
 package.json
 
+process.env
+- conventionally does strings only. not anymore. w/ js moves we can make it much more dynamic.
+
 lifecycle states
 - startup
 - run
@@ -86,6 +101,9 @@ lifecycle states
 
 local and remote ssl
 - how we gonna do this? a way to generate local ssl certs via command line command?
+
+postdeploy
+- leave a hook so someone can write a docker integration.
 
 brahma advantages
 - to be featured on readme
@@ -108,6 +126,7 @@ breaking from convention
 sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
 these private github repos is a bit of work,
 - ci server - the server has a tests endpoint that runs our tests in a forked process, and communicates the results. why use another server - its just worse?
+- process.env uses jsmoves and can be any jsmoves type.
 
 make sure...
 - the apps should be able to start themselves given an brahma.app.js file and other configs.
@@ -159,6 +178,7 @@ brahma status
 - brahma status (runs all brahma statuses)
 - brahma status resources (validate resources objects)
 - brahma status resource RESOURCE_NAME (tells u what other resources are dependencies)
+- brahma status routes
 - brahma status service SERVICE_NAME (tells u what resources are dependent)
 - brahma status decorator
 - brahma status middleware
@@ -203,6 +223,7 @@ brahma status
 long todos
 
 - auto updating `brahma` cli module (1.0?)
+- youtube video
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.
 installation should happen automatically.
