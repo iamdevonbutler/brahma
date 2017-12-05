@@ -16,8 +16,7 @@ logdna and bunyan.
 main.js vs index.js
 
 
-brahma status ITEM - right now not set up for that.
-STATUS AUTOCOMPLETE
+status command listing?
 
 ---
 

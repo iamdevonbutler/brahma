@@ -100,7 +100,16 @@ function logArray(obj, error = false) {
 // Register commands w/ vorpal.
 mainPrompt
   .command('status [command]')
-  .autocomplete(status.autocompleteOptions())
+  .autocomplete(status.autocompleteOptions().map(item => chalk.magenta(item)))
+  .help(async (args) => {
+    var str = '';
+    str = mainPrompt._commandHelp('status');
+    str += '\n  Command List:\n'
+    str += status.autocompleteOptions(false).map(item => `   - ${item}`).join('\n');
+    str += '\n';
+    console.log(str);
+    return mainPrompt.show(); // @note idk if there's a way to modify help w/o needing to return this.
+  })
   .action(async args => {
     var {errors, info} = await status.main(state)(args);
     if (info) logArray(info);
