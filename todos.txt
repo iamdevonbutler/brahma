@@ -12,7 +12,6 @@ presets and plugins (ok name, could be better)
 }
 
 server.js
-- logdna and bunyan.
 
 The idea is that we dont have a ./apps dir, and that we keep everything generic
 in the way we code. our services, decorators, middleware, it's all generic.
@@ -25,6 +24,54 @@ When planning the client architecture, make sure chnages are fast.
 so if you change the name of your api server, make sure u dont need to update a million other things.
 add this to some architectural goals list in the readme.
 
+neo-architecture (readme and example project)
+neo-core (a bunch of functions)
+neo (meant to be cloned like rruhe)
+
+neo status
+neo update (resources, tests, dependencies, assets, )
+neo start
+neo stop
+
+since we are doing the live update thing...
+we are required to update dependencies (files of code) and static assets (more files)
+so we are going to be writing to disk
+so the architecture needs to support this...
+
+
+
+how to update node_modules while live
+- could update pack.j -> run npm i -> clear require cache;
+- big problem. npm is super unreliable and debugging its logs on remote systems sucks.
+- so let's ship dependencies from our local to prod...
+  - post deploy file checksum - do a recursive grep of remote files and compare concatenated file strings and also add up the file size.
+  - post deploy run tests on the remote machine
+- ./neo
+  - ./dependencies
+    - ./@todo
+      - ./node_modules
+      - ./static
+  - ./lib
+- will need to set NODE_PATH='yourdir'/node_modules
+- will still need to clear the require cache
+
+how to transport and load decorators/middleware/plugins/services.
+- managing dependencies is your first issue.
+  - how do u handle a contrib decorator requiring some npm module.
+  - we need to ship the required code
+
+architecture
+- renaming a server (how does it affect the rest of your code - does the updating suck?)
+  - would be awesome if we could identify the dependencies either though static analysis or otherwise
+  - think what else do u rename and how to help w/ that.
+updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
+
+\n EOL
+
+front end app?
+
+jsmoves accept leading functions
+- tests dont accept leading objects?
 
 ---
 
