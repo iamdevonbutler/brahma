@@ -1,8 +1,23 @@
 test ssh
+https://github.com/mscdex/ssh2#connection-hopping
+
+maybe make the load config functions more generic.
+should be a way to load a file, set defaults (deep), validate? and return an obj.
+
+config
+- provide an object OR a function.
+
+thinking about changing the name from apps to config and from config to variables.
+
+
+maybe we use a pull strategy for linking dependencies.
+rather than organizing static assets, decorators middleware static ...,
+in a defined way, sacrificing peolples ability to scale at the cost of disorganization,
+we let people include shit in those top level dirs anyway they want, and we distribute them
+based on the way they are included in resources and the main and shutdown files?
+
 
 middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
-
-https://github.com/mscdex/ssh2#connection-hopping
 
 presets and plugins (ok name, could be better)
 - presets are collections of plugins
@@ -11,12 +26,13 @@ presets and plugins (ok name, could be better)
   cron: require('brahma-plugin-cron')
 }
 
-server.js
+where would u put all ur mongorules config.
+where would u put ssh credentials, api keys, passwords for shit
+- in config, maybe make it convention for plugins to put config in config w/ a prefix maybe? dont love it, name conflicts
 
-The idea is that we dont have a ./apps dir, and that we keep everything generic
-in the way we code. our services, decorators, middleware, it's all generic.
 Services
  - mwb a1 file (how would this work)
+ - i like the idea of giving people freedom in creating their folder structure. big apps gotta do weird shit sometimes.
 
 People are going to do auth for sites, we want a modular way of using that same implemention across projects.
 
@@ -29,9 +45,13 @@ neo-core (a bunch of functions)
 neo (meant to be cloned like rruhe)
 
 neo status
-neo update (resources, tests, dependencies, assets, )
+neo update (resources, tests, dependencies, assets, config, apps, )
 neo start
 neo stop
+* mention in docs that other implementations can have more methods but this is what it needs.
+
+what does a neo project look like. the local boilerplate looks much different than the
+codebase on the server. locally u have resources, ..., but u dont have that on remote.
 
 since we are doing the live update thing...
 we are required to update dependencies (files of code) and static assets (more files)
@@ -51,10 +71,16 @@ how to update node_modules while live
       - ./node_modules
       - ./static
   - ./lib
+  - ./bin
 - will need to set NODE_PATH='yourdir'/node_modules
 - will still need to clear the require cache
 
 we are forgetting database shit.
+
+versioning
+- what if we do semver, starting at 0.1.0 and each  update auto incremented the version
+and by passing flags --updateMajor --updateMinor you could do the obvious
+- where is the version stored
 
 there are just resources
 at the core of this you begin and end in resources
@@ -105,10 +131,6 @@ updating ur apps file, e.g. you enable cors, we need a way to download koa-cors 
 
 \n EOL
 
-front end app?
-
-jsmoves accept leading functions
-- tests dont accept leading objects?
 
 status
 - should regex all resources (and perhaps other stuff too) and make sure no one is using require or import statements
@@ -137,6 +159,9 @@ see if we can make a generic neo interface for message services
 might have to be baked in
 
 @todo how u gonna do app init() and shutdown() funcs.
+
+in ./config
+- make sure people can replace an apps.js file w/ an ./config/apps/index.js
 
 ---
 
@@ -206,12 +231,22 @@ plugins
   - testing?
   - ...
 
+documentation
+- we want the ability for plugins to create their own site for documentation
+or github repo at least.
+
 dependency management
 - builds (OK)
 - updates (@todo) - update live app, update running dev server (would be nice if we didnt need to do a server restart)
 
 versioning
 - i have an idea, i want to keep all apps w/ the same version. idk why. gotta flush this out.
+
+changelog
+- deployment plugin?
+
+deployment
+- if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
 
 env
 - env var validation. make sure no one is updating to invalid types (object).
@@ -228,11 +263,6 @@ lifecycle states
 
 local and remote ssl
 - how we gonna do this? a way to generate local ssl certs via command line command?
-
-brahma advantages
-- to be featured on readme
-- you should be able to test remote configuations locally. e.g. test your dev build locally.
-
 
 zmq
 xreq/xres intelligent req/res. it think it knows where to route a reply.
@@ -359,10 +389,9 @@ brahma status
 ---
 
 long todos
-
+- how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
 - youtube video
 - tests
-  - utils
 - read zmq codebase
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.

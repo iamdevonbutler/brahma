@@ -95,6 +95,13 @@ Env vs config
 List what functionality is modular and what is mandatory.
 - e.g. database is modular but message queue is baked in.
 
+Coding standards
+- Speak to the importance of keeping code generic and provide examples.
+- e.g. how to name function params and variables. make shit recursive because you never know maybe for some other shit you will need a deep version of your function. just look at my utils files and grab a few examples. this would be a good page on a gitbook.
+
+brahma advantages
+- you should be able to test remote configuations locally. e.g. test your dev build locally.
+
 ## Potential functionality
 I encourage suggestions. What do u want to see brahma do? How should it do it?
 Does anyone care about:
