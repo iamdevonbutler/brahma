@@ -39,7 +39,6 @@ so we are going to be writing to disk
 so the architecture needs to support this...
 
 
-
 how to update node_modules while live
 - could update pack.j -> run npm i -> clear require cache;
 - big problem. npm is super unreliable and debugging its logs on remote systems sucks.
@@ -54,6 +53,44 @@ how to update node_modules while live
   - ./lib
 - will need to set NODE_PATH='yourdir'/node_modules
 - will still need to clear the require cache
+
+we are forgetting database shit.
+
+there are just resources
+at the core of this you begin and end in resources
+resources do depend on some other things
+but everything eventually integrates w/ resources
+resources directly integrate w/ systems:
+  - services (libraries, email, sms, 3rd party apis, utility code, ...)
+  - decorators
+  - middleware
+  - databases
+  - static assets
+  - caches. both local and remote.
+  - other resources. both local and remote.
+  - dynamic (env) config
+  - static config
+  - logging
+  - cron
+  - realtime
+a decorator is a function
+and this function can have dependencies
+decorators need to ship w/ their resources to remote computers
+so does middleware
+middleware works very similar to decorators
+so do services but they are more often collections of files
+decorators and middleware are usually single files
+but they can be collections of files all w/ depenendcies
+all this needs to ship to remote systems.
+require() is used to include dependencies
+import is used too. often interchangeably.
+the api is similar but the differences are greater when you get more low-level im sure
+import isnt really standard yet (2017)
+services are often contrib on npm and github
+an example of a service is `axios`
+services are used by everything...resources, decorators, middleware, other services
+where as decorators are used only by resources
+middleware is used only by resources
 
 how to transport and load decorators/middleware/plugins/services.
 - managing dependencies is your first issue.
@@ -73,12 +110,40 @@ front end app?
 jsmoves accept leading functions
 - tests dont accept leading objects?
 
+status
+- should regex all resources (and perhaps other stuff too) and make sure no one is using require or import statements
+in their code.
+
+middleware
+- for http use w/ koa
+- resource middleware is a decorator
+
+there should be a way of organizing various types of middleware. the same goes for
+decorators, services, and ...
+
+decorators
+- provide good documentation here. use autolog as an example to demonstrate the gotchyas.
+- mention that their super powerful and they are the easiest way to fuck shit up.
+
+how do u write a resource that loads and sends a static asset like a jpg.
+
+think of how to manage the ecosystem of contribtued shit.
+- how to keep track of it all.
+- naming conventions (document in readme and elseware)
+- brahma-plugin-NAME
+- brahma-
+
+see if we can make a generic neo interface for message services
+might have to be baked in
+
+@todo how u gonna do app init() and shutdown() funcs.
+
 ---
 
 actions
 
 helpers
-- @todo latestDependencies
+- @todo latestDependencies - updates pack.j w/ latest versions of packages.
 - plugin ecosystem, people can integrate help tasks.
 
 serve
@@ -137,6 +202,8 @@ plugins
   - mail
   - static asset cdn
   - versioning?
+  - static analysis
+  - testing?
   - ...
 
 dependency management
