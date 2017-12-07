@@ -5,6 +5,7 @@ const path = require('path');
 const {fileExists, forEach, map, reduce} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
+const {EOL} = require('os');
 
 const loadAppsConfig = require('../lib/load/loadAppsConfig');
 const loadSettings = require('../lib/load/loadSettings');
@@ -91,10 +92,10 @@ chokidar
 // Utility functions.
 function logArray(obj, error = false) {
   if (error) {
-    console.error(obj.map(item => chalk.red('-> ' + item)).join('\n'));
+    console.error(obj.map(item => chalk.red('-> ' + item)).join(EOL));
   }
   else {
-    console.log(obj.map(item => '-> ' + item).join('\n'));
+    console.log(obj.map(item => '-> ' + item).join(EOL));
   }
 };
 
@@ -106,9 +107,9 @@ mainPrompt
   .help(async (args) => {
     var str = '';
     str = mainPrompt._commandHelp('status');
-    str += '\n  Command List:\n'
-    str += status.autocompleteOptions(false).map(item => `   - ${item}`).join('\n');
-    str += '\n';
+    str += `${EOL}  Command List:${EOL}`;
+    str += status.autocompleteOptions(false).map(item => `   - ${item}`).join(EOL);
+    str += EOL;
     console.log(str);
     return mainPrompt.show(); // @note idk if there's a way to modify help w/o needing to return this.
   })

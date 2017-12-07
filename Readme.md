@@ -102,6 +102,20 @@ Coding standards
 brahma advantages
 - you should be able to test remote configuations locally. e.g. test your dev build locally.
 
+Spread the terminology "infinity" server.
+
+I think we should say that these patterns could be the future of node and JS
+
+## Technologies
+- i think a list of all the technologies is important for people to get an understanding of what they are dealing w/.
+- @todo @end.
+
+## Emerging Themes (maybe this is just important for now and we can express this in another way)
+- Interoperable JS
+- Infinity servers
+- Omniservices
+
+
 ## Potential functionality
 I encourage suggestions. What do u want to see brahma do? How should it do it?
 Does anyone care about:

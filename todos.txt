@@ -7,15 +7,12 @@ should be a way to load a file, set defaults (deep), validate? and return an obj
 config
 - provide an object OR a function.
 
-thinking about changing the name from apps to config and from config to variables.
-
-
 maybe we use a pull strategy for linking dependencies.
 rather than organizing static assets, decorators middleware static ...,
 in a defined way, sacrificing peolples ability to scale at the cost of disorganization,
 we let people include shit in those top level dirs anyway they want, and we distribute them
 based on the way they are included in resources and the main and shutdown files?
-
+- provide conventions for how to organize folders tho
 
 middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
 
@@ -40,18 +37,6 @@ When planning the client architecture, make sure chnages are fast.
 so if you change the name of your api server, make sure u dont need to update a million other things.
 add this to some architectural goals list in the readme.
 
-neo-architecture (readme and example project)
-neo-core (a bunch of functions)
-neo (meant to be cloned like rruhe)
-
-neo status
-neo update (resources, tests, dependencies, assets, config, apps, )
-neo start
-neo stop
-* mention in docs that other implementations can have more methods but this is what it needs.
-
-what does a neo project look like. the local boilerplate looks much different than the
-codebase on the server. locally u have resources, ..., but u dont have that on remote.
 
 since we are doing the live update thing...
 we are required to update dependencies (files of code) and static assets (more files)
@@ -129,8 +114,6 @@ architecture
   - think what else do u rename and how to help w/ that.
 updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
 
-\n EOL
-
 
 status
 - should regex all resources (and perhaps other stuff too) and make sure no one is using require or import statements
@@ -162,6 +145,13 @@ might have to be baked in
 
 in ./config
 - make sure people can replace an apps.js file w/ an ./config/apps/index.js
+
+how do u dynamically require static assets and serve them inside resources.
+/static {
+  route:
+  http() {}
+}
+// `route` and `http` are made available by the koa plugin.
 
 ---
 
@@ -234,6 +224,10 @@ plugins
 documentation
 - we want the ability for plugins to create their own site for documentation
 or github repo at least.
+- plugins can implement a docs property on our resource, but docs should be more than just
+an explination of resources. how do u contribute a general comment on the architecture.
+- integrate w/ gitbook
+
 
 dependency management
 - builds (OK)
@@ -283,7 +277,6 @@ idea - neo can be an architecture and a GH repo that uses its architecture. not 
 
 SSH commands
 - `neo status` - logs ?
-
 
 ---
 
@@ -359,40 +352,13 @@ brahma status
 
 ---
 
-// const resources = new ResourceCollection();
-// resources.forEach
-// resources.get()
-// resources.get('resource.name')
-// resources.add()
-// resources.update()
-// resources.remove()
-
---
-
-/update
-/update/dependencies
-/update/resources
-
-/update/config
-/update/dbs/[dbName]/[add/remove/update/[custom]]
-/update/decorators/[decoratorName]/[add/remove/update]
-/update/docs?
-/update/integrations?
-/update/middleware/[name]/[add/remove/update]
-/update/services
-/update/utils
-/update/brahmaConfig
-
-/update/startup
-/update/shutdown
-
----
-
 long todos
 - how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
 - youtube video
 - tests
 - read zmq codebase
+- update repo keywords
+- \n -> EOL
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.
 installation should happen automatically.
