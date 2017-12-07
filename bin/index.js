@@ -111,7 +111,7 @@ mainPrompt
     str += status.autocompleteOptions(false).map(item => `   - ${item}`).join(EOL);
     str += EOL;
     console.log(str);
-    return mainPrompt.show(); // @note idk if there's a way to modify help w/o needing to return this.
+    return mainPrompt.show(); // @note idk if there's a way to modify help w/o this return.
   })
   .action(async args => {
     var {errors, info} = await status.main(state)(args);

@@ -9,6 +9,7 @@
   "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
   "license": "MIT",
   "dependencies": {
+    "neo-core": "latest",
     "chalk": "2.3.0",
     "chokidar": "1.7.0",
     "fs-extra": "4.0.2",

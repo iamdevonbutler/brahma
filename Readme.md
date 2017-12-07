@@ -106,6 +106,15 @@ Spread the terminology "infinity" server.
 
 I think we should say that these patterns could be the future of node and JS
 
+Juxtapose the opinions of neo w/ brahma.
+Show that brahma is a evolution of neo:
+- app.js -> apps.js
+- config files are the same, but they are keyed for each appName.
+- ...
+
+Demonstrate the `config` -> `status` -> `resources` pattern.
+- write config. run status. will tell u what shit ur missing. write resources. test. itterate. deploy. itterate.
+
 ## Technologies
 - i think a list of all the technologies is important for people to get an understanding of what they are dealing w/.
 - @todo @end.

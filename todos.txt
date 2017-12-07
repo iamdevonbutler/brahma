@@ -1,3 +1,28 @@
+brahma-app-smtp
+brahma-app-realtime
+brahma-app-cron
+- like plugins, you can plug in another brahma app. it will go to build, and takes config so it can be sorta dynamic.
+- @todo architecture
+
+callbacks
+- app.start
+- app.stop
+- app.update
+- custom?
+- ./callbacks or in callbacks.js export callbacks
+- each cb has a pre and post method. can pass just a function to run
+
+no presets - plugins wont be too verbose
+
+namespace contrib plugins, apps, decorators, middleware, resource
+
+resource, decorator, service, middleware, plugin, app, and all plugin mounts {
+  name: 'overridesFilename',
+  ...
+} use this interface
+
+i feel like much of the contrib shit should be straight JS objects.
+
 test ssh
 https://github.com/mscdex/ssh2#connection-hopping
 
@@ -114,6 +139,8 @@ architecture
   - think what else do u rename and how to help w/ that.
 updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
 
+to test jsmoves
+- hijack all requires and pass eberything though jsmoves. see if the app still works.
 
 status
 - should regex all resources (and perhaps other stuff too) and make sure no one is using require or import statements
@@ -125,6 +152,12 @@ middleware
 
 there should be a way of organizing various types of middleware. the same goes for
 decorators, services, and ...
+
+private
+- keep local certs there.
+- @todo helper command to generate local certs.
+- in .gitignore
+- default dirPath is ./private but on remote servers can be anywhere.
 
 decorators
 - provide good documentation here. use autolog as an example to demonstrate the gotchyas.
@@ -159,6 +192,7 @@ actions
 
 helpers
 - @todo latestDependencies - updates pack.j w/ latest versions of packages.
+- @todo looseEnds - see helpers/commands/looseEnds.
 - plugin ecosystem, people can integrate help tasks.
 
 serve
@@ -192,10 +226,14 @@ testing
 - want ot be able to run all tests, one test, or match wildcard...so api.* all api tests
 - WILL WANT A WAY TO RUN TESTS ON SERVER - should be called automatically on update.
 
-scafold
-- like integrations, scafolding tools can be plugins. brahma-plugin-scafold
-- i want to scafold - resources, ...
+new
+- pull from brahma-boilerplate repo.
 - should the tool be used to remove shit as well? remove resources? maybe this will be contrib plugin shit. a remove resource plugin should be able to do validation and make sure the removal wont break shit.
+
+add/remove
+- resource
+- plugin
+- ...
 
 status
 - @todo status makes sure you dont have conflicting ports in env.
@@ -206,20 +244,7 @@ status
 plugins
 - just be sure someone can write a docker deploy plugin
 - mounting points:
-  - `helpers`
-  - `new`
-  - `deploy`
-  - logger
-  - ratelimiter
-  - database
-  - cron
-  - docs
-  - mail
-  - static asset cdn
-  - versioning?
-  - static analysis
-  - testing?
-  - ...
+  - see /brahma-demo/config/plugins.js
 
 documentation
 - we want the ability for plugins to create their own site for documentation
@@ -359,6 +384,7 @@ long todos
 - read zmq codebase
 - update repo keywords
 - \n -> EOL
+- use neo-core fixed version - not 'latest'
 
 I want to be able to list a dependency in a resource w/o needing to isntall it.
 installation should happen automatically.
