@@ -255,6 +255,7 @@ generate
 status
 - `brahma status resources`
   - validate resources - calls validate functions defined by integrations and your local tests.
+  - use static analysis plugin to validate and prevent the use of `this`.
 - `brahma status resource RESOURCE_NAME`
   - resource has a location property. its value is a registered app. (if not, log all errors so people can fix all at once)
 - `brahma status routes`
@@ -325,23 +326,6 @@ lifecycle states
 ---
 
 app
-
-communication
-- property on $ctx (proptype property)
-- $ctx.handler
-- $ctx.call('ygl.apartments.status.change', 'method') // if in resources obj call directly, else use rabbit rpc. if method is empty, calls 'handler'
-- $ctx.get('ygl.apartments.status.change.config.field') // gets a field value.
-- we should make sure decorators dont fuck w/ these methods so maybe we can attach them last?
-set ctx to null inside objs?
-
-resource validator
-- makes sure you don't have a get property or a call prop or anything that we are using elseware
-
-Resources have the following possible entry points:
-- restful HTTP interface
-- response to zmq task
-- cron
-* since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
 
 templating
 - ejs? handlebars? pick my fav, do it, then allow the others to be built using plugins.
