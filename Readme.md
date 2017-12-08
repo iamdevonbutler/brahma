@@ -115,6 +115,16 @@ Show that brahma is a evolution of neo:
 Demonstrate the `config` -> `status` -> `resources` pattern.
 - write config. run status. will tell u what shit ur missing. write resources. test. itterate. deploy. itterate.
 
+## breaking from convention
+- no dev dependencies - intented to make remote builds faster. we are not doing remote builds.
+- one of the things we do w/ microservices is create github repos for each service and
+sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
+these private github repos is a bit of work,
+- ci server - the server has a tests endpoint that runs our tests in a forked process, and communicates the results. why use another server - its just not as consistent worse?
+- process.env uses jsmoves and can be any jsmoves type.
+- main.js > index.js
+- say something about exporting objects from files w/ a name property and a main property.
+
 ## Technologies
 - i think a list of all the technologies is important for people to get an understanding of what they are dealing w/.
 - @todo @end.
@@ -124,6 +134,11 @@ Demonstrate the `config` -> `status` -> `resources` pattern.
 - Infinity servers
 - Omniservices
 
+## Technological requirements
+- node >= 9
+- git (used by `new`)
+- openssl (used maybe by `generate` to generate local self signed cert)
+* not all of these are required, e.g. openssl.
 
 ## Potential functionality
 I encourage suggestions. What do u want to see brahma do? How should it do it?

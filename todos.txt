@@ -1,3 +1,6 @@
+commands
+- each command registers w/ vorpal in its own repo by calling the register method.
+
 .data
 - being a version store is problematic when multiple people are deploying from repos.
 - try another method. maybe ping, get last version, then deploy.
@@ -216,7 +219,7 @@ build
   - *making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
 
 deploy
-- maybe there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
+- there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
 - ideally you just run deploy, you see the manifest (whhats going to happen), you agree, and then shit happens.
   - deploy everything or select items?
     - big con w/ deploying items is you can fuck up. e.g. if u deploy a version of the config that is out of date w/ live code.
@@ -224,9 +227,11 @@ deploy
     - could mitigate this if ur resources requested config as its own prop, so we know what config items our prod code needs.
 - ci server? see "breaking from convention - ci server"
 - for selecting items to deploy: do one of those yeoman style option list things where you select what u wanna deploy (config, env,)
+- if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
 
 watch
 - @todo
+- uses fork to fork new processes and change servers.
 
 testing
 - @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
@@ -239,8 +244,7 @@ testing
 - WILL WANT A WAY TO RUN TESTS ON SERVER - should be called automatically on update.
 
 new
-- pull from brahma-boilerplate repo.
-- should the tool be used to remove shit as well? remove resources? maybe this will be contrib plugin shit. a remove resource plugin should be able to do validation and make sure the removal wont break shit.
+- git clone repos (brahma-boilerplate)
 
 generate
 - resource
@@ -249,34 +253,48 @@ generate
 - ...
 
 status
-- brahma status resources
+- `brahma status resources`
   - validate resources - calls validate functions defined by integrations and your local tests.
-- brahma status resource RESOURCE_NAME
-- brahma status routes
+- `brahma status resource RESOURCE_NAME`
+  - resource has a location property. its value is a registered app. (if not, log all errors so people can fix all at once)
+- `brahma status routes`
   - list routes by each resource - resourceName|route
-- brahma status routes ROUTE
-  - returns the resource.
-  - 2 flags. one flag to match '/users/:id' and another to match '/user/122'. --exact
-- brahma status require
+- `brahma status routes ROUTE`
+  - returns matching the resource.
+  - 2 flags. one flag to match '/users/:id' and another to match '/user/122'. --exact -e
+  - @todo how to handle routes that have multiple matches. i think koa-router (which we should
+  mention we are using in the docs) hits all matched enodpoints but i could be wrong. keep
+  in mind, the order in which we load routes is unknown to the user.
+- `brahma status require`
   - brahma status require resource.name|service.name|middleware.name|decorator.name|...
   - tells u what is requiring the resource, and what the resource is requiring.
-- brahma status service SERVICE_NAME (tells u what resources are dependent)
-- brahma status decorator
-- brahma status middleware
-- brahma status config
+- `brahma status services|decorator|middleware|utils`
+  - lists all services|decorator|middleware|utils
+  - runs tests. services are npm modules which should be tested on their own.
+  but what about custom services?
+  - maybe list what's requiring them too (redundant but OK)
+- `brahma status config`
+  - runs basic validation for each config. our validation and integration validation for their config (thinking about seprating configs from integrations, so integrations dont fuck w/ the apps.js file)
   - makes sure you dont have conflicting ports when env === settings.localEnvironment.
-- brahma status dependencies APP_NAME lists all dependencies for a given app
-- brahma status deploy (makes sure you have git repos defined for each server)
-- makes sure all resources have a location entry in their brahma.config.js
-- brahma stats ports  - make sure we are using unique ports.
-- have a status to log dependencies for a remote server. log pack.json
+- `brahma status dependencies`
+  - makes sure dependencies were installed correctly ('npm i' worked).
+  - lists dependencies and their versions (useful for debugging remote servers)
 
 ---
 
-plugins
-- just be sure someone can write a docker deploy plugin
-- mounting points:
-  - see /brahma-demo/config/plugins.js
+needed functionality
+- want a way to prefix all routes w/ api version or whatever.
+- need to know how route matches are handled when there are matching multiple endpoints.
+- debug integration? (tj's npm module)
+- sitemap?
+- a way to steam logs of remote servers like heroku allows.
+- generate local ssl certs via command line command? - maybe its a `generate` integration.
+
+aliases
+- user can alias DI. e.g. call 'environment' 'env' if they want.
+
+utils
+- @todo
 
 documentation
 - we want the ability for plugins to create their own site for documentation
@@ -285,24 +303,16 @@ or github repo at least.
 an explination of resources. how do u contribute a general comment on the architecture.
 - integrate w/ gitbook
 
-
-dependency management
-- builds (OK)
-- updates (@todo) - update live app, update running dev server (would be nice if we didnt need to do a server restart)
-
 versioning
 - i have an idea, i want to keep all apps w/ the same version. idk why. gotta flush this out.
 
-changelog
-- deployment plugin?
-
-deployment
-- if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
-
-env
-- env var validation. make sure no one is updating to invalid types (object).
+validation
+- kinda a edge case, but u should be able to write custom validators for your configs.
+e.g. environment. might want to do type checking.
+- put custom validators in lib
 
 package.json
+- package.js
 
 process.env
 - conventionally does strings only. not anymore. w/ js moves we can make it much more dynamic.
@@ -311,58 +321,6 @@ lifecycle states
 - startup
 - run
 - shutdown
-
-local and remote ssl
-- how we gonna do this? a way to generate local ssl certs via command line command?
-
-zmq
-xreq/xres intelligent req/res. it think it knows where to route a reply.
-listens and resonds to file io
-i think u can use tcp for remote communcation and ipc for local communication.
-doesnt seem to be a request/response pattern for the node module.
-to do ack or replys, in the message field include a replyTo address,
-and we can use either zmq or http to send a reply.
-
-neo {
-  main() {}
-  http() {}
-  cron() {}
-  custom() {}
-  docs: []
-}
-idea - neo can be an architecture and a GH repo that uses its architecture. not everything needs to be its own framework.
-
-SSH commands
-- `neo status` - logs ?
-
----
-
-breaking from convention
-- no dev dependencies - intented to make remote builds faster. we are not doing remote builds.
-- one of the things we do w/ microservices is create github repos for each service and
-sometimes set up hooks to deploy to webservers. lets find a way to not do this w/o tradeoffs...setting up
-these private github repos is a bit of work,
-- ci server - the server has a tests endpoint that runs our tests in a forked process, and communicates the results. why use another server - its just worse?
-- process.env uses jsmoves and can be any jsmoves type.
-- main.js > index.js
-
-make sure...
-- the apps should be able to start themselves given an brahma.app.js file and other configs.
-dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
-- keep integrations modular. abstract out modules like mongorules and make the their own github repos e.g. brahma-mongorules?, brahma-...
-- static assets w/ ID caching. make sure this is a technique people will be able to implement.
-- should the app server be its own module? build it and see what it would take
-- try to connect to servers using ssh and ur ssh key.
-
-apps to build
-- website (make it functionally eq to rails).
-
-youtube videos
-- general
-- architectural discusssion
-- demo w/ corey
-- how to build a simple website - inspired by rails
-- how to build some complex shit
 
 ---
 
@@ -388,9 +346,34 @@ Resources have the following possible entry points:
 templating
 - ejs? handlebars? pick my fav, do it, then allow the others to be built using plugins.
 
+zmq
+xreq/xres intelligent req/res. it think it knows where to route a reply.
+listens and resonds to file io
+i think u can use tcp for remote communcation and ipc for local communication.
+doesnt seem to be a request/response pattern for the node module.
+to do ack or replys, in the message field include a replyTo address,
+and we can use either zmq or http to send a reply.
+
 ---
 
-realtime
+apps to build
+- website (make it functionally eq to rails).
+- realtime
+- worker
+- cron
+- smtp (w/ templating)
+- api
+
+youtube videos
+- general
+- architectural discusssion
+- demo w/ corey
+- how to build a simple website - inspired by rails
+- how to build some complex shit
+
+---
+
+realtime app
 - handshake
   - client connects
   - server asks for JWT
@@ -402,6 +385,19 @@ realtime
     - for each event, get each users subs w/ filters, check to see if each user
     gets updated, and update
   - maybe we can integrate a restful interface to add montioring/control
+* this is a reminder to let me know that our apps need a way to communicate that is secure.
+
+---
+
+make sure...
+- the apps should be able to start themselves given an brahma.app.js file and other configs.
+dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
+- keep integrations modular. abstract out modules like mongorules and make the their own github repos e.g. brahma-mongorules?, brahma-...
+- static assets w/ ID caching. make sure this is a technique people will be able to implement.
+- should the app server be its own module? build it and see what it would take
+- try to connect to servers using ssh and ur ssh key.
+- auto install dependencies.
+- use koa1.x and koa2.x in the same project.
 
 ---
 
@@ -413,14 +409,3 @@ long todos
 - update repo keywords
 - \n -> EOL
 - use neo-core fixed version - not 'latest'
-
-I want to be able to list a dependency in a resource w/o needing to isntall it.
-installation should happen automatically.
-- 3 sources: local, github npm.
-- push endpoint to remote.
-  - reads dependencies
-  - installs dependencies to node_modules
-  - refetches dependencies by default
-  - idea - might not need to use node_modules at all if u can do this locally to each endopoint
-  - there shoudl be a naming collision check w/ dependencies. make sure we are not injecting another ygl object or something.
-- i want to be able to use koa1.x and koa2.x in the same project.
