@@ -1,3 +1,16 @@
+PATHING
+- i think u can do all abs paths...
+- 'a1': './services/a1'
+- '{a1}': './services'
+- '{callOnce}': './utils'
+- 'callOnce': './utils/callOnce'
+- u write it like this everywhere. in resources. in utils.
+
+function versions
+- what if i'm using a util function in resource A
+i want to update the function and use it in resource B
+i still want to use the old function in resource A
+
 commands
 - each command registers w/ vorpal in its own repo by calling the register method.
 
@@ -228,6 +241,7 @@ deploy
 - ci server? see "breaking from convention - ci server"
 - for selecting items to deploy: do one of those yeoman style option list things where you select what u wanna deploy (config, env,)
 - if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
+- neo servers are deployed, they register global cli commands, which we are gonna hit w/ ssh. make sure we check the path to be sure the bin exists OR run a status command and if it doesnt work say 'hey check ur path'.
 
 watch
 - @todo
@@ -242,6 +256,8 @@ testing
   - remove tests for shit that doesnt exist (y/N prompt)
 - want ot be able to run all tests, one test, or match wildcard...so api.* all api tests
 - WILL WANT A WAY TO RUN TESTS ON SERVER - should be called automatically on update.
+- --watch. test on save tdd feature - when ur writing a util or something, tell it what the name of the file is, and on save, it will run your test. `test utils.thenify --watch`
+- how to load fixtures
 
 new
 - git clone repos (brahma-boilerplate)
@@ -251,6 +267,8 @@ generate
 - plugin
 - react component - integration
 - ...
+- have a flag --all to generate an object w/ all properties. --basic --custom
+- people will want to generate resources w/ certain decorators predefined.
 
 status
 - `brahma status resources`
@@ -297,12 +315,21 @@ aliases
 utils
 - @todo
 
+settings
+- nodeVersion - not implemented, check to make sure node is of the proper version.
+- require using 'const' - if we have a `require` field in our utils and resources
+and we are importing a npm module, we are going to make it var by default, because
+people will want to mutate data and if we dont there will be errors.
+
 documentation
 - we want the ability for plugins to create their own site for documentation
 or github repo at least.
 - plugins can implement a docs property on our resource, but docs should be more than just
 an explination of resources. how do u contribute a general comment on the architecture.
 - integrate w/ gitbook
+
+DI & status (or could there be an `info` command)
+- i want the ability to identify a resource, and for each property, know what is injected.
 
 versioning
 - i have an idea, i want to keep all apps w/ the same version. idk why. gotta flush this out.
@@ -322,6 +349,11 @@ lifecycle states
 - startup
 - run
 - shutdown
+
+static analyisis
+- can check and make sure people are passing the proper number of params to functions
+either when using $ctx, or when using pre() and post({}, args)
+- { main(null, param) } // make sure u dont pass null. will error normally but the message sucks.
 
 ---
 
@@ -381,7 +413,14 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - should the app server be its own module? build it and see what it would take
 - try to connect to servers using ssh and ur ssh key.
 - auto install dependencies.
-- use koa1.x and koa2.x in the same project.
+- use koa1.x and koa2.x in the same project but on seprate apps (if a dependent is requring w/o sepcifiying a version obs return the greater version).
+- for stuff u gotta write a lot make sure then names are brief. i would use 'docs' over 'documentation' as the name for an object property.
+- if i end up using regex, wrap it in a utility function. it's just so gross.
+
+functionality looking for use cases:
+- pre() post() ???
+- different file names and object name.
+- custom brahma command.
 
 ---
 
@@ -393,3 +432,9 @@ long todos
 - update repo keywords
 - \n -> EOL
 - use neo-core fixed version - not 'latest'
+
+Upgrading w/ breaking changes.
+- when we create a 1.x if there are breaking changes do this:
+create a new GH repos called brahma-1 and bramha-0.
+bramha is the same as bramha-0.
+after a while make bramha eql to bramha-1

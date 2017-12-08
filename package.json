@@ -1,19 +1,21 @@
 {
   "name": "brahma",
   "version": "0.1.0",
-  "description": "A nodejs omniservices framework leveraging Koa, Monogodb, RabbitMQ, and Redis",
-  "main": "index.js",
+  "description": "A Nodejs omniservices framework.",
+  "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jay Pescione <jpescione@gmail.com> (https://github.com/iamdevonbutler)",
   "license": "MIT",
   "dependencies": {
-    "neo-core": "latest",
     "chalk": "2.3.0",
     "chokidar": "1.7.0",
     "fs-extra": "4.0.2",
+    "koa": "2.4.1",
+    "neo-core": "latest",
     "node-ssh": "5.0.0",
+    "semver": "5.4.1",
     "stringify-object": "3.2.1",
     "swig": "1.4.2",
     "vorpal": "1.12.0"

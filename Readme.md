@@ -101,6 +101,7 @@ Coding standards
 
 brahma advantages
 - you should be able to test remote configuations locally. e.g. test your dev build locally.
+- CI baked in. kinda. its better than CI and it solves the same problem.
 
 Spread the terminology "infinity" server.
 
@@ -145,3 +146,8 @@ I encourage suggestions. What do u want to see brahma do? How should it do it?
 Does anyone care about:
 - license in app package.json
 - other package.json fields for apps.
+
+## Todos
+- i like this cube https://www.flickr.com/photos/generated/20204505852
+- suggest that atom plugin that does ur filenames right when ur working on lots of index.js files.
+- suggest the atom grey your .gitignore folders 'build' and 'private'
