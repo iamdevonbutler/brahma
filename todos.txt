@@ -1,3 +1,14 @@
+.data
+- being a version store is problematic when multiple people are deploying from repos.
+- try another method. maybe ping, get last version, then deploy.
+
+do rails tutorials
+
+gotta think about how to do integration tests and e2e tests.
+tests are props on obj for middleware, decorators, resource ,...
+
+bin commands? what if a server wants bin commands.
+
 brahma-app-smtp
 brahma-app-realtime
 brahma-app-cron
@@ -158,6 +169,7 @@ private
 - @todo helper command to generate local certs.
 - in .gitignore
 - default dirPath is ./private but on remote servers can be anywhere.
+- @todo need a way to let users who clone the repo know what to put in here
 
 decorators
 - provide good documentation here. use autolog as an example to demonstrate the gotchyas.
@@ -230,14 +242,34 @@ new
 - pull from brahma-boilerplate repo.
 - should the tool be used to remove shit as well? remove resources? maybe this will be contrib plugin shit. a remove resource plugin should be able to do validation and make sure the removal wont break shit.
 
-add/remove
+generate
 - resource
 - plugin
+- react component - integration
 - ...
 
 status
-- @todo status makes sure you dont have conflicting ports in env.
-- no news is good news. returns nothing if shits good. document behavior in readme.
+- brahma status resources
+  - validate resources - calls validate functions defined by integrations and your local tests.
+- brahma status resource RESOURCE_NAME
+- brahma status routes
+  - list routes by each resource - resourceName|route
+- brahma status routes ROUTE
+  - returns the resource.
+  - 2 flags. one flag to match '/users/:id' and another to match '/user/122'. --exact
+- brahma status require
+  - brahma status require resource.name|service.name|middleware.name|decorator.name|...
+  - tells u what is requiring the resource, and what the resource is requiring.
+- brahma status service SERVICE_NAME (tells u what resources are dependent)
+- brahma status decorator
+- brahma status middleware
+- brahma status config
+  - makes sure you dont have conflicting ports when env === settings.localEnvironment.
+- brahma status dependencies APP_NAME lists all dependencies for a given app
+- brahma status deploy (makes sure you have git repos defined for each server)
+- makes sure all resources have a location entry in their brahma.config.js
+- brahma stats ports  - make sure we are using unique ports.
+- have a status to log dependencies for a remote server. log pack.json
 
 ---
 
@@ -322,6 +354,16 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - should the app server be its own module? build it and see what it would take
 - try to connect to servers using ssh and ur ssh key.
 
+apps to build
+- website (make it functionally eq to rails).
+
+youtube videos
+- general
+- architectural discusssion
+- demo w/ corey
+- how to build a simple website - inspired by rails
+- how to build some complex shit
+
 ---
 
 app
@@ -343,6 +385,9 @@ Resources have the following possible entry points:
 - cron
 * since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
 
+templating
+- ejs? handlebars? pick my fav, do it, then allow the others to be built using plugins.
+
 ---
 
 realtime
@@ -357,23 +402,6 @@ realtime
     - for each event, get each users subs w/ filters, check to see if each user
     gets updated, and update
   - maybe we can integrate a restful interface to add montioring/control
-
----
-
-brahma status
-- brahma status (runs all brahma statuses)
-- brahma status resources (validate resources objects)
-- brahma status resource RESOURCE_NAME (tells u what other resources are dependencies)
-- brahma status routes
-- brahma status service SERVICE_NAME (tells u what resources are dependent)
-- brahma status decorator
-- brahma status middleware
-- brahma status config
-- brahma status dependencies APP_NAME lists all dependencies for a given app
-- brahma status deploy (makes sure you have git repos defined for each server)
-- makes sure all resources have a location entry in their brahma.config.js
-- brahma stats ports  - make sure we are using unique ports.
-- have a status to log dependencies for a remote server. log pack.json
 
 ---
 
