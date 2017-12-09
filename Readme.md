@@ -116,6 +116,24 @@ Show that brahma is a evolution of neo:
 Demonstrate the `config` -> `status` -> `resources` pattern.
 - write config. run status. will tell u what shit ur missing. write resources. test. itterate. deploy. itterate.
 
+Apps consist of:
+- resources
+- config
+- assets (static)
+- dependencies
+
+## Resource types
+### Endpoint
+### Decorators
+- provide good documentation here. use autolog as an example to demonstrate the gotchyas.
+- mention that their super powerful and they are the easiest way to fuck shit up.
+### Middleware
+### Tests
+### Services
+### Utils
+- **Pure functions**
+
+
 ## breaking from convention
 - no dev dependencies - intented to make remote builds faster. we are not doing remote builds.
 - one of the things we do w/ microservices is create github repos for each service and
@@ -147,7 +165,17 @@ Does anyone care about:
 - license in app package.json
 - other package.json fields for apps.
 
+## Architectural goals
+- speed. fast local server reloads during dev (< X sec). Fast updates to remote (< X sec).
+
 ## Todos
 - i like this cube https://www.flickr.com/photos/generated/20204505852
 - suggest that atom plugin that does ur filenames right when ur working on lots of index.js files.
 - suggest the atom grey your .gitignore folders 'build' and 'private'
+
+## Feature requests
+To create a feature request, open an issue, and attach the `feature request` label.
+
+## Community
+links to all thinks Brahma.
+- [awesome brahma](@todo)

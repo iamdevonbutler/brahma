@@ -1,255 +1,39 @@
-PATHING
-- i think u can do all abs paths...
-- 'a1': './services/a1'
-- '{a1}': './services'
-- '{callOnce}': './utils'
-- 'callOnce': './utils/callOnce'
-- u write it like this everywhere. in resources. in utils.
-
-function versions
-- what if i'm using a util function in resource A
-i want to update the function and use it in resource B
-i still want to use the old function in resource A
-- should have a helper function
-
-Private
-- what if u want env to be private?
-- maybe have some deploy integration, post deploy, make it easy for users to create their private dir.
-
-Database updates.
-Database scripts. common commands that query database.
-
-integrations
-- make sure app integrations have access to all other integration hooks (i think)
-  - they should have the ability to add commands for shit like database queries?
-- i wanna see if i can do some fractal recursive architecture shit for app integrations.
-
-commands
-- each command registers w/ vorpal in its own repo by calling the register method.
-
-.data
-- being a version store is problematic when multiple people are deploying from repos.
-- try another method. maybe ping, get last version, then deploy.
-
 do rails tutorials
-
-gotta think about how to do integration tests and e2e tests.
-tests are props on obj for middleware, decorators, resource ,...
-
-bin commands? what if a server wants bin commands.
-
-brahma-app-smtp
-brahma-app-realtime
-brahma-app-cron
-- like plugins, you can plug in another brahma app. it will go to build, and takes config so it can be sorta dynamic.
-- @todo architecture
-
-callbacks
-- app.start
-- app.stop
-- app.update
-- custom?
-- ./callbacks or in callbacks.js export callbacks
-- each cb has a pre and post method. can pass just a function to run
-
-namespace contrib plugins, apps, decorators, middleware, resource
-
-resource, decorator, service, middleware, plugin, app, and all plugin mounts {
-  name: 'overridesFilename',
-  ...
-} use this interface
-
-i feel like much of the contrib shit should be straight JS objects.
 
 test ssh
 https://github.com/mscdex/ssh2#connection-hopping
 
-maybe make the load config functions more generic.
-should be a way to load a file, set defaults (deep), validate? and return an obj.
-
-config
-- provide an object OR a function.
-
-maybe we use a pull strategy for linking dependencies.
-rather than organizing static assets, decorators middleware static ...,
-in a defined way, sacrificing peolples ability to scale at the cost of disorganization,
-we let people include shit in those top level dirs anyway they want, and we distribute them
-based on the way they are included in resources and the main and shutdown files?
-- provide conventions for how to organize folders tho
-
-middleware, decorators, static, ..., should prob hav subfolders for each app - but not cuz what if u wanted /static/aa and other folders in root
-
-presets and plugins (ok name, could be better)
-- presets are collections of plugins
-- plugins integrate into various aspects of brahma (multiple mounting points)
-- thinking of a {
-  cron: require('brahma-plugin-cron')
-}
-
-where would u put all ur mongorules config.
-where would u put ssh credentials, api keys, passwords for shit
-- in config, maybe make it convention for plugins to put config in config w/ a prefix maybe? dont love it, name conflicts
-
-Services
- - mwb a1 file (how would this work)
- - i like the idea of giving people freedom in creating their folder structure. big apps gotta do weird shit sometimes.
-
-People are going to do auth for sites, we want a modular way of using that same implemention across projects.
-
-When planning the client architecture, make sure chnages are fast.
-so if you change the name of your api server, make sure u dont need to update a million other things.
-add this to some architectural goals list in the readme.
-
-
-since we are doing the live update thing...
-we are required to update dependencies (files of code) and static assets (more files)
-so we are going to be writing to disk
-so the architecture needs to support this...
-
-
-how to update node_modules while live
-- could update pack.j -> run npm i -> clear require cache;
-- big problem. npm is super unreliable and debugging its logs on remote systems sucks.
-- so let's ship dependencies from our local to prod...
-  - post deploy file checksum - do a recursive grep of remote files and compare concatenated file strings and also add up the file size.
-  - post deploy run tests on the remote machine
-- ./neo
-  - ./dependencies
-    - ./@todo
-      - ./node_modules
-      - ./static
-  - ./lib
-  - ./bin
-- will need to set NODE_PATH='yourdir'/node_modules
-- will still need to clear the require cache
-
-we are forgetting database shit.
-
-versioning
-- what if we do semver, starting at 0.1.0 and each  update auto incremented the version
-and by passing flags --updateMajor --updateMinor you could do the obvious
-- where is the version stored
-
-there are just resources
-at the core of this you begin and end in resources
-resources do depend on some other things
-but everything eventually integrates w/ resources
-resources directly integrate w/ systems:
-  - services (libraries, email, sms, 3rd party apis, utility code, ...)
-  - decorators
-  - middleware
-  - databases
-  - static assets
-  - caches. both local and remote.
-  - other resources. both local and remote.
-  - dynamic (env) config
-  - static config
-  - logging
-  - cron
-  - realtime
-a decorator is a function
-and this function can have dependencies
-decorators need to ship w/ their resources to remote computers
-so does middleware
-middleware works very similar to decorators
-so do services but they are more often collections of files
-decorators and middleware are usually single files
-but they can be collections of files all w/ depenendcies
-all this needs to ship to remote systems.
-require() is used to include dependencies
-import is used too. often interchangeably.
-the api is similar but the differences are greater when you get more low-level im sure
-import isnt really standard yet (2017)
-services are often contrib on npm and github
-an example of a service is `axios`
-services are used by everything...resources, decorators, middleware, other services
-where as decorators are used only by resources
-middleware is used only by resources
-
-how to transport and load decorators/middleware/plugins/services.
-- managing dependencies is your first issue.
-  - how do u handle a contrib decorator requiring some npm module.
-  - we need to ship the required code
-
-architecture
-- renaming a server (how does it affect the rest of your code - does the updating suck?)
-  - would be awesome if we could identify the dependencies either though static analysis or otherwise
-  - think what else do u rename and how to help w/ that.
-updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
-
-to test jsmoves
-- hijack all requires and pass eberything though jsmoves. see if the app still works.
-
-mail app
-- should have customizeable templating integration.
-- could either do it on the function level or the config level. should be able to do it on the config level.
-
-status
-- should regex all resources (and perhaps other stuff too) and make sure no one is using require or import statements
-in their code.
-
-helpers.js
-- file in config that adds helper commands to `helpers`
-
-middleware
-- for http use w/ koa
-- resource middleware is a decorator
-
-there should be a way of organizing various types of middleware. the same goes for
-decorators, services, and ...
-
-private
-- keep local certs there.
-- @todo helper command to generate local certs.
-- in .gitignore
-- default dirPath is ./private but on remote servers can be anywhere.
-- @todo need a way to let users who clone the repo know what to put in here
-
-decorators
-- provide good documentation here. use autolog as an example to demonstrate the gotchyas.
-- mention that their super powerful and they are the easiest way to fuck shit up.
-
+clean readme
+mongorules config
+templating
+bin commands? what if a server wants bin commands.
 how do u write a resource that loads and sends a static asset like a jpg.
-
-think of how to manage the ecosystem of contribtued shit.
-- how to keep track of it all.
-- naming conventions (document in readme and elseware)
-- brahma-plugin-NAME
-- brahma-
-
-see if we can make a generic neo interface for message services
-might have to be baked in
-
-@todo how u gonna do app init() and shutdown() funcs.
-
-in ./config
-- make sure people can replace an apps.js file w/ an ./config/apps/index.js
-
-how do u dynamically require static assets and serve them inside resources.
-/static {
-  route:
-  http() {}
-}
-// `route` and `http` are made available by the koa plugin.
+hooks - how to manage a bunch of hooks for a bunch of apps.
 
 ---
 
-actions
+commands
 
-helpers
+* commands register w/ vorpal by calling a `register` method, passed into their main file.
+
+`db`
+- custom database scripts.
+- @todo
+
+`helpers`
 - @todo latestDependencies - updates pack.j w/ latest versions of packages.
 - @todo looseEnds - see helpers/commands/looseEnds.
 - plugin ecosystem, people can integrate help tasks.
 
-serve
+`serve`
 - @todo
 - /endpoint to return app.js, env, status, ...?, (ssh only)
 
-build
+`build`
 - the async implementation is a hack. needs to make sure all files are written before resolving main promise.
   - *making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
 
-deploy
+`deploy`
 - there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
 - ideally you just run deploy, you see the manifest (whhats going to happen), you agree, and then shit happens.
   - deploy everything or select items?
@@ -260,12 +44,13 @@ deploy
 - for selecting items to deploy: do one of those yeoman style option list things where you select what u wanna deploy (config, env,)
 - if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
 - neo servers are deployed, they register global cli commands, which we are gonna hit w/ ssh. make sure we check the path to be sure the bin exists OR run a status command and if it doesnt work say 'hey check ur path'.
+- if dep/plugin versions are not fixed, we fix, install updated deps, run tests, then ask if the user wants to deploy. make it a rule, dont deploy non fixed versions.
 
-watch
+`watch`
 - @todo
 - uses fork to fork new processes and change servers.
 
-testing
+`testing`
 - @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
 - i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
 - write your tests...last?
@@ -276,11 +61,14 @@ testing
 - WILL WANT A WAY TO RUN TESTS ON SERVER - should be called automatically on update.
 - --watch. test on save tdd feature - when ur writing a util or something, tell it what the name of the file is, and on save, it will run your test. `test utils.thenify --watch`
 - how to load fixtures
+- tests: {unit, system}
 
-new
+`new`
 - git clone repos (brahma-boilerplate)
+- should have a command or flag to build site w/ config folders vs config files and
+folders vs files for other shit.
 
-generate
+`generate`
 - resource
 - plugin
 - react component - integration
@@ -288,7 +76,8 @@ generate
 - have a flag --all to generate an object w/ all properties. --basic --custom
 - people will want to generate resources w/ certain decorators predefined.
 
-status
+`status`
+- make sure no one is using require or import statements.
 - `brahma status resources`
   - validate resources - calls validate functions defined by integrations and your local tests.
   - use static analysis plugin to validate and prevent the use of `this`.
@@ -316,7 +105,6 @@ status
 - `brahma status dependencies`
   - makes sure dependencies were installed correctly ('npm i' worked).
   - lists dependencies and their versions (useful for debugging remote servers)
-
 ---
 
 needed functionality
@@ -327,17 +115,65 @@ needed functionality
 - a way to steam logs of remote servers like heroku allows.
 - generate local ssl certs via command line command? - maybe its a `generate` integration.
 
-aliases
-- user can alias DI. e.g. call 'environment' 'env' if they want.
+aliases?
+- user can alias DI. e.g. call 'environment' 'env' if they want????
 
-utils
-- @todo
+dependencies
+- you dont manage a centralized dependency graph?
+
+private
+- keep local certs there.
+- @todo helper command to generate local certs.
+- in .gitignore
+- default dirPath is ./private but on remote servers can be anywhere.
+- @todo need a way to let users who clone the repo know what to put in here
+- @todo what if u want env to be private?
+- maybe have some deploy integration, post deploy, make it easy for users to create their private dir.
+solves the problem of how to get private shit on remote servers.
+
+hooks (see notes why it's hooks vs callbacks)
+- app.start
+- app.stop
+- app.update
+- custom?
+- ./callbacks or in callbacks.js export callbacks
+- each cb has a pre and post method. can pass just a function to run
+
+plugins
+- make sure plugins of type "app" have access to all other plugin hooks (i think)
+  - they should have the ability to add commands for shit like database queries?
+- i wanna see if i can do some fractal recursive architecture shit for app plugins.
+
+resources
+- @neo this is a neo thing
+- include: plugins, endpoints, services, utils - it's everything.
+- all have a name field
+- resource {
+  name: '',
+  active: true,
+  ...@todo
+}
+
+Pathing
+- abs paths...
+- 'a1': './services/a1'
+- '{a1}': './services'
+- '{callOnce}': './utils'
+- 'callOnce': './utils/callOnce'
+- u write it like this everywhere. in resources. in utils.
 
 settings
 - nodeVersion - not implemented, check to make sure node is of the proper version.
 - require using 'const' - if we have a `require` field in our utils and resources
 and we are importing a npm module, we are going to make it var by default, because
 people will want to mutate data and if we dont there will be errors.
+
+contrib
+- apps, decorators, middleware, endpoints, utils (make everything contribable)
+- `brahma-${type}-${name}`
+- types = [decorator, decorators, middleware, middlewares ...]
+- namspace contrib. e.g. iamdevonbutler/decoratorName
+- @todo document naming conventions
 
 documentation
 - we want the ability for plugins to create their own site for documentation
@@ -349,16 +185,21 @@ an explination of resources. how do u contribute a general comment on the archit
 DI & status (or could there be an `info` command)
 - i want the ability to identify a resource, and for each property, know what is injected.
 
-versioning
-- i have an idea, i want to keep all apps w/ the same version. idk why. gotta flush this out.
+resource versions (endpoints, services, utils, decorators, middleware, plugins)
+- should have a helper function identify what resource has multiple versions
+and what code is requiring each version.
 
 validation
 - kinda a edge case, but u should be able to write custom validators for your configs.
 e.g. environment. might want to do type checking.
 - put custom validators in lib
 
-package.json
-- package.js
+auth
+- this is a very common problem. find a way to modularize and contribute.
+
+config files
+- package.js (u can add decription and other fields for some reason, dep versions?)
+- helpers.js (adds helper commands to `helpers`)
 
 process.env
 - conventionally does strings only. not anymore. w/ js moves we can make it much more dynamic.
@@ -372,6 +213,21 @@ static analyisis
 - can check and make sure people are passing the proper number of params to functions
 either when using $ctx, or when using pre() and post({}, args)
 - { main(null, param) } // make sure u dont pass null. will error normally but the message sucks.
+
+command queue/buffer
+- when ur downloading dependencies, users may want to take other actions, need to queue them.
+
+apps.js
+- updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
+
+Renaming shit
+- renaming a server (how does it affect the rest of your code - does the updating suck?)
+  - would be awesome if we could identify the dependencies either though static analysis or otherwise
+  - think what else do u rename and how to help w/ that.
+
+front end apps
+- I really dont want to cater to front end apps since i plan on building my own webgl webapp framework
+- headless browser testing
 
 ---
 
@@ -391,15 +247,23 @@ and we can use either zmq or http to send a reply.
 ---
 
 apps to build
+- *like plugins, you can plug in another brahma app. it will go to build, and takes config so it can be sorta dynamic.
 - website (make it functionally eq to rails).
 - realtime
 - worker
 - cron
-- smtp (w/ templating)
+- smtp
 - api
+
+smtp
+- should have customizeable templating integration.
+- could either choose templating system on the function level or the config level. should be able to do it on the config level (in general modify plugin type apps w/ config).
+
+---
 
 youtube videos
 - general
+- documentation rundown
 - architectural discusssion
 - demo w/ corey
 - how to build a simple website - inspired by rails
@@ -434,6 +298,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - use koa1.x and koa2.x in the same project but on seprate apps (if a dependent is requring w/o sepcifiying a version obs return the greater version).
 - for stuff u gotta write a lot make sure then names are brief. i would use 'docs' over 'documentation' as the name for an object property.
 - if i end up using regex, wrap it in a utility function. it's just so gross.
+- fast. local updates are fast. remote updates are fast.
 
 functionality looking for use cases:
 - pre() post() ???
@@ -450,6 +315,7 @@ long todos
 - update repo keywords
 - \n -> EOL
 - use neo-core fixed version - not 'latest'
+- "sponsors" and "backers" section on Readme (see koa)
 
 Upgrading w/ breaking changes.
 - when we create a 1.x if there are breaking changes do this:
