@@ -1,5 +1,5 @@
 <p align="center">
-  <a data-flickr-embed="true"  href="https://www.flickr.com/photos/generated/20204505852/in/photostream/lightbox/" title="Metatron&#x27;s Cube"><img src="https://farm1.staticflickr.com/426/20204505852_77469d6c4b_z.jpg" width="640" height="640" alt="Metatron&#x27;s Cube"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+  <a data-flickr-embed="true"  href="https://www.flickr.com/photos/generated/20204505852/in/photostream/lightbox/" title="Metatron&#x27;s Cube"><img src="https://farm1.staticflickr.com/426/20204505852_77469d6c4b_z.jpg" width="400" height="400" alt="Metatron&#x27;s Cube"></a>
   <p align="center">An omniservices framework</p>
 </p>
 
