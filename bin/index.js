@@ -186,22 +186,6 @@ mainPrompt
     return errors;
   });
 
-// mainPrompt
-//   .command('watch')
-//   .action();
-
-// mainPrompt
-//   .command('new')
-//   .action(new);
-//
-// mainPrompt
-//   .command('test')
-//   .action(test);
-
-//   // vorpal
-//   .command('add')
-//   .action(add);
-
 // Display vorpal in terminal.
 mainPrompt
   .delimiter(state.settings.delimiter)

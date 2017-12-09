@@ -9,6 +9,18 @@ templating
 bin commands? what if a server wants bin commands.
 how do u write a resource that loads and sends a static asset like a jpg.
 hooks - how to manage a bunch of hooks for a bunch of apps.
+custom helpers (./config/helpers.js)
+custom db commands
+
+---
+
+needed functionality
+- want a way to prefix all routes w/ api version or whatever.
+- need to know how route matches are handled when there are matching multiple endpoints.
+- debug integration? (tj's npm module)
+- sitemap?
+- a way to steam logs of remote servers like heroku allows.
+- generate local ssl certs via command line command? - maybe its a `generate` integration.
 
 ---
 
@@ -62,6 +74,7 @@ commands
 - --watch. test on save tdd feature - when ur writing a util or something, tell it what the name of the file is, and on save, it will run your test. `test utils.thenify --watch`
 - how to load fixtures
 - tests: {unit, system}
+- property name is "test" not "tests" - throw special error.
 
 `new`
 - git clone repos (brahma-boilerplate)
@@ -105,15 +118,8 @@ folders vs files for other shit.
 - `brahma status dependencies`
   - makes sure dependencies were installed correctly ('npm i' worked).
   - lists dependencies and their versions (useful for debugging remote servers)
----
 
-needed functionality
-- want a way to prefix all routes w/ api version or whatever.
-- need to know how route matches are handled when there are matching multiple endpoints.
-- debug integration? (tj's npm module)
-- sitemap?
-- a way to steam logs of remote servers like heroku allows.
-- generate local ssl certs via command line command? - maybe its a `generate` integration.
+---
 
 aliases?
 - user can alias DI. e.g. call 'environment' 'env' if they want????

@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="http://gulpjs.com">
-    <img height="300" width="300" src="https://thumbs.dreamstime.com/b/metatrons-cube-flower-life-vector-illustration-83115526.jpg">
-  </a>
+  <a data-flickr-embed="true"  href="https://www.flickr.com/photos/generated/20204505852/in/photostream/lightbox/" title="Metatron&#x27;s Cube"><img src="https://farm1.staticflickr.com/426/20204505852_77469d6c4b_z.jpg" width="640" height="640" alt="Metatron&#x27;s Cube"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
   <p align="center">An omniservices framework</p>
 </p>
 
@@ -169,7 +167,6 @@ Does anyone care about:
 - speed. fast local server reloads during dev (< X sec). Fast updates to remote (< X sec).
 
 ## Todos
-- i like this cube https://www.flickr.com/photos/generated/20204505852
 - suggest that atom plugin that does ur filenames right when ur working on lots of index.js files.
 - suggest the atom grey your .gitignore folders 'build' and 'private'
 
