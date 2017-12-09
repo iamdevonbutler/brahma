@@ -10,6 +10,19 @@ function versions
 - what if i'm using a util function in resource A
 i want to update the function and use it in resource B
 i still want to use the old function in resource A
+- should have a helper function
+
+Private
+- what if u want env to be private?
+- maybe have some deploy integration, post deploy, make it easy for users to create their private dir.
+
+Database updates.
+Database scripts. common commands that query database.
+
+integrations
+- make sure app integrations have access to all other integration hooks (i think)
+  - they should have the ability to add commands for shit like database queries?
+- i wanna see if i can do some fractal recursive architecture shit for app integrations.
 
 commands
 - each command registers w/ vorpal in its own repo by calling the register method.
@@ -38,8 +51,6 @@ callbacks
 - custom?
 - ./callbacks or in callbacks.js export callbacks
 - each cb has a pre and post method. can pass just a function to run
-
-no presets - plugins wont be too verbose
 
 namespace contrib plugins, apps, decorators, middleware, resource
 
@@ -169,9 +180,16 @@ updating ur apps file, e.g. you enable cors, we need a way to download koa-cors 
 to test jsmoves
 - hijack all requires and pass eberything though jsmoves. see if the app still works.
 
+mail app
+- should have customizeable templating integration.
+- could either do it on the function level or the config level. should be able to do it on the config level.
+
 status
 - should regex all resources (and perhaps other stuff too) and make sure no one is using require or import statements
 in their code.
+
+helpers.js
+- file in config that adds helper commands to `helpers`
 
 middleware
 - for http use w/ koa
@@ -225,7 +243,7 @@ helpers
 
 serve
 - @todo
-- /endpoint to return brahma.config.js, env, status, ...?, (ssh only)
+- /endpoint to return app.js, env, status, ...?, (ssh only)
 
 build
 - the async implementation is a hack. needs to make sure all files are written before resolving main promise.
@@ -406,7 +424,7 @@ realtime app
 ---
 
 make sure...
-- the apps should be able to start themselves given an brahma.app.js file and other configs.
+- the apps should be able to start themselves given an app.js file and other configs.
 dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
 - keep integrations modular. abstract out modules like mongorules and make the their own github repos e.g. brahma-mongorules?, brahma-...
 - static assets w/ ID caching. make sure this is a technique people will be able to implement.

@@ -37,9 +37,9 @@ if (majorVersion < 9) {
 }
 
 // Load Settings.
-const settingsPath = path.join(process.cwd(), 'brahma.settings.js');
+const settingsPath = path.join(process.cwd(), 'config/settings.js');
 if (!fileExists(settingsPath)) {
-  console.error('Add a "./brahma.settings.js" file.');
+  console.error('Add a "./config/settings.js" file.');
   return;
 }
 state.settings = loadSettings(settingsPath);
@@ -49,42 +49,42 @@ state.activeEnv = process.argv[2] || state.settings.localEnvironment;
 console.log(chalk.yellow(`Active environment: "${state.activeEnv}".`));
 
 // Load apps config.
-const configPath = path.join(process.cwd(), 'brahma.apps.js');
+const configPath = path.join(process.cwd(), 'config/apps.js');
 if (!fileExists(configPath)) {
-  console.error('Add a "./brahma.apps.js" file.');
+  console.error('Add a "./config/apps.js" file.');
   return;
 }
 state.apps = loadAppsConfig(configPath, state.env);
 
 // Load env.
-const envPath = path.join(process.cwd(), 'brahma.env.js');
+const envPath = path.join(process.cwd(), 'config/env.js');
 state.env = loadEnv(envPath, state.apps);
 
 // Load variables.
-const variablesPath = path.join(process.cwd(), 'brahma.config.js');
+const variablesPath = path.join(process.cwd(), 'config/variables.js');
 state.variables = loadVariables(variablesPath, state.env);
 
 // live update `state` during runtime.
 chokidar
-  .watch(path.join(process.cwd(), 'brahma.apps.js'))
+  .watch(path.join(process.cwd(), 'config/apps.js'))
   .on('change', () => {
     state.apps = loadAppsConfig(configPath, state.env);
   });
 
 chokidar
-  .watch(path.join(process.cwd(), 'brahma.env.js'))
+  .watch(path.join(process.cwd(), 'config/env.js'))
   .on('change', () => {
     state.env = loadEnv(envPath, state.apps);
   });
 
 chokidar
-  .watch(path.join(process.cwd(), 'brahma.settings.js'))
+  .watch(path.join(process.cwd(), 'config/settings.js'))
   .on('change', () => {
     state.settings = loadSettings(settingsPath);
   });
 
 chokidar
-  .watch(path.join(process.cwd(), 'brahma.config.js'))
+  .watch(path.join(process.cwd(), 'config/variables.js'))
   .on('change', () => {
     state.variables = loadVariables(variablesPath, state.env);
   });
