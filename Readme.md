@@ -9,9 +9,9 @@ omniservices framework
 
 A command line application - given a singular source of ambigious "resources" it creates a integrated collection of nodejs microservices.
 
-Koa isn't really a framework, it's more of a library.
+Koa isn't really a framework, it's more of a library. It wraps `req` and `res`, introduces a middleware system, and provides basic helpers to handle things like cookies and serving static assets; but it doesn't provide much frame to work w/ to be classified as a traditional framework.
 
-This is a framework, w/ the benefits of:
+Brahma is a framework, w/ the benefits of:
 - code reuse
 - common config
 - common utils
@@ -42,6 +42,10 @@ use the word "opinionated" somewhere.
 
 Terminology?
 resources are made up of ???? modules?
+
+env vs variables
+- env === dynamic config
+- variables === static config
 
 Philosophy
 - unix philosophy, do 1 thing, and decorate to do more. u want lots of little modules.

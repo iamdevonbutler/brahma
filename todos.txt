@@ -1,16 +1,51 @@
+status driven development
+- build an app by running status. be able to start w/ an empty directly, run status,
+and from the log messages build an app.
+
+maya should be abelt ot communicate w/ a runnning brahma to build server shit.
+
+vultr
+maya is the webapp framework. drop neo and roll it into brahma.
+
 do rails tutorials
 
 test ssh
 https://github.com/mscdex/ssh2#connection-hopping
+- dont think i need this anymore w/ the bin shit
 
+app.js config, nginx option - configure load balancer and asset cache.
 clean readme
 mongorules config
 templating
+api route prefix w/ version.
 bin commands? what if a server wants bin commands.
 how do u write a resource that loads and sends a static asset like a jpg.
 hooks - how to manage a bunch of hooks for a bunch of apps.
 custom helpers (./config/helpers.js)
 custom db commands
+upload more than one ssh key to server
+
+ssl
+domains.
+load balancer (nginx)
+rev proxy cache. (nginx)
+
+http://blog.bitfinex.com/tutorial/bitfinex-loves-microservices-grenache/
+https://www.youtube.com/watch?v=kR06NoSzAXY - this looks good. talks about setting up lets encrypt.
+https://github.com/iwantmyname/iwmn-js
+flightplan - talking to remote servers.
+https://www.youtube.com/watch?v=BJZZnhGtR4A&t=322s
+https://www.npmjs.com/package/vultr
+https://jream.com/blog/post/time-saving-digital-ocean-vultr-startup-script
+https://www.youtube.com/watch?v=FJrs0Ar9asY
+https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/
+
+nginx
+user nginx and node monitoring - how would they set it up. https://opbeat.com/docs/articles/get-started-with-koa/
+sample nginx configs - run helper, which uses pbcopy and console.logs "hey conf file on clipboard"
+https://www.nginx.com/blog/tuning-nginx/
+https://www.youtube.com/watch?v=3vMIIekO45k
+https://www.youtube.com/watch?v=4R_1muxKJLo
 
 ---
 
@@ -30,6 +65,7 @@ commands
 
 `db`
 - custom database scripts.
+- database backups - scheduling them and
 - @todo
 
 `helpers`
@@ -46,6 +82,9 @@ commands
   - *making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
 
 `deploy`
+- cycle server feature - command to refresh server like heroku does automatically.
+- gotta be able to add custom nginx configs.
+- upstart
 - there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
 - ideally you just run deploy, you see the manifest (whhats going to happen), you agree, and then shit happens.
   - deploy everything or select items?
@@ -57,6 +96,10 @@ commands
 - if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
 - neo servers are deployed, they register global cli commands, which we are gonna hit w/ ssh. make sure we check the path to be sure the bin exists OR run a status command and if it doesnt work say 'hey check ur path'.
 - if dep/plugin versions are not fixed, we fix, install updated deps, run tests, then ask if the user wants to deploy. make it a rule, dont deploy non fixed versions.
+- services
+  - mongo free tier - https://www.mongodb.com/cloud/atlas/lp/general
+  - redis free tier - https://redislabs.com/pricing/redis-cloud/
+  - image cdn
 
 `watch`
 - @todo
@@ -75,6 +118,7 @@ commands
 - how to load fixtures
 - tests: {unit, system}
 - property name is "test" not "tests" - throw special error.
+- how to emlutate before each? and before? and other scripts?
 
 `new`
 - git clone repos (brahma-boilerplate)
@@ -160,6 +204,10 @@ resources
   ...@todo
 }
 
+caching
+- for endpoints:
+  - cache decorators. 'lcache' 'mcache' 'redis'
+
 Pathing
 - abs paths...
 - 'a1': './services/a1'
@@ -214,6 +262,9 @@ lifecycle states
 - startup
 - run
 - shutdown
+
+terminology
+- router vs api - the api is just a router.
 
 static analyisis
 - can check and make sure people are passing the proper number of params to functions
@@ -305,6 +356,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - for stuff u gotta write a lot make sure then names are brief. i would use 'docs' over 'documentation' as the name for an object property.
 - if i end up using regex, wrap it in a utility function. it's just so gross.
 - fast. local updates are fast. remote updates are fast.
+- u can upload images from a website and throw it in S3
 
 functionality looking for use cases:
 - pre() post() ???
@@ -322,6 +374,7 @@ long todos
 - \n -> EOL
 - use neo-core fixed version - not 'latest'
 - "sponsors" and "backers" section on Readme (see koa)
+- handling video and audio streams.
 
 Upgrading w/ breaking changes.
 - when we create a 1.x if there are breaking changes do this:

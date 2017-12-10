@@ -2,10 +2,37 @@
 
 const Vorpal = require('vorpal');
 const path = require('path');
-const {fileExists, forEach, map, reduce} = require('../lib/utils');
+const {fileExists, forEach, map, reduce, logArray} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const {EOL} = require('os');
+const {loadConfig} = require('neo-core');
+
+
+// Error handling.
+process.on('unhandledRejection', console.error);
+
+// Node version check.
+const majorVersion = +process.version.slice(1).split('.')[0];
+if (majorVersion < 9) {
+  logError('Brahma requires node version >= 9.0.0');
+  return;
+}
+
+const configs = [
+  'settings',
+  'apps',
+];
+
+configs.forEach(name => {
+  const setting = loadConfig('settings', configDirPath);
+
+});
+// Load settings first - requires no dependencies.
+
+
+
+
 
 const loadAppsConfig = require('../lib/load/loadAppsConfig');
 const loadSettings = require('../lib/load/loadSettings');
@@ -26,15 +53,9 @@ const mainPrompt = Vorpal();
 
 const state = {};
 
-// Error handling.
-process.on('unhandledRejection', console.error);
 
-// Node version check.
-const majorVersion = +process.version.slice(1).split('.')[0];
-if (majorVersion < 9) {
-  console.error('Brahma requires node version >= 9.0.0');
-  return;
-}
+
+
 
 // Load Settings.
 const settingsPath = path.join(process.cwd(), 'config/settings.js');
@@ -90,14 +111,7 @@ chokidar
   });
 
 // Utility functions.
-function logArray(obj, error = false) {
-  if (error) {
-    console.error(obj.map(item => chalk.red('-> ' + item)).join(EOL));
-  }
-  else {
-    console.log(obj.map(item => '-> ' + item).join(EOL));
-  }
-};
+
 
 
 // Register commands w/ vorpal.
