@@ -180,3 +180,7 @@ To create a feature request, open an issue, and attach the `feature request` lab
 ## Community
 links to all thinks Brahma.
 - [awesome brahma](@todo)
+
+## System requirements
+- **node >= 9**
+- Brahma should work on Windows, but it's designed and tested for Mac.

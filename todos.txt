@@ -135,6 +135,7 @@ folders vs files for other shit.
 
 `status`
 - make sure no one is using require or import statements.
+- if you are using any of the http properties make sure the location has http enabled.
 - `brahma status resources`
   - validate resources - calls validate functions defined by integrations and your local tests.
   - use static analysis plugin to validate and prevent the use of `this`.
@@ -195,14 +196,19 @@ plugins
 - i wanna see if i can do some fractal recursive architecture shit for app plugins.
 
 resources
-- @neo this is a neo thing
-- include: plugins, endpoints, services, utils - it's everything.
-- all have a name field
-- resource {
-  name: '',
-  active: true,
-  ...@todo
-}
+- @see neo
+
+callbacks
+- callbacks are just functions that get called by somethign.
+the best way to create a callback is to create ./endpoints/callbacks
+
+endpoints
+- endpoints vs other resources. resources have access to other resources via DI, endpoints are special - they have can be accessed by other endpoints using the $call method.
+- organization:
+  - by app (./api, ./worker, ./...)
+  - by type (./commands - bin commands, ./callbacks - called by one or more apps, ./router - output one ore more apps)
+  - by collection (database driven design, ./employees, ./stores, ./tags)
+  - @see readme.
 
 caching
 - for endpoints:
