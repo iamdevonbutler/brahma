@@ -22,3 +22,7 @@ calling the code back is not implied - it can be anything.
 "args" vs "params"
 - i like both. probably params a bit more.
 - But JS uses "arguments" and "...args" and you rarely see "params"; so ill stay true to tradition here.
+
+"lib" vs "libraries"
+- "lib" is just so classic in node, and there's a lot of implied meaning here. So to avoid confusion
+and to avoid inheriting behavioral characteristics of "lib", we use the full name "libraries".

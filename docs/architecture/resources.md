@@ -17,6 +17,7 @@ Resource structure
 - provide conventions for how to organize folders tho. @todo reference repos.
 
 Resource properties
+- version?
 - cache?
 - name
 - type (@see resource types)

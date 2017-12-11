@@ -1,17 +1,6 @@
-status driven development
-- build an app by running status. be able to start w/ an empty directly, run status,
-and from the log messages build an app.
+do rails tutorials.
 
-
-vultr
-maya is the webapp framework. drop neo and roll it into brahma.
-
-do rails tutorials
-
-test ssh
-https://github.com/mscdex/ssh2#connection-hopping
-- dont think i need this anymore w/ the bin shit
-
+./docs
 app.js config, nginx option - configure load balancer and asset cache.
 clean readme
 mongorules config
@@ -26,8 +15,6 @@ upload more than one ssh key to server
 
 ssl
 domains.
-load balancer (nginx)
-rev proxy cache. (nginx)
 
 http://blog.bitfinex.com/tutorial/bitfinex-loves-microservices-grenache/
 https://www.youtube.com/watch?v=kR06NoSzAXY - this looks good. talks about setting up lets encrypt.
@@ -40,6 +27,8 @@ https://www.youtube.com/watch?v=FJrs0Ar9asY
 https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/
 
 nginx
+load balancer (nginx)
+rev proxy cache. (nginx)
 user nginx and node monitoring - how would they set it up. https://opbeat.com/docs/articles/get-started-with-koa/
 sample nginx configs - run helper, which uses pbcopy and console.logs "hey conf file on clipboard"
 https://www.nginx.com/blog/tuning-nginx/
@@ -105,6 +94,7 @@ commands
 - uses fork to fork new processes and change servers.
 
 `testing`
+- in ./tests, u should be able to write a test, that is used by multiple apps. in app config, pull in tests, do some wildcard path shit idk.
 - @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
 - i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
 - write your tests...last?
@@ -164,6 +154,8 @@ folders vs files for other shit.
   - lists dependencies and their versions (useful for debugging remote servers)
 
 ---
+assets
+- asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
 
 aliases?
 - user can alias DI. e.g. call 'environment' 'env' if they want????
