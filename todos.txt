@@ -2,7 +2,6 @@ status driven development
 - build an app by running status. be able to start w/ an empty directly, run status,
 and from the log messages build an app.
 
-maya should be abelt ot communicate w/ a runnning brahma to build server shit.
 
 vultr
 maya is the webapp framework. drop neo and roll it into brahma.
@@ -371,6 +370,11 @@ functionality looking for use cases:
 
 ---
 
+Maya
+- you want your routes local to your maya project, but that data is also needed by
+your API server -> maya can locally integrate w/ brahma, give it data, and brahma makes
+http route endpoints.
+
 long todos
 - how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
 - youtube video
@@ -381,6 +385,7 @@ long todos
 - use neo-core fixed version - not 'latest'
 - "sponsors" and "backers" section on Readme (see koa)
 - handling video and audio streams.
+- remove brahma-documenation repo? (if were not gonna use it)
 
 Upgrading w/ breaking changes.
 - when we create a 1.x if there are breaking changes do this:

@@ -5,7 +5,7 @@
 
 # Brahma
 
-omniservices framework
+The omniservices framework that doesn't give a fuck.
 
 A command line application - given a singular source of ambigious "resources" it creates a integrated collection of nodejs microservices.
 
@@ -118,12 +118,6 @@ Show that brahma is a evolution of neo:
 Demonstrate the `config` -> `status` -> `resources` pattern.
 - write config. run status. will tell u what shit ur missing. write resources. test. itterate. deploy. itterate.
 
-Apps consist of:
-- resources
-- config
-- assets (static)
-- dependencies
-
 ## Resource types
 ### Endpoint
 ### Decorators
@@ -169,6 +163,7 @@ Does anyone care about:
 
 ## Architectural goals
 - speed. fast local server reloads during dev (< X sec). Fast updates to remote (< X sec).
+- status driven development
 
 ## Todos
 - suggest that atom plugin that does ur filenames right when ur working on lots of index.js files.
@@ -184,3 +179,9 @@ links to all thinks Brahma.
 ## System requirements
 - **node >= 9**
 - Brahma should work on Windows, but it's designed and tested for Mac.
+
+## Support
+Support for Brahma is brought to you by the good people over at "Northrop Grumman". Imagine a world that isnt controlled by people who naively sit absent of philosophy, missing an understanding of the causal nature of systems, devoid of emotional intelligence and deterministic compassion. There is no such thing as random folks...If you really want to support Brahma - build something amazing. Build something that isn't hindered by deadlines and funding - move outside the system. Cast of the shackles of capitalism; let's fix the problems preventing us from reaching our divine purpose, and actually enjoy our time here on Earth.
+
+## Maya
+Maya is the companion project to Brahma. It's basically Brahma for front-end development. A WebGL webapp framework architecturally inspired by Brahma. At present, Maya is in need to development resources, aka some free time. To support Maya send me an email at jpescione@gmail.com.
