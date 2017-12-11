@@ -1,3 +1,9 @@
+apps have modes.
+- testing
+- running
+- updating
+- ....
+
 do rails tutorials.
 
 ./docs

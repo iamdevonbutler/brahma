@@ -21,7 +21,7 @@ module.exports = ({env, private}) => ({
 });
 
 ```
-For more on managing `private` data, view [./docs/functionality/privacy](@todo).
+For more on managing `private` data, view [/docs/functionality/privacy](@todo).
 
 ## Example
 

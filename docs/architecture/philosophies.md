@@ -1,9 +1,5 @@
 # Philosophies
 
-## Wrap it up
-$ctx
-- @todo
-
 ## As above so below
 The fractal pattern of recurring architecture and design.
 

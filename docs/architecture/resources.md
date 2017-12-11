@@ -37,11 +37,12 @@ Resource properties
 * a big thing w/ neo is extending functionality - so there can be more properties. @todo provide examples of extending a resource e.g. "cron" integration.
 
 Resource types
+- util (not dependent on other resources. "resource pure")
 - endpoint
 - test
 - decorator
 - middleware
-- service
+- library
 - static asset? (can be a resource if its an obj w/ a assetPath field)
 - callback? can have callback types like hooks.
 
