@@ -5,3 +5,4 @@
 - zero server config.
 - zero downtime downtime deployments.
 - instant deployments.
+- one repo per project regardless of #apps

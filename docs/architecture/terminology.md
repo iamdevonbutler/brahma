@@ -37,3 +37,8 @@ The property could be called "params", but JS uses "arguments" and "...args" oft
 Brahma projects have a "libraries" folder - it's where you put custom code that's required by other "resources".
 
 Calling it "lib" would be true to node tradition, but there's much implied meaning about its function. So to avoid confusion and to avoid inheriting the behavioral characteristics of "lib", we use the full name "libraries" to define where we put our custom library code. Its a specificity thing.
+
+## "router" vs "api"
+This is just about ambiguity of language. Most projects have a comparatively large server used to handle HTTP requests. It's often called the "api", and it delegates long running synchronous tasks to "worker" servers to keep the thread clear. "api" is a decent word to identify this server - after all, it is a literal interface for other applications, but the semantics of "api" are so general it can be difficult for non-code people to understand EXACTLY what you're talking about ("I thought Twitter was the Api?").
+
+When you think about it, the "api" server is just a big "router". So let's call it just that, the "router".

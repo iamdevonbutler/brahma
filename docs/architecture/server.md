@@ -9,8 +9,10 @@ apps have modes.
 - running
 - updating
 - ....
+* mode.onChange
 
 lifecycle states
 - startup
 - run
 - shutdown
+* lifecycle.onChange

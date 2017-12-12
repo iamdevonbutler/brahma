@@ -1,3 +1,9 @@
+
+mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
+
+routing
+- how to build a site that serves an index page at / it's nested in a endopoint subdirectory. basically custom pathing and organization for server websites.
+
 Post install i suggest u run brahma in the terminal. make sure the output is legit. we dont want the intall confirmation to be some brahma error message "add a config file" or some shit.
 
 Rails has a nice post update codebase terminal output (https://youtu.be/GY7Ps8fqGdc?t=593)
@@ -11,8 +17,8 @@ could ditch "https" and add "ssl". use ssl plugin to install letsenecrypt or wha
 there are use casese for not using ssl. so its gotta work both ways.
 u cant really fuck w/ ssl for quick demos and shit.
 
-do rails tutorials.
-
+requiring shit - how to require each resouce type.
+plugin interfaces
 bin? - what is the root command.
 private - getallproperties map so other users can make their own ./private, folder/file structure, private assets for servers
 ./docs
@@ -39,16 +45,6 @@ https://www.npmjs.com/package/vultr
 https://jream.com/blog/post/time-saving-digital-ocean-vultr-startup-script
 https://www.youtube.com/watch?v=FJrs0Ar9asY
 https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/
-
-nginx
-https://www.nginx.com/blog/rate-limiting-nginx/
-load balancer (nginx)
-rev proxy cache. (nginx)
-user nginx and node monitoring - how would they set it up. https://opbeat.com/docs/articles/get-started-with-koa/
-sample nginx configs - run helper, which uses pbcopy and console.logs "hey conf file on clipboard"
-https://www.nginx.com/blog/tuning-nginx/
-https://www.youtube.com/watch?v=3vMIIekO45k
-https://www.youtube.com/watch?v=4R_1muxKJLo
 
 ---
 
@@ -292,21 +288,6 @@ front end apps
 
 ---
 
-app
-
-templating
-- ejs? handlebars? pick my fav, do it, then allow the others to be built using plugins.
-
-zmq
-xreq/xres intelligent req/res. it think it knows where to route a reply.
-listens and resonds to file io
-i think u can use tcp for remote communcation and ipc for local communication.
-doesnt seem to be a request/response pattern for the node module.
-to do ack or replys, in the message field include a replyTo address,
-and we can use either zmq or http to send a reply.
-
----
-
 apps to build
 - *like plugins, you can plug in another brahma app. it will go to build, and takes config so it can be sorta dynamic.
 - website (make it functionally eq to rails).
@@ -315,10 +296,6 @@ apps to build
 - cron
 - smtp
 - api
-
-smtp
-- should have customizeable templating integration.
-- could either choose templating system on the function level or the config level. should be able to do it on the config level (in general modify plugin type apps w/ config).
 
 ---
 
@@ -329,7 +306,8 @@ youtube videos
 - demo w/ corey
 - how to build a simple website - inspired by rails
 - how to build some complex shit
-
+- * make a bunch of little videos so people can easily find out how to do shit. can also make a big video too and cut clips out from it.
+- * videos do that zoom in shit, like they zoom in on close shit. not essential.
 ---
 
 realtime app
@@ -376,8 +354,8 @@ your API server -> maya can locally integrate w/ brahma, give it data, and brahm
 http route endpoints.
 
 long todos
+- if ur writing a rails type app, and u go to a URL, and theres errors, send down one of those pretty error templates
 - how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
-- youtube video
 - tests
 - read zmq codebase
 - update repo keywords
@@ -386,6 +364,7 @@ long todos
 - "sponsors" and "backers" section on Readme (see koa)
 - handling video and audio streams.
 - remove brahma-documenation repo? (if were not gonna use it)
+- find a way to keep your code DRY across multiple brahma projects.
 
 Upgrading w/ breaking changes.
 - when we create a 1.x if there are breaking changes do this:

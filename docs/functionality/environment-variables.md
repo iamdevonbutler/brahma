@@ -1,0 +1,3 @@
+# Env
+
+2 types of config. static and dynamic. this is dynamic. meaning....
