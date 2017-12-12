@@ -75,10 +75,11 @@ config {
 }
 ```
 options:
-- `{Array} whitelist` : Allow nobody except X
-- `{Array} blacklist` : Allow everybody except X
+- `{Array} whitelist` - Allow nobody except whitelisted IPs
+- `{Array} blacklist` - Allow everybody except blacklist IPs
 - `{Number|String}` port?
 
+*Note: you can config a `blacklist` OR a `whitelist` NOT both.*
 ### secure
 ```javascript
 ({private, env}) => ({
