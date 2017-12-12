@@ -13,10 +13,6 @@ Configure your deploy.js config file:
 module.exports = ({env, private}) => ({
   router: {
     ip: 'remoteIp',
-    ssh: {
-      username: private.app('router').get('ssh.username'),
-      password: private.app('router').get('ssh.password'),
-    }
   },
 });
 

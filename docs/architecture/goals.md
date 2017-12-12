@@ -6,3 +6,4 @@
 - zero downtime downtime deployments.
 - instant deployments.
 - one repo per project regardless of #apps
+- properly opinionated - opinionated to enforce best pratices and continunity, while not copping out and enforcing structure when it compromises developer flexibility as a means to cut down on development time.

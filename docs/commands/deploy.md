@@ -25,6 +25,7 @@ Server config
 
 @todo
 
+Add ssh key to vultr. config option somewhere.
 
 thinking about ditiching flightplan and using the ssh2 module.
 

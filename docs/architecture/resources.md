@@ -1,6 +1,5 @@
 # Resources
 
-
 ## Rules
 - A resource is a ALWAYS a JS Object.
 - A resource NEVER uses `this`

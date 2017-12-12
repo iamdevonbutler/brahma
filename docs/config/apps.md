@@ -49,6 +49,7 @@ App config uses an opt-in strategy. The default "barebones" app manifests as a "
 appConfig {
   http: false,
   secure: false,
+  nginx: false,
 
   redis: false,
   lcache: false,
@@ -75,15 +76,55 @@ config {
 
 ### secure
 ```javascript
-config {
-  key: private.app('api').call('ssh.username'),
-  cert: {},
-}
+({private, env}) => ({
+  config {
+    key: private.read('certs/key.pem'),
+    cert: private.read('certs/cert.pem'),
+  }
+});
 ```
 
+### nginx
+
 ### redis
+
 ### lcache
+[LRU cache](https://github.com/isaacs/node-lru-cache) ("least recently used").
+
+```javascript
+endpoint {
+  name: 'getDogs',
+  start({lcache, $ctx}) {
+    $ctx.lcache = lcache({max: 100});
+  },
+  async main({$ctx}, type) {
+    var result = $ctx.lcache.get(type);
+    if (!result) {
+      result = await $ctx.call('dogs', 'verifyType', type);
+      $ctx.lcache.set(type, result);
+    }
+    return result;
+  }
+}
+```
+*Learn how to use `lcache` and `mcache` w/ "decorators" [here](@todo)*
+
 ### mcache
+[memory cache](https://github.com/ptarjan/node-cache)
+```javascript
+endpoint {
+  name: 'getDogs',
+  async main({$ctx, mcache}, type) {
+    var result = mcache.get(type);
+    if (!result) {
+      result = await $ctx.call('dogs', 'verifyType', type);
+      mcache.set(type, result);
+    }
+    return result;
+  }
+}
+```
+*Learn how to use `lcache` and `mcache` w/ "decorators" [here](@todo)*
 
 ### static
 @todo its called static but it lives in public?
