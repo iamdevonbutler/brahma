@@ -25,6 +25,7 @@ Server config
 
 @todo
 
+
 thinking about ditiching flightplan and using the ssh2 module.
 
 vultr package takes a snapshot. make sure that workflow exists.
@@ -55,3 +56,7 @@ ufw - ssh firewall
 // theres a lot of install shit that i should let the user configure like
 the version of node that's downlaoded and i could let them update a config but
 ide rather have them impertiavely update the server code.
+
+## Domains
+talk about how to set up ur domains. we dont do auto shit cuz u like never have to do this.
+https://github.com/iwantmyname/iwmn-js helper integration

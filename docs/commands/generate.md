@@ -2,4 +2,5 @@
 
 ## Commands
 - writeLocalCert
+- writeEslintrc
 - private?

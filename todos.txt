@@ -1,8 +1,6 @@
 
 mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
 
-routing
-- how to build a site that serves an index page at / it's nested in a endopoint subdirectory. basically custom pathing and organization for server websites.
 
 Post install i suggest u run brahma in the terminal. make sure the output is legit. we dont want the intall confirmation to be some brahma error message "add a config file" or some shit.
 
@@ -10,7 +8,6 @@ Rails has a nice post update codebase terminal output (https://youtu.be/GY7Ps8fq
 
 where to put db schema.
 
-maybe make a logs and errors file full of functions for that shit.
 
 could ditch "https" and add "ssl". use ssl plugin to install letsenecrypt or whaterver.
 
@@ -216,13 +213,17 @@ caching
 - for endpoints:
   - cache decorators. 'lcache' 'mcache' 'redis'
 
-Pathing
+Dependency Pathing
 - abs paths...
 - 'a1': './services/a1'
 - '{a1}': './services'
 - '{callOnce}': './utils'
 - 'callOnce': './utils/callOnce'
 - u write it like this everywhere. in resources. in utils.
+
+Route pathing
+- endpoint "route" property to override default
+-
 
 settings
 - nodeVersion - not implemented, check to make sure node is of the proper version.
@@ -348,6 +349,13 @@ functionality looking for use cases:
 
 ---
 
+Brahma dev todos
+
+make a logs and errors file full of functions for consistent formatting.
+
+
+---
+
 Maya
 - you want your routes local to your maya project, but that data is also needed by
 your API server -> maya can locally integrate w/ brahma, give it data, and brahma makes
@@ -356,11 +364,9 @@ http route endpoints.
 long todos
 - if ur writing a rails type app, and u go to a URL, and theres errors, send down one of those pretty error templates
 - how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
-- tests
-- read zmq codebase
+- unit tests (objAssignDeep)
 - update repo keywords
 - \n -> EOL
-- use neo-core fixed version - not 'latest'
 - "sponsors" and "backers" section on Readme (see koa)
 - handling video and audio streams.
 - remove brahma-documenation repo? (if were not gonna use it)
