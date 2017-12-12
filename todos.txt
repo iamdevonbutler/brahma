@@ -1,14 +1,14 @@
-apps have modes.
-- testing
-- running
-- updating
-- ....
+could ditch "https" and add "ssl". use ssl plugin to install letsenecrypt or whaterver.
+
+there are use casese for not using ssl. so its gotta work both ways.
+u cant really fuck w/ ssl for quick demos and shit.
 
 do rails tutorials.
 
+bin? - what is the root command.
+private - getallproperties map so other users can make their own ./private, folder/file structure, private assets for servers
 ./docs
 app.js config, nginx option - configure load balancer and asset cache.
-clean readme
 mongorules config
 templating
 api route prefix w/ version.
@@ -19,8 +19,8 @@ custom helpers (./config/helpers.js)
 custom db commands
 upload more than one ssh key to server
 
-ssl
-domains.
+ssl - letsencrypt default implementation and make sure user can do it custom.
+domains - domain plugin.
 
 http://blog.bitfinex.com/tutorial/bitfinex-loves-microservices-grenache/
 https://www.youtube.com/watch?v=kR06NoSzAXY - this looks good. talks about setting up lets encrypt.
@@ -33,6 +33,7 @@ https://www.youtube.com/watch?v=FJrs0Ar9asY
 https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/
 
 nginx
+https://www.nginx.com/blog/rate-limiting-nginx/
 load balancer (nginx)
 rev proxy cache. (nginx)
 user nginx and node monitoring - how would they set it up. https://opbeat.com/docs/articles/get-started-with-koa/
@@ -261,14 +262,6 @@ config files
 process.env
 - conventionally does strings only. not anymore. w/ js moves we can make it much more dynamic.
 
-lifecycle states
-- startup
-- run
-- shutdown
-
-terminology
-- router vs api - the api is just a router.
-
 static analyisis
 - can check and make sure people are passing the proper number of params to functions
 either when using $ctx, or when using pre() and post({}, args)
@@ -360,6 +353,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - if i end up using regex, wrap it in a utility function. it's just so gross.
 - fast. local updates are fast. remote updates are fast.
 - u can upload images from a website and throw it in S3
+- it has a good way to reuse common functionality across projects like forgot password functionality
 
 functionality looking for use cases:
 - pre() post() ???

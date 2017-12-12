@@ -149,11 +149,9 @@ these private github repos is a bit of work,
 - Infinity servers
 - Omniservices
 
-## Technological requirements
+## Development requirements
 - node >= 9
-- git (used by `new`)
-- openssl (used maybe by `generate` to generate local self signed cert)
-* not all of these are required, e.g. openssl.
+- [openssl] (used by `brahma generate localCert`)
 
 ## Potential functionality
 I encourage suggestions. What do u want to see brahma do? How should it do it?
@@ -161,13 +159,9 @@ Does anyone care about:
 - license in app package.json
 - other package.json fields for apps.
 
-## Architectural goals
-- speed. fast local server reloads during dev (< X sec). Fast updates to remote (< X sec).
-- status driven development
-
-## Todos
-- suggest that atom plugin that does ur filenames right when ur working on lots of index.js files.
-- suggest the atom grey your .gitignore folders 'build' and 'private'
+## Development suggestions
+If you are using [atom](https://github.com/atom/atom)...
+- [smart-tab-name](https://atom.io/packages/smart-tab-name) will change your tab name from "index.js" to the file's dirname.
 
 ## Feature requests
 To create a feature request, open an issue, and attach the `feature request` label.
@@ -176,12 +170,8 @@ To create a feature request, open an issue, and attach the `feature request` lab
 links to all thinks Brahma.
 - [awesome brahma](@todo)
 
-## System requirements
-- **node >= 9**
-- Brahma should work on Windows, but it's designed and tested for Mac.
-
-## Support
-Support for Brahma is brought to you by the good people over at "Northrop Grumman". Imagine a world that isnt controlled by people who naively sit absent of philosophy, missing an understanding of the causal nature of systems, devoid of emotional intelligence and deterministic compassion. There is no such thing as random folks...If you really want to support Brahma - build something amazing. Build something that isn't hindered by deadlines and funding - move outside the system. Cast of the shackles of capitalism; let's fix the problems preventing us from reaching our divine purpose, and actually enjoy our time here on Earth.
-
-## Maya
+## Support Maya
 Maya is the companion project to Brahma. It's basically Brahma for front-end development. A WebGL webapp framework architecturally inspired by Brahma. At present, Maya is in need to development resources, aka some free time. To support Maya send me an email at jpescione@gmail.com.
+
+# License
+MIT

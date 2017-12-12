@@ -34,6 +34,6 @@ You can hook into ap"Hooks" imply intentionality. When you hook into a system, y
 The property could be called "params", but JS uses "arguments" and "...args" often, and you rarely see "params"; so ill stay true to tradition here and favor "args" in Brahma.
 
 ## "lib" vs "libraries"
-Brahma projects have a "libraries" folder - it's where you put custom code that's required by other "resources". 
+Brahma projects have a "libraries" folder - it's where you put custom code that's required by other "resources".
 
-Calling it "lib" would be true to node tradition, but there's much implied meaning about its function. So to avoid confusion and to avoid inheriting the behavioral characteristics of "lib", we use the full name "libraries" to define where we put our custom library code.
+Calling it "lib" would be true to node tradition, but there's much implied meaning about its function. So to avoid confusion and to avoid inheriting the behavioral characteristics of "lib", we use the full name "libraries" to define where we put our custom library code. Its a specificity thing.

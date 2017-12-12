@@ -11,11 +11,11 @@ Configure your deploy.js config file:
 ```javascript
 // ./config/deploy.js
 module.exports = ({env, private}) => ({
-  api: {
+  router: {
     ip: 'remoteIp',
     ssh: {
-      username: private.app('api').call('ssh.username'),
-      password: private.app('api').call('ssh.password'),
+      username: private.app('router').get('ssh.username'),
+      password: private.app('router').get('ssh.password'),
     }
   },
 });
