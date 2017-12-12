@@ -30,7 +30,8 @@ module.exports = {
 // sample apps.js "folder" style config.
 const common = {};
 module.exports = ({load}) => ({
-  router: load('./config/apps/router', common), // @note Brahma only uses absolute paths.
-  worker: load('./config/apps/worker', common),
+  router: load.config('apps/router', common),
+  worker: load.config('apps/worker', common),
 });
 ```
+*More on loading dependencies [here](@todo).*

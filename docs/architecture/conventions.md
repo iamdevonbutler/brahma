@@ -14,7 +14,7 @@ module.exports = ({env, load}) => {
     ...common,
     redis: true,
     injectables: {
-      $redis: load('./libraries/redis'),
+      $redis: load.resource('libraries', 'redis', {}),
     }
   }
 };

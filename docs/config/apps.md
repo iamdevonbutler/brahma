@@ -22,7 +22,7 @@ Your "apps.js" file can export either:
 ```javascript
 const common = {};
 module.exports = {
-  appName: appConfig {
+  appName: {
     ...common,
     http: true,
   },
@@ -31,38 +31,63 @@ module.exports = {
 
 ### Exporting a Function.
 ```javascript
+//@todo list all DI args.
 module.exports = ({env, private, load}) => ({
-  appName: appConfig {
+  appName: {
     ...common,
     http: true,
   },
 });
 ```
-@todo list all injectables.
+
 
 ## App config (defaults).
+App config uses an opt-in strategy. The default "barebones" app manifests as a "worker" app, that communicates w/ other apps via a "distributed" "TCP" messaging service (can be configured to use "TLS" w/ the `secure` option).
+
+*See the docs on [privacy](@todo) to learn how the "private" injectable manages and integrates sensitive data in your configs.*
 ```
 appConfig {
   http: false,
-  ssl: false,
+  secure: false,
 
   redis: false,
   lcache: false,
   mcache: false,
 
-  static: false,
-
-  lockdown: false,
-  ratelimiter: false,
-
   database: false,
 
+  static: false,
+
   cors: false,
+  ratelimiter: false,
+
   injectables: false,
 };
 ```
 
-Talk about each property.
+### http
+```javascript
+config {
+  whitelist: [],
+  blacklist: [],
+}
+```
 
-injectables
+### secure
+```javascript
+config {
+  key: private.app('api').call('ssh.username'),
+  cert: {},
+}
+```
+
+### redis
+### lcache
+### mcache
+
+### static
+@todo its called static but it lives in public?
+
+
+### injectables
 - can override whats being in injected your not just adding.
