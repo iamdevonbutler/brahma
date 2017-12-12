@@ -4,7 +4,7 @@ The "apps.js" file is the main configuration file for Brahma.
 
 The config is used by `build` to create you applications.
 
-The config Object contains keys (app name) and values ("app config").
+The config Object contains "keys" (**app name**) and "values" (**app config**).
 
 ## Location
 Edit your "apps.js":
@@ -16,11 +16,13 @@ Your "apps.js" file can export either:
 - an `Object` (static config).
 - a `Function` that returns an `Object` (dynamic config).
 
+*See [config organization documentation](@todo)*
+
 ### Exporting an Object.
 ```javascript
 const common = {};
 module.exports = {
-  appName: {
+  appName: appConfig {
     ...common,
     http: true,
   },
@@ -30,7 +32,7 @@ module.exports = {
 ### Exporting a Function.
 ```javascript
 module.exports = ({env, private, load}) => ({
-  appName: {
+  appName: appConfig {
     ...common,
     http: true,
   },
