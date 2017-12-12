@@ -1,20 +1,12 @@
+pre/post deploy hooks - how would we implement that?
+do env.
 should we have both $ctx and ctx?
 needs a default request library. axios?
 needs default decorors - lru
 
-
 mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
 
-
-Post install i suggest u run brahma in the terminal. make sure the output is legit. we dont want the intall confirmation to be some brahma error message "add a config file" or some shit.
-
-Rails has a nice post update codebase terminal output (https://youtu.be/GY7Ps8fqGdc?t=593)
-
 where to put db schema.
-
-there are use casese for not using ssl. so its gotta work both ways.
-u cant really fuck w/ ssl for quick demos and shit.
-
 load - being used in brahma configs too. require wouldnt clear cache.
 requiring shit - how to require each resouce type.
 plugin interfaces

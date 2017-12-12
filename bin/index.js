@@ -9,6 +9,14 @@ const {EOL} = require('os');
 const {loadConfig} = require('neo-core');
 
 
+
+
+// todos.
+// run brahma outside a brahma app. make sure the message is appropiate.
+
+
+
+
 // Error handling.
 process.on('unhandledRejection', console.error);
 

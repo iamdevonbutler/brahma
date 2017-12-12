@@ -67,19 +67,23 @@ appConfig {
 ```
 
 ### http
-@todo pass
 ```javascript
-config {
-  whitelist: [],
-  blacklist: [],
-}
+({private, env}) => ({
+  config {
+    whitelist: [],
+    blacklist: [],
+    password: private.load('passwords').routerPass,
+    port: env.router.port,
+  }
+});
 ```
 options:
-- `{Array} whitelist` - Allow nobody except whitelisted IPs
-- `{Array} blacklist` - Allow everybody except blacklist IPs
-- `{Number|String}` port?
+- `whitelist [Array=null]` - Allow nobody except whitelisted IPs
+- `blacklist [Array=null]` - Allow everybody except blacklist IPs
+- `password [String=null]` - password protect app via Basic Auth.
+- `port <Number|String=3000>` - port
 
-*Note: you can config a `blacklist` OR a `whitelist` NOT both.*
+*Note: you can configure a `blacklist` OR a `whitelist` NOT both.*
 ### secure
 ```javascript
 ({private, env}) => ({
