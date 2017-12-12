@@ -29,6 +29,8 @@ vultr package takes a snapshot. make sure that workflow exists.
 
 ddos nginx.
 
+take server offline every X - see heroku docs,
+
 https://www.vultr.com/docs/securing-ssh-on-ubuntu-14-04 2014 (old)
 https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
 https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-16-04

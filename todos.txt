@@ -1,3 +1,5 @@
+maybe make a logs and errors file full of functions for that shit.
+
 could ditch "https" and add "ssl". use ssl plugin to install letsenecrypt or whaterver.
 
 there are use casese for not using ssl. so its gotta work both ways.
