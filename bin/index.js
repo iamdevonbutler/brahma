@@ -19,15 +19,15 @@ if (majorVersion < 9) {
   return;
 }
 
-const configs = [
-  'settings',
-  'apps',
-];
-
-configs.forEach(name => {
-  const setting = loadConfig('settings', configDirPath);
-
-});
+// const configs = [
+//   'settings',
+//   'apps',
+// ];
+//
+// configs.forEach(name => {
+//   const setting = loadConfig('settings', configDirPath);
+//
+// });
 // Load settings first - requires no dependencies.
 
 

@@ -1,5 +1,5 @@
 # Generate
 
 ## Commands
-- localCert
+- writeLocalCert
 - private?

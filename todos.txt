@@ -1,3 +1,9 @@
+Post install i suggest u run brahma in the terminal. make sure the output is legit. we dont want the intall confirmation to be some brahma error message "add a config file" or some shit.
+
+Rails has a nice post update codebase terminal output (https://youtu.be/GY7Ps8fqGdc?t=593)
+
+where to put db schema.
+
 maybe make a logs and errors file full of functions for that shit.
 
 could ditch "https" and add "ssl". use ssl plugin to install letsenecrypt or whaterver.
