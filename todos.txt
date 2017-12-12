@@ -1,3 +1,4 @@
+maybe for "http" config, u pass it the port? idk how we're doing env yet,
 
 mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
 
@@ -8,12 +9,10 @@ Rails has a nice post update codebase terminal output (https://youtu.be/GY7Ps8fq
 
 where to put db schema.
 
-
-could ditch "https" and add "ssl". use ssl plugin to install letsenecrypt or whaterver.
-
 there are use casese for not using ssl. so its gotta work both ways.
 u cant really fuck w/ ssl for quick demos and shit.
 
+load - being used in brahma configs too. require wouldnt clear cache.
 requiring shit - how to require each resouce type.
 plugin interfaces
 bin? - what is the root command.
@@ -30,13 +29,8 @@ custom helpers (./config/helpers.js)
 custom db commands
 upload more than one ssh key to server
 
-ssl - letsencrypt default implementation and make sure user can do it custom.
-domains - domain plugin.
-
 http://blog.bitfinex.com/tutorial/bitfinex-loves-microservices-grenache/
 https://www.youtube.com/watch?v=kR06NoSzAXY - this looks good. talks about setting up lets encrypt.
-https://github.com/iwantmyname/iwmn-js
-flightplan - talking to remote servers.
 https://www.youtube.com/watch?v=BJZZnhGtR4A&t=322s
 https://www.npmjs.com/package/vultr
 https://jream.com/blog/post/time-saving-digital-ocean-vultr-startup-script
@@ -222,8 +216,7 @@ Dependency Pathing
 - u write it like this everywhere. in resources. in utils.
 
 Route pathing
-- endpoint "route" property to override default
--
+- endpoint "route" property to override default.
 
 settings
 - nodeVersion - not implemented, check to make sure node is of the proper version.
@@ -341,6 +334,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - fast. local updates are fast. remote updates are fast.
 - u can upload images from a website and throw it in S3
 - it has a good way to reuse common functionality across projects like forgot password functionality
+- i can write have an app create a rails site and use custom routing, custom index page, custom about page.
 
 functionality looking for use cases:
 - pre() post() ???
