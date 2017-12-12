@@ -75,8 +75,8 @@ config {
 }
 ```
 options:
-- `{Array}` whitelist: Allow nobody except X
-- `{Array}` blacklist: Allow everybody except X
+- `{Array} whitelist` : Allow nobody except X
+- `{Array} blacklist` : Allow everybody except X
 - `{Number|String}` port?
 
 ### secure
