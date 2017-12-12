@@ -2,7 +2,6 @@ should we have both $ctx and ctx?
 needs a default request library. axios?
 needs default decorors - lru
 
-maybe for "http" config, u pass it the port? idk how we're doing env yet,
 
 mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
 

@@ -46,6 +46,12 @@ set that config, then u would configure both.
 Middleware
 - [brahma-middleware-essentials](@todo)
 
+Decorators
+- [brahma-decorators-essentials](@todo)
+  - mcache
+  - lcache
+  - some http interfaces?
+
 Static analysis
 - [brahma-analysis-essentials](@todo) - checks require statements and this.
 

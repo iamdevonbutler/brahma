@@ -67,12 +67,17 @@ appConfig {
 ```
 
 ### http
+@todo pass
 ```javascript
 config {
   whitelist: [],
   blacklist: [],
 }
 ```
+options:
+- `{Array}` whitelist: Allow nobody except X
+- `{Array}` blacklist: Allow everybody except X
+- `{Number|String}` port?
 
 ### secure
 ```javascript
