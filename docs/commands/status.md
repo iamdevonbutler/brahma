@@ -14,3 +14,6 @@ Brahma's architecture allows us to validate our app in its entierty prior to `bu
 
 Privacy
 - hook into status, uses static analyssi tool, check .gitignore to make sure private is included.
+
+## Commands
+- `validateProcessEnv` - ensures you access `config` via the "[config API](@todo)" 

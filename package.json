@@ -1,5 +1,5 @@
 {
-  "name": "brahma",
+  "name": "brahma-cli",
   "version": "0.1.0",
   "description": "A Nodejs omniservices framework.",
   "main": "bin/index.js",
@@ -15,6 +15,7 @@
     "koa": "2.4.1",
     "neo-core": "latest",
     "node-ssh": "5.0.0",
+    "node-vultr": "1.0.2",
     "semver": "5.4.1",
     "stringify-object": "3.2.1",
     "swig": "1.4.2",

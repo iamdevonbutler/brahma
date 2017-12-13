@@ -252,8 +252,6 @@ config files
 - package.js (u can add decription and other fields for some reason, dep versions?)
 - helpers.js (adds helper commands to `helpers`)
 
-process.env
-- conventionally does strings only. not anymore. w/ js moves we can make it much more dynamic.
 
 static analyisis
 - can check and make sure people are passing the proper number of params to functions
@@ -284,7 +282,7 @@ apps to build
 - worker
 - cron
 - smtp
-- api
+- router
 
 ---
 
@@ -293,10 +291,12 @@ youtube videos
 - documentation rundown
 - architectural discusssion
 - demo w/ corey
+- beginner screencast - very detailed?
 - how to build a simple website - inspired by rails
 - how to build some complex shit
 - * make a bunch of little videos so people can easily find out how to do shit. can also make a big video too and cut clips out from it.
 - * videos do that zoom in shit, like they zoom in on close shit. not essential.
+
 ---
 
 realtime app
@@ -342,6 +342,12 @@ Brahma dev todos
 
 make a logs and errors file full of functions for consistent formatting.
 
+---
+
+Brahma website
+
+- built w/ brahma
+- https://codepen.io/john052/pen/KzIfb?page=4
 
 ---
 
