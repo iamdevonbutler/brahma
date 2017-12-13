@@ -5,18 +5,18 @@ You configure "plugins" in your `./config/plugins.js` file.
 ## Syntax
 
 Export types:
-- "Object"
+- Object
 
 The exported Object MUST contain:
-- "keys" - `String` ["plugin" type](@todo) e.g. "command" or "decorator".
-- "values" - `Array` of `Objects`
+- keys `String` - [plugin type](@todo) e.g. "command" or "decorator".
+- values `Array` of `Objects`
 
 Each Array item MUST be an `Object` containing:
-- <name>
-- [user=null]
-- [source='npm']
-- [version='latest']
-- [options=null]
+- &lt;`name`&gt;
+- [`user`=null]
+- [`source`='npm']
+- [`version`='latest']
+- [`options`=null]
 
 ## Example
 
