@@ -1,15 +1,15 @@
 # Project Organization
 
 ```javascript
-- ./
-- ./build
-- ./config
-- ./decorators
-- ./endpoints
-- ./hooks
-- ./middleware
-- ./plugins
-- ./plugins
+
+- build/ // private
+- config/
+  - // apps.js
+- decorators/
+- endpoints/
+- hooks/
+- middleware/
+- plugins/
 
 ```
 
