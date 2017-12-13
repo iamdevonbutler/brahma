@@ -4,10 +4,10 @@ Trying to understand new stuff can be tough. So let's start high level, and esta
 terms to later apply a lower-level understanding.
 
 Brahma projects can be deconstructed into:
-- resources
-- config
-- static assets
-- dependencies
+- "resources"
+- "config"
+- "static assets"
+- "dependencies"
 
 > If you want to find the secrets of the Brahma, think in terms of `resources`, `config`, `assets`, and resource `dependencies` - Thomas Edison
 
@@ -25,7 +25,7 @@ Yeah, these are called "integration" tests by most. To me, the word integration 
 And i'm just sick of business people trying to blow smoke. So let's be to the point..."system" tests...test a live system - the collection of connected applications produced in `./build`. If you still call them integration test's I wont get mad.
 
 ## "hooks" vs "callbacks"
-You can hook into ap"Hooks" imply intentionality. When you hook into a system, you do so w/ the intent to modify/extend behavior. Brahma hooks extend the `start()`, `stop()`, `checkout()`, and `update()` behavior (see [hooks](/docs/functionality/hooks)). The word "callback" is more general - it's just code that gets called after something happens. The reason for calling the code back is not implied - it can be anything.
+You can hook into ap"Hooks" imply intentionality. When you hook into a system, you do so w/ the intent to extend / modify behavior. Brahma hooks extend the `start()`, `stop()`, `checkout()`, and `update()` behavior (see [hooks](/docs/functionality/hooks)). The word "callback" is more general - it's just code that gets called after something happens. The reason for calling the code back is not implied - it can be anything.
 
 ## "args" vs "params"
 "Resources" have an "args" property used to define information regarding a function's arguments. That information can be used in documentation, and validation.

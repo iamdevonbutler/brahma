@@ -4,7 +4,7 @@ The "apps.js" file is the main configuration file for Brahma.
 
 The config is used by `build` to create you applications.
 
-The config Object contains "keys" (**app name**) and "values" (**app config**).
+The config Object has "keys" (**app name**) with Object "values" (**app config**).
 
 ## Location
 Edit your "apps.js":

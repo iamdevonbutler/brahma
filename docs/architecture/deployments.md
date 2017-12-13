@@ -7,7 +7,12 @@ Brahma server management includes:
 ## Deployment vs Update
 
 ### Deployment
-- transfers (via "SSH") static files to remote hosts: 
+- Configures remote server:
+  -
+- Transfers (via "SSH") static files to remote hosts:
   - "server boilerplate"
   - "dependencies"
   - "static assets"
+
+### Update
+- Transfer (from memory) "resources"

@@ -9,3 +9,6 @@ Flags
 
 `serve`
 - ssh /endpoint to return app.js config, env config, status, ...?, (ssh only)
+
+## "--watch" mode
+installs dependencies automatically

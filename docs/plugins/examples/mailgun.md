@@ -1,4 +1,4 @@
-## SMTP plugin
+# Plugin `brahma-app-mailgun`
 
 
 explain integration process:

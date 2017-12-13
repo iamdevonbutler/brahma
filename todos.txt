@@ -53,6 +53,12 @@ commands
 
 plugins
 - docs - "integration" or "config"?
+- should there be a generic way to create a custom plugin - one that doesnt have a type? hopefully we covered everything.
+- brahma-command-git
+- make sure plugins of type "app" have access to all other plugin hooks (i think)
+  - they should have the ability to add commands for shit like database queries?
+- i wanna see if i can do some fractal recursive architecture shit for app plugins.
+- plugin updates? should we install a new version, run tests, install next plugin, tests, itteate? maybe new plugin version have update instructions. that could be a feature of resources, some update integration functionality.
 
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
@@ -80,11 +86,6 @@ hooks (see notes why it's hooks vs callbacks)
 - custom?
 - ./callbacks or in callbacks.js export callbacks
 - each cb has a pre and post method. can pass just a function to run
-
-plugins
-- make sure plugins of type "app" have access to all other plugin hooks (i think)
-  - they should have the ability to add commands for shit like database queries?
-- i wanna see if i can do some fractal recursive architecture shit for app plugins.
 
 resources
 - @see neo

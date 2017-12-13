@@ -15,6 +15,7 @@
   - [Projects](@todo)
   - [Config](@todo)
   - [Dependencies](@todo)
+  - [Plugins](@todo)
   - [Resources](@todo)
   - [Interoperable-JS](@todo)
   - [Messaging](@todo)
