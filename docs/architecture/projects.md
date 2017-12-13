@@ -15,6 +15,7 @@
 - ./middleware
 - ./plugins
 - ./libraries
+- ./merge
 - ./private
 - ./static
 - ./templates
@@ -29,9 +30,9 @@
 ## ./hooks
 ## ./middleware
 ## ./libraries
+## ./merge
 ## ./private
 ## ./static
 ## ./templates
 ## ./tests
-
-## Adding an app
+For [system tests](@todo). [Unit testing](@todo) is encapsulated w/i a "resource".

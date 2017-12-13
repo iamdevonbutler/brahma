@@ -5,7 +5,10 @@ Plugins can be very powerful, so be careful when integrating them into your proj
 Here is a list of core "plugins" created and supported by Brahma:
 
 ## Library
-- [brahma-library-axios](@todo)
+- [brahma-library-request](@todo)
+
+Dependencies
+- axios
 
 ## Database
 - [brahma-database-mongodb](@todo)

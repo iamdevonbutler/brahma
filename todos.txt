@@ -3,6 +3,7 @@ API
   - load.private()
   - load.resource()
   - load.config()
+  - load.merge(path, {data})
 - readStream
 - read
   - read.static();
@@ -18,12 +19,6 @@ Convention
 
 ---
 
-nginx config overrides.
-plugins - can they be a resource w/ app plugins which may include shit that are resources.
-do env.
-pre/post deploy hooks - how would we implement that?
-should we have both $ctx and ctx?
-needs a default request library. axios?
 needs default decorators - lru
 
 mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
@@ -63,11 +58,19 @@ needed functionality
 - sitemap?
 - a way to steam logs of remote servers like heroku allows.
 - generate local ssl certs via command line command? - maybe its a `generate` integration.
+- reading deploy output. u could be deploying 10 apps at a time, buffer the logs, and only show one app at a time.
 
 ---
 
 commands
 - register w/ vorpal by calling a `register` method, passed into their main file.
+
+---
+
+cli (endpoint method)
+- ssh calls ~/brahma/appName/bin/cli.js
+- cli.js uses phone.local (ipc unix socket) to call resource endpoint lisitener (listen via decorator implementation when `cli` property is configured)
+- how would this test locally?
 
 ---
 
