@@ -35,18 +35,20 @@ Simple "flat" key-value store.
 
 Useful to store static (non changing) data such as API Keys.
 
+Grouped per app.
+
 All types allowed.
 
 Methods:
-- `config.variables.get(key)`;
+- `variables.get(key)`;
 
 ```javascript
 endpoint {
   require: {
     '{GoogleApi}': './libraries/google',
   },
-  start({$ctx, config, GoogleApi}) {
-    var id = config.variables.get('google.api.id');
+  start({$ctx, variables, GoogleApi}) {
+    var id = variables.get('google.api.id');
     $ctx.google = new GoogleApi(id);
   }
 }
@@ -59,6 +61,8 @@ Simple "flat" key-value store.
 Useful to store dynamic data that changes relative to its environment.
 
 All types allowed.
+
+Grouped per app.
 
 Methods
 - `config.env.get(key)`

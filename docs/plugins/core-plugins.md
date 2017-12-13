@@ -1,10 +1,8 @@
-# Recommended plugins
+# Core plugins
 
 Plugins can be very powerful, so be careful when integrating them into your project. You should know how they work - so check out the code and make sure they're not complete garbage.
 
 Here is a list of core "plugins" created and supported by Brahma:
-
-*List organized by [plugin type](@todo)*
 
 ## Library
 - [brahma-library-axios](@todo)

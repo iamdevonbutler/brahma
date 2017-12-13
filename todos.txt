@@ -1,3 +1,23 @@
+API
+- load
+  - load.private()
+  - load.resource()
+  - load.config()
+- readStream
+- read
+  - read.static();
+  - read.private('', true);
+- env
+  - env.get()
+  - env.set()
+- variables
+  - variables.get()
+
+Convention
+- all reads via read are async?
+
+---
+
 nginx config overrides.
 plugins - can they be a resource w/ app plugins which may include shit that are resources.
 do env.
@@ -47,8 +67,7 @@ needed functionality
 ---
 
 commands
-
-* commands register w/ vorpal by calling a `register` method, passed into their main file.
+- register w/ vorpal by calling a `register` method, passed into their main file.
 
 ---
 
@@ -63,22 +82,24 @@ plugins
 - [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config.
 - for each recomended plugin, do an example in ./docs/plugins/examples/XXX and reference the example on the recomended plugins page.
 
+---
+
+---
+
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
 
 aliases?
-- user can alias DI. e.g. call 'environment' 'env' if they want????
+- can't aliash injectables. want projects to be consistent.
+- can't alias dirnames in settings config.
 
 dependencies
 - you dont manage a centralized dependency graph?
 
 private
-- keep local certs there.
-- @todo helper command to generate local certs.
 - in .gitignore
-- default dirPath is ./private but on remote servers can be anywhere.
+- explain how to integrate private data w/ env.
 - @todo need a way to let users who clone the repo know what to put in here
-- @todo what if u want env to be private?
 - maybe have some deploy integration, post deploy, make it easy for users to create their private dir.
 solves the problem of how to get private shit on remote servers.
 
@@ -89,13 +110,6 @@ hooks (see notes why it's hooks vs callbacks)
 - custom?
 - ./callbacks or in callbacks.js export callbacks
 - each cb has a pre and post method. can pass just a function to run
-
-resources
-- @see neo
-
-callbacks
-- callbacks are just functions that get called by somethign.
-the best way to create a callback is to create ./endpoints/callbacks
 
 endpoints
 - endpoints vs other resources. resources have access to other resources via DI, endpoints are special - they have can be accessed by other endpoints using the $call method.
@@ -157,7 +171,7 @@ auth
 
 config files
 - package.js (u can add decription and other fields for some reason, dep versions?)
-- helpers.js (adds helper commands to `helpers`)
+- helpers.js (adds helper commands to `helpers`) OR PUT IT IN PLUGINS
 
 
 static analyisis
