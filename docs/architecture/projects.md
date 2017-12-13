@@ -1,6 +1,6 @@
 # Project Organization
 
-```javascript
+```
 
 - build/ // private
 - config/
