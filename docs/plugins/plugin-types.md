@@ -1,5 +1,9 @@
 ## Plugin types
 
+Plugins are segmented into various "types", with each "type" performing a different function.
+
+Plugin "types" include:
+
 - `App`
 - `Build`
 - `Database`
@@ -9,8 +13,7 @@
 - `Decorator`
 - `Library`
 - `Template`
-- `Template`
-- `Helpers`
+- `Helper`
 - `Boilerplate`
 - `Generate`
 - `Logging`

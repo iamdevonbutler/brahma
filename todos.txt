@@ -4,7 +4,7 @@ do env.
 pre/post deploy hooks - how would we implement that?
 should we have both $ctx and ctx?
 needs a default request library. axios?
-needs default decorors - lru
+needs default decorators - lru
 
 mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
 
@@ -61,7 +61,7 @@ plugins
 - i wanna see if i can do some fractal recursive architecture shit for app plugins.
 - plugin updates? should we install a new version, run tests, install next plugin, tests, itteate? maybe new plugin version have update instructions. that could be a feature of resources, some update integration functionality.
 - [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config.
-
+- for each recomended plugin, do an example in ./docs/plugins/examples/XXX and reference the example on the recomended plugins page.
 
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
@@ -206,22 +206,6 @@ youtube videos
 
 ---
 
-realtime app
-- handshake
-  - client connects
-  - server asks for JWT
-  - server uses JWT to verify (via mamaba communication syntax)
-  - server asks client for subscriptions
-  - client sends subscriptions
-  - server associates subscriptions list w/ socket client ID.
-  - server listens for all events
-    - for each event, get each users subs w/ filters, check to see if each user
-    gets updated, and update
-  - maybe we can integrate a restful interface to add montioring/control
-* this is a reminder to let me know that our apps need a way to communicate that is secure.
-
----
-
 make sure...
 - the apps should be able to start themselves given an app.js file and other configs.
 dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
@@ -237,6 +221,8 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - u can upload images from a website and throw it in S3
 - it has a good way to reuse common functionality across projects like forgot password functionality
 - i can write have an app create a rails site and use custom routing, custom index page, custom about page.
+
+---
 
 functionality looking for use cases:
 - pre() post() ???

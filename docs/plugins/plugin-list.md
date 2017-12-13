@@ -1,6 +1,6 @@
 # Plugin list
 
-Ordered by "plugin" [type](@todo ./types):
+Ordered by [plugin type](@todo ./types):
 
 ## App
 ## Database
