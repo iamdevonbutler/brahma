@@ -33,7 +33,7 @@ Status will return a list of todo items - mostly config. Update your config file
 
 Run brahma `serve`:
 ```
-$brahma serve [--watch]
+$brahma serve --watch
 ```
 `serve` first runs `status`, then `build`, and from the build directory, locally runs your application(s). Append the optional "--watch" flag to enable autoupdating.
 

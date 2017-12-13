@@ -25,10 +25,9 @@ Process management
 Server config
 
 @todo
+pre/post deploy hooks - call a func before and after running deploy shit.
 
 Add ssh key to vultr. config option somewhere.
-
-thinking about ditiching flightplan and using the ssh2 module.
 
 vultr package takes a snapshot. make sure that workflow exists.
 

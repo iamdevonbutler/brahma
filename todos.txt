@@ -81,6 +81,7 @@ plugins
 - plugin updates? should we install a new version, run tests, install next plugin, tests, itteate? maybe new plugin version have update instructions. that could be a feature of resources, some update integration functionality.
 - [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config.
 - for each recomended plugin, do an example in ./docs/plugins/examples/XXX and reference the example on the recomended plugins page.
+- build plugin: brahma-build-packj
 
 ---
 
