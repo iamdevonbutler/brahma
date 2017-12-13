@@ -1,0 +1,15 @@
+# Commands
+
+- [`New`](@todo)
+- [`Status`](@todo)
+- [`Serve`](@todo)
+- [`Deploy`](@todo)
+- [`Update`](@todo)
+- [`Generate`](@todo)
+- [`Helpers`](@todo)
+- [`Watch`](@todo)
+- [`Build`](@todo)
+- [`Test`](@todo)
+- [`Db`](@todo)
+- [`Logs`](@todo)
+- [`SSH`](@todo)

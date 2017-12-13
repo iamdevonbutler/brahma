@@ -1,3 +1,4 @@
+plugins - can they be a resource w/ app plugins which may include shit that are resources.
 do env.
 pre/post deploy hooks - how would we implement that?
 should we have both $ctx and ctx?

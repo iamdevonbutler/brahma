@@ -1,8 +1,9 @@
 # Plugins
 
 Plugins integrate into Brahma from:
-- npm/git repo
-- local
+- `npm`
+- `git`
+- `project` (./plugins/NAME)
 
 *Plugin integration docs [here](@todo)*
 
