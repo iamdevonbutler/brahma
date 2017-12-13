@@ -1,6 +1,8 @@
 # Recommended plugins
 
-Plugins can be very powerful, so be careful when integrating them into your project. Here is a list of core "plugins" created and supported by Brahma:
+Plugins can be very powerful, so be careful when integrating them into your project. You should know how they work - so check out the code and make sure they're not complete garbage.
+
+Here is a list of core "plugins" created and supported by Brahma:
 
 List organized by ["plugin" type](@todo)
 
@@ -10,17 +12,17 @@ List organized by ["plugin" type](@todo)
 ## Deploy
 - [brahma-deploy-vultr](@todo)
 
-## Templating
+## Template
 - [brahma-template-jsx](@todo)
 
 ## App
 - [brahma-app-cron](@todo)
 - [brahma-app-mailgun](@todo)
 
-## Commands
-- @todo make `watch` a command plugin
+## Command
+- [brahma-command-watch](@todo)
 
-## Helpers
+## Helper
 - [brahma-helper-essentials](@todo)
 - * can have multiple helpers.
 
@@ -43,8 +45,8 @@ set that config, then u would configure both.
 ## Middleware
 - [brahma-middleware-essentials](@todo)
 
-## Decorators
-- [brahma-decorators-essentials](@todo)
+## Decorator
+- [brahma-decorator-essentials](@todo)
   - mcache
   - lcache
   - some http interfaces?

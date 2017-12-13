@@ -1,3 +1,4 @@
+nginx config overrides.
 plugins - can they be a resource w/ app plugins which may include shit that are resources.
 do env.
 pre/post deploy hooks - how would we implement that?
@@ -59,6 +60,8 @@ plugins
   - they should have the ability to add commands for shit like database queries?
 - i wanna see if i can do some fractal recursive architecture shit for app plugins.
 - plugin updates? should we install a new version, run tests, install next plugin, tests, itteate? maybe new plugin version have update instructions. that could be a feature of resources, some update integration functionality.
+- [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config.
+
 
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
