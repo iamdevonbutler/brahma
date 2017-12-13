@@ -1,5 +1,5 @@
-pre/post deploy hooks - how would we implement that?
 do env.
+pre/post deploy hooks - how would we implement that?
 should we have both $ctx and ctx?
 needs a default request library. axios?
 needs default decorors - lru
@@ -48,109 +48,11 @@ commands
 
 * commands register w/ vorpal by calling a `register` method, passed into their main file.
 
-`db`
-- custom database scripts.
-- database backups - scheduling them and
-- @todo
-
-`helpers`
-- @todo latestDependencies - updates pack.j w/ latest versions of packages.
-- @todo looseEnds - see helpers/commands/looseEnds.
-- plugin ecosystem, people can integrate help tasks.
-
-`serve`
-- @todo
-- /endpoint to return app.js, env, status, ...?, (ssh only)
-
-`build`
-- the async implementation is a hack. needs to make sure all files are written before resolving main promise.
-  - *making the bulk of file copying async is the main time saver. u dont really save any time making writeFileSync async.
-
-`deploy`
-- cycle server feature - command to refresh server like heroku does automatically.
-- gotta be able to add custom nginx configs.
-- upstart
-- there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
-- ideally you just run deploy, you see the manifest (whhats going to happen), you agree, and then shit happens.
-  - deploy everything or select items?
-    - big con w/ deploying items is you can fuck up. e.g. if u deploy a version of the config that is out of date w/ live code.
-    - but sometimes u have edited your resources locally, but that shit aint ready for prod and all u wanna do is update your config e.g. change the name of something.
-    - could mitigate this if ur resources requested config as its own prop, so we know what config items our prod code needs.
-- ci server? see "breaking from convention - ci server"
-- for selecting items to deploy: do one of those yeoman style option list things where you select what u wanna deploy (config, env,)
-- if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
-- neo servers are deployed, they register global cli commands, which we are gonna hit w/ ssh. make sure we check the path to be sure the bin exists OR run a status command and if it doesnt work say 'hey check ur path'.
-- if dep/plugin versions are not fixed, we fix, install updated deps, run tests, then ask if the user wants to deploy. make it a rule, dont deploy non fixed versions.
-- services
-  - mongo free tier - https://www.mongodb.com/cloud/atlas/lp/general
-  - redis free tier - https://redislabs.com/pricing/redis-cloud/
-  - image cdn
-
-`watch`
-- @todo
-- uses fork to fork new processes and change servers.
-
-`testing`
-- in ./tests, u should be able to write a test, that is used by multiple apps. in app config, pull in tests, do some wildcard path shit idk.
-- @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style
-- i want to use mocha and chai. i could integrate this so that these tools can be replaced by the user. will prob just use as defaults but in future versions.
-- write your tests...last?
-  - generate tests feature. generates tests for resources, ...,. if test does not yet exist.
-  - list empty tests - you can keep calling generate tests as you continue to develope, eventually your will forget about some. this helps you get back to them.
-  - remove tests for shit that doesnt exist (y/N prompt)
-- want ot be able to run all tests, one test, or match wildcard...so api.* all api tests
-- WILL WANT A WAY TO RUN TESTS ON SERVER - should be called automatically on update.
-- --watch. test on save tdd feature - when ur writing a util or something, tell it what the name of the file is, and on save, it will run your test. `test utils.thenify --watch`
-- how to load fixtures
-- tests: {unit, system}
-- property name is "test" not "tests" - throw special error.
-- how to emlutate before each? and before? and other scripts?
-
-`new`
-- git clone repos (brahma-boilerplate)
-- should have a command or flag to build site w/ config folders vs config files and
-folders vs files for other shit.
-
-`generate`
-- resource
-- plugin
-- react component - integration
-- ...
-- have a flag --all to generate an object w/ all properties. --basic --custom
-- people will want to generate resources w/ certain decorators predefined.
-
-`status`
-- make sure no one is using require or import statements.
-- if you are using any of the http properties make sure the location has http enabled.
-- `brahma status resources`
-  - validate resources - calls validate functions defined by integrations and your local tests.
-  - use static analysis plugin to validate and prevent the use of `this`.
-- `brahma status resource RESOURCE_NAME`
-  - resource has a location property. its value is a registered app. (if not, log all errors so people can fix all at once)
-- `brahma status routes`
-  - list routes by each resource - resourceName|route
-- `brahma status routes ROUTE`
-  - returns matching the resource.
-  - 2 flags. one flag to match '/users/:id' and another to match '/user/122'. --exact -e
-  - @todo how to handle routes that have multiple matches. i think koa-router (which we should
-  mention we are using in the docs) hits all matched enodpoints but i could be wrong. keep
-  in mind, the order in which we load routes is unknown to the user.
-- `brahma status require`
-  - brahma status require resource.name|service.name|middleware.name|decorator.name|...
-  - tells u what is requiring the resource, and what the resource is requiring.
-- `brahma status services|decorator|middleware|utils`
-  - lists all services|decorator|middleware|utils
-  - runs tests. services are npm modules which should be tested on their own.
-  but what about custom services?
-  - maybe list what's requiring them too (redundant but OK)
-- `brahma status config`
-  - runs basic validation for each config. our validation and integration validation for their config (thinking about seprating configs from integrations, so integrations dont fuck w/ the apps.js file)
-  - makes sure you dont have conflicting ports when env === settings.localEnvironment.
-- `brahma status dependencies`
-  - makes sure dependencies were installed correctly ('npm i' worked).
-  - lists dependencies and their versions (useful for debugging remote servers)
-
 ---
+
+plugins
+- docs - "integration" or "config"?
+
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
 

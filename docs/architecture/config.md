@@ -22,8 +22,8 @@
 
 ### Accessing config
 
-- from resources
-- from
+- in resources
+- in config
 
 
 **No more process.env**

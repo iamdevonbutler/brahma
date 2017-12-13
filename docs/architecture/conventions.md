@@ -1,5 +1,12 @@
 # Conventions
 
+## Dot syntax
+- @todo
+- give usage examples
+- favors flat Objects and Arrays over nested data.
+- explain why this is helpful for accessing object properties - interface would be weird w/o it
+- keeps you config files looking simple - scales better
+
 ## $wrap it up
 By convention, we prefix wrapped code, injected into our resources, w/ the dollar sign ("$").
 

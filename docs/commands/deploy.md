@@ -61,3 +61,27 @@ ide rather have them impertiavely update the server code.
 ## Domains
 talk about how to set up ur domains. we dont do auto shit cuz u like never have to do this.
 https://github.com/iwantmyname/iwmn-js helper integration
+
+
+
+
+
+`deploy`
+- cycle server feature - command to refresh server like heroku does automatically.
+- gotta be able to add custom nginx configs.
+- upstart
+- there is separate `deploy` and `update` functionality. deploy deploys server boilerplate that u dont update. update is how u update that boilerplate.
+- ideally you just run deploy, you see the manifest (whhats going to happen), you agree, and then shit happens.
+  - deploy everything or select items?
+    - big con w/ deploying items is you can fuck up. e.g. if u deploy a version of the config that is out of date w/ live code.
+    - but sometimes u have edited your resources locally, but that shit aint ready for prod and all u wanna do is update your config e.g. change the name of something.
+    - could mitigate this if ur resources requested config as its own prop, so we know what config items our prod code needs.
+- ci server? see "breaking from convention - ci server"
+- for selecting items to deploy: do one of those yeoman style option list things where you select what u wanna deploy (config, env,)
+- if deploying a single app to multiple boxes, deploy 2 1 box first, make sure shit works, then deploy the rest, or clone the boxes.
+- neo servers are deployed, they register global cli commands, which we are gonna hit w/ ssh. make sure we check the path to be sure the bin exists OR run a status command and if it doesnt work say 'hey check ur path'.
+- if dep/plugin versions are not fixed, we fix, install updated deps, run tests, then ask if the user wants to deploy. make it a rule, dont deploy non fixed versions.
+- services
+  - mongo free tier - https://www.mongodb.com/cloud/atlas/lp/general
+  - redis free tier - https://redislabs.com/pricing/redis-cloud/
+  - image cdn

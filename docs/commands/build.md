@@ -1,4 +1,4 @@
-# Build
+# brahma `build`
 
 When do u need to rebuild locally / remotely.
 - update dependencies
