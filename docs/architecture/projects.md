@@ -9,6 +9,7 @@
   - plugins.js
   - variables.js
   - settings.js
+- ./dbs
 - ./decorators
 - ./endpoints
 - ./hooks
@@ -25,6 +26,7 @@
 
 ## ./build
 ## ./config
+## ./dbs
 ## ./decorators
 ## ./endpoints
 ## ./hooks

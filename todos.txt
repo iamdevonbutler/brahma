@@ -4,6 +4,7 @@ API
   - load.resource()
   - load.config()
   - load.merge(path, {data})
+  - clear require cache param?
 - readStream
 - read
   - read.static();
@@ -19,26 +20,23 @@ Convention
 
 ---
 
-needs default decorators - lru
+build core plugins
+- brahma-database-mongo needs to hook into `generate` and register createSchema. fractal architecute?
+- build all plugin interfaces
 
-mongonrules database plugins need a way to integrate w/ generate and add createSchema files. fractal architecute?
+generate
+- if u run generate, there is some yeoman questionair type shit. have forsm that are fixed, and forms that repeat (useful for mongorules)
 
-where to put db schema.
-load - being used in brahma configs too. require wouldnt clear cache.
-requiring shit - how to require each resouce type.
-plugin interfaces
-bin? - what is the root command.
-private - getallproperties map so other users can make their own ./private, folder/file structure, private assets for servers
 ./docs
-app.js config, nginx option - configure load balancer and asset cache.
+- general project documentation. can be integrated w/ by brahma-app-documenation
+
+
 mongorules config
+app.js config, nginx option - configure load balancer and asset cache.
 templating
-api route prefix w/ version.
-bin commands? what if a server wants bin commands.
 how do u write a resource that loads and sends a static asset like a jpg.
 hooks - how to manage a bunch of hooks for a bunch of apps.
 custom helpers (./config/helpers.js)
-custom db commands
 upload more than one ssh key to server
 
 http://blog.bitfinex.com/tutorial/bitfinex-loves-microservices-grenache/
@@ -75,6 +73,8 @@ cli (endpoint method)
 ---
 
 plugins
+- plugins hook into status to talk about their system dependencies. e.g. brahma-database-mongodb wants mongod running - need to check (database-mongond integrates w/ serve which integreate w/ status to add a check for mongod).
+- plugins document via API how theyre goning to modify your project. so they can say that their going to ad a dir in root or add a config file.
 - docs - "integration" or "config"?
 - should there be a generic way to create a custom plugin - one that doesnt have a type? hopefully we covered everything.
 - brahma-command-git
@@ -85,8 +85,7 @@ plugins
 - [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config.
 - for each recomended plugin, do an example in ./docs/plugins/examples/XXX and reference the example on the recomended plugins page.
 - build plugin: brahma-build-packj
-
----
+- app plugin: brahma-app-documentation hooks into status and registers a command to make sure a docs dir exists
 
 ---
 
@@ -225,6 +224,7 @@ youtube videos
 ---
 
 make sure...
+- api route prefix w/ version. - give a general way for them to modify koa - via start hook.
 - the apps should be able to start themselves given an app.js file and other configs.
 dont compile too much. the idea is for redeployment we want to just upload the configs and resources.
 - keep integrations modular. abstract out modules like mongorules and make the their own github repos e.g. brahma-mongorules?, brahma-...

@@ -7,9 +7,6 @@ Here is a list of core "plugins" created and supported by Brahma:
 ## Library
 - [brahma-library-request](@todo)
 
-Dependencies
-- axios
-
 ## Database
 - [brahma-database-mongodb](@todo)
 
@@ -22,6 +19,8 @@ Dependencies
 ## App
 - [brahma-app-cron](@todo)
 - [brahma-app-mailgun](@todo)
+- [brahma-app-realtime](@todo)
+- [brahma-app-documentation](@todo)
 
 ## Command
 - [brahma-command-watch](@todo)
