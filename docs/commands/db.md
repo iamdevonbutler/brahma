@@ -1,4 +1,4 @@
-## db command
+## brahma `db`
 
 - custom database scripts - pull to local. pull and add database, push database,
 

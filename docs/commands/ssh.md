@@ -1,4 +1,5 @@
-# SSH
+## brahma `ssh`
+
 
 Allows you to ssh into a remote app.
 

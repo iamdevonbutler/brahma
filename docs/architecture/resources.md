@@ -1,5 +1,7 @@
 # Resources
 
+Maybe make everything a resource somehow?
+
 ## Rules
 - A resource is a ALWAYS a JS Object.
 - A resource NEVER uses `this`
@@ -36,8 +38,9 @@ Resource properties
 * a big thing w/ neo is extending functionality - so there can be more properties. @todo provide examples of extending a resource e.g. "cron" integration.
 
 Resource types
-- util (not dependent on other resources. "resource pure")
 - endpoint
+- plugin
+- util (not dependent on other resources. "resource pure")
 - test
 - decorator
 - middleware

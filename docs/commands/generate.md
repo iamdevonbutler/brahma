@@ -1,4 +1,5 @@
-# Generate
+## brahma `generate`
+
 
 ## Commands
 - writeLocalCert

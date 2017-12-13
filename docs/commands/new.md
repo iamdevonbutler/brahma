@@ -1,4 +1,6 @@
-# New
+# brahma `new`
+
+Writes project scaffolding.
 
 @todo
 
