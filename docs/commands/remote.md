@@ -3,9 +3,9 @@
 ## Commands
 ```
 $brahma remote list
-$brahma remote add
+$brahma remote add [--environment=]
 $brahma remote remove
-$brahma remote update [--hold] [--checkout]
+$brahma remote update [--hold] [--checkout=]
 $brahma remote checkout [--hold]
 
 $brahma remote stop
@@ -19,15 +19,25 @@ Lists all remote environments.
 ### `remote add`
 Adds a remote environment.
 
-Args
-- `[--environment=name]`
+Options
+- `[--environment=]`
 
-If you run add w/o any args, it will add every environment in your `env.js` config.
+If you run `add` w/o any args, it will add every environment in your `env.js` config.
+
+### `remote remove`
+Removes a remote environment.
+
+Options
+- `< --environment= >`
 
 ### `remote start`
+Starts a stopped environment.
+
 ### `remote stop`
 Stops all apps running in the remove environment, while keeping the servers running. To stop the underlying servers run `remote remove ENV`.
 
+### `remote restart`
+Calls `remote stop` and then `remote start`.
 
 
 

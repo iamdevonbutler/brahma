@@ -20,6 +20,8 @@ Convention
 
 ---
 
+review nodes strengths and weakenssses on google.
+
 abilities
 - i like the idea of plugging shit it and getting abilities because of it.
 so if u plugged in a cron thing, u have the ability to rotate logs.
