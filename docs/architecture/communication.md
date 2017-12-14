@@ -2,7 +2,7 @@
 
 Apps communicate w/ eachother via a lightweight library over TCP.
 
-"Secure" apps (apps.js `secure=true`) use SSL over TCP.
+"Secure" apps (apps.js `security=true`) use SSL over TCP.
 
 ## API
 

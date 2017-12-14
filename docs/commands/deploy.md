@@ -1,16 +1,32 @@
 ## brahma `deploy`
 
+```
+$brahma remote add
+$brahma remote remove
+```
+
+A `remote` is a collection of integreated servers.
+`remote add`
+
+
+
+
+
+
+
+## Helper integration
+- adds a helper to list vultr plans.
+
 
 ## Plugins
-
-### brahma-deploy-vultr
+- [brahma-deploy-vultr](@todo)
 
 Required config:
 - SSH key(s)
 - user name
 
 OS
-- Ubuntu 17.10 x64
+- Ubuntu 16.04 x64 (default)
 
 Default VPS
 - $5/month, 1 CPU, 1024 MB memory, 1 TB bandwidth (upgradeable)
@@ -36,6 +52,7 @@ https://www.youtube.com/watch?v=BJZZnhGtR4A&t=322s - upstart
 https://jream.com/blog/post/time-saving-digital-ocean-vultr-startup-script - vultr startup scripts
 https://www.youtube.com/watch?v=FJrs0Ar9asY - nginx (load balancer, static cache)
 https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/ - nginx
+https://mail.google.com/mail/u/0/#inbox/16055558c5b6abd7
 
 add multiple ssh keys to server
 
@@ -99,3 +116,6 @@ https://github.com/iwantmyname/iwmn-js helper integration
   - mongo free tier - https://www.mongodb.com/cloud/atlas/lp/general
   - redis free tier - https://redislabs.com/pricing/redis-cloud/
   - image cdn
+
+@note
+the server config is tested on "Ubuntu 16" - and although the OS version can be changed, do so at your own risk.

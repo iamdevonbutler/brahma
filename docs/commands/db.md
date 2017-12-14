@@ -2,13 +2,14 @@
 
 ### Commands
 ```
+$brahma db ... CHOOSE DB
 $brahma db run commandName
 $brahma db run --help (lists comands)
 $brahma db import strategy
 $brahma db export strategy
 $brahma db download strategy
 $brahma db backup strategy
-$brahma db connect
+$brahma db connect (iteractive shell)
 $brahma db custom (extended by database plugins)
 
 ```

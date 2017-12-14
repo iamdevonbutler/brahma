@@ -23,7 +23,7 @@ Convention
 test SSH!
 
 remote
-- mayeb theres a `remote` command that manages ur deployments. u can kill servers, regardless of deployment strategy
+- remote theres a `remote` command that manages ur deployments. u can kill servers, regardless of deployment strategy
 
 build
 - may only need to build a single app and deploy everywhere. maybe there is no build.
@@ -40,11 +40,7 @@ how would a website load CSS and JS (@todo for brahma-website). get fast css rel
 
 resources architecture docs
 
-bring deploy/build/,... todos back here.
-
 build core plugins
-- brahma-database-mongo needs to hook into `generate` and register createSchema. fractal architecute?
-- build all plugin interfaces
 
 generate
 - if u run generate, there is some yeoman questionair type shit. have forsm that are fixed, and forms that repeat (useful for mongorules)
@@ -61,6 +57,15 @@ mongorules config
 - if we have config in a dbs dir - dbs isnt exactly a standard resource,
 so it wont exist as load.dbs(), so we need a generic way to load stuff
 (see if the config can take config format or resources format)
+
+http
+- optionally enables ipv6. checks server to make sure its enabled.
+
+deploy API (deploy plugins must have these methods)
+- addSSHKeys
+- removeSSHKeys
+- listSSHKeys must return an Oject w/ required properties such as ID so we can remove key.
+
 
 ---
 
@@ -81,6 +86,10 @@ cli (endpoint method)
 ---
 
 plugins
+- plugin status. run a status command, and view information about the plugin. e.g. if it registers helpers, what are these helpers.
+- build all plugin interfaces
+- brahma-database-mongo
+  - needs to hook into `generate` and register createSchema. fractal architecute?
 - brahma-database-mongodb
 - plugin that registers w/ the deploy pre hook to make sure u did a git tag before updating. can abort deploy.
 - brahma-template-jsx
@@ -101,6 +110,9 @@ plugins
 - app plugin: brahma-app-documentation hooks into status and registers a command to make sure a docs dir exists
 
 ---
+
+static
+- @todo s3 integration
 
 config
 - modules need a way to respond to cahnges in config.

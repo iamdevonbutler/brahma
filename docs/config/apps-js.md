@@ -48,7 +48,7 @@ App config uses an opt-in strategy. The default "barebones" app manifests as a "
 ```
 appConfig {
   http: false,
-  secure: false,
+  security: false,
   nginx: false,
 
   redis: false,
@@ -69,12 +69,13 @@ appConfig {
 
 ### http
 ```javascript
-({load, env}) => ({
+module.exports = ({load, env}) => ({
   config {
     whitelist: [],
     blacklist: [],
     password: load.private('passwords').routerPass,
     port: env.get('port'),
+    ipv6: '',
   }
 });
 ```
@@ -85,7 +86,7 @@ options:
 - `port <Number|String=3000>` - port
 
 *Note: you can configure a `blacklist` OR a `whitelist` NOT both.*
-### secure
+### security
 ```javascript
 ({read, env}) => async ({
   config {
@@ -95,7 +96,7 @@ options:
 });
 ```
 
-### nginx
+### proxy
 
 ### redis
 

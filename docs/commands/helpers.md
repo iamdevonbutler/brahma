@@ -1,5 +1,15 @@
 ## brahma `helper`
 
+```
+$brahma helper (lists all helpers w/ owner field)
+$brahma helper sslVerify
+$brahma helper eol
+$brahma helper iwantmyname
+$brahma helper latestDependencies
+$brahma helper looseEnds
+```
+
+
 ## Commands
 - sslVerify - open browser w/ link to (https://www.ssllabs.com/ssltest/)
 - eol - \n -> eol.
@@ -24,3 +34,6 @@ module.exports = () => ({
 
 ## Plugins
 - [`brahma-helper-essentials`](@todo) (core)
+
+@todo
+- if helpers are provided by plugins, display an "owner" field in the helper listing.
