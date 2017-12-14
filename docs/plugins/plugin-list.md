@@ -3,6 +3,7 @@
 Ordered by [plugin type](@todo ./types):
 
 ## App
+## Build
 ## Database
 ## Deploy
 ## Command
@@ -10,8 +11,7 @@ Ordered by [plugin type](@todo ./types):
 ## Decorator
 ## Library
 ## Template
-## Helpers
-## Boilerplate
+## Helper
 ## Generate
 ## Logging
 ## Analysis

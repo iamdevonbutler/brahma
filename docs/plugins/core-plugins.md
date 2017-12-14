@@ -4,9 +4,6 @@ Plugins can be very powerful, so be careful when integrating them into your proj
 
 Here is a list of core "plugins" created and supported by Brahma:
 
-## Library
-- [brahma-library-request](@todo)
-
 ## Database
 - [brahma-database-mongodb](@todo)
 
@@ -27,13 +24,6 @@ Here is a list of core "plugins" created and supported by Brahma:
 
 ## Helper
 - [brahma-helper-essentials](@todo)
-- * can have multiple helpers.
-
-## Boilerplate
-- [brahma-boilerplate-basic](@todo)
-- [brahma-boilerplate-advanced](@todo)
-- * can have multiple new plugins.
-- @todo the name 'new' and were calling it 'boilerplate'.
 
 ## Generate
 - [brahma-generate-nginx](@todo) - creates config files.
@@ -44,6 +34,9 @@ Here is a list of core "plugins" created and supported by Brahma:
 - [brahma-logger-logdna](@todo)
 - * logdna has a config option to include bunyan, so u wouldnt use both here, but if u didnt
 set that config, then u would configure both.
+
+## Library
+- [brahma-library-essentials](@todo)
 
 ## Middleware
 - [brahma-middleware-essentials](@todo)

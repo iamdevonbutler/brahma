@@ -2,6 +2,8 @@
 
 Plugins are segmented into various "types", with each "type" performing a different function.
 
+All plugins are "resources" EXCEPT for "`App` plugins" - they are "projects".
+
 Plugin "types" include:
 
 - `App`
@@ -14,7 +16,6 @@ Plugin "types" include:
 - `Library`
 - `Template`
 - `Helper`
-- `Boilerplate`
 - `Generate`
 - `Logging`
 - `Analysis`

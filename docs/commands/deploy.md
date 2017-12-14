@@ -25,6 +25,17 @@ Process management
 Server config
 
 @todo
+
+
+Info
+https://www.youtube.com/watch?v=kR06NoSzAXY - lets encrypt.
+https://www.youtube.com/watch?v=BJZZnhGtR4A&t=322s - upstart
+https://jream.com/blog/post/time-saving-digital-ocean-vultr-startup-script - vultr startup scripts
+https://www.youtube.com/watch?v=FJrs0Ar9asY - nginx (load balancer, static cache)
+https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/ - nginx
+
+add multiple ssh keys to server
+
 pre/post deploy hooks - call a func before and after running deploy shit.
 
 Add ssh key to vultr. config option somewhere.

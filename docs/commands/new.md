@@ -1,12 +1,11 @@
 # brahma `new`
 
-Writes project scaffolding.
+Writes project boilerplate.
 
 @todo
 
-clones git repos (does not require git be installed locally)
+writes an eslintrc
 
-- git clone repos (brahma-boilerplate)
 - should have a command or flag to build site w/ config folders vs config files and
 folders vs files for other shit.
 

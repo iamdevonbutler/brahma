@@ -6,7 +6,6 @@ const {fileExists, forEach, map, reduce, logArray} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const {EOL} = require('os');
-const {loadConfig} = require('neo-core');
 
 
 

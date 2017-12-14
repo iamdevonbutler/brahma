@@ -18,6 +18,7 @@ Resource definition
 link to resources page.
 
 ## Config
+@todo
 
 ## "system" tests vs "integration" tests?
 So I just made this term up. "System" tests. Maybe it's a thing, but idk.
@@ -41,3 +42,9 @@ Calling it "lib" would be true to node tradition, but there's much implied meani
 This is just about ambiguity of language. Most projects have a comparatively large server used to handle HTTP requests. It's often called the "api", and it delegates long running synchronous tasks to "worker" servers to keep the thread clear. "api" is a decent word to identify this server - after all, it is a literal interface for other applications, but the semantics of "api" are so general it can be difficult for non-code people to understand EXACTLY what you're talking about ("I thought Twitter was the Api?").
 
 When you think about it, the "api" server is just a big "router". So let's call it just that, the "router".
+
+## "start" and "stop" vs "init" and "shutdown"
+"Endpoints" have a `[start()](@todo)` and a `[stop()](@todo)` method called on startup and on shutdown.
+@todo
+- start and stop are opposites
+- init and shutdown aren't so closely related. you wouldn't think, oh looks there's an init() method, there must be an opposing "shutdown" method.

@@ -20,6 +20,10 @@ Convention
 
 ---
 
+resources architecture docs
+
+bring deploy/build/,... todos back here.
+
 build core plugins
 - brahma-database-mongo needs to hook into `generate` and register createSchema. fractal architecute?
 - build all plugin interfaces
@@ -30,22 +34,15 @@ generate
 ./docs
 - general project documentation. can be integrated w/ by brahma-app-documenation
 
+nginx
+- app.js option - auto enabled when secure === true
+- documentation on how to configure as a static asset cache.
 
 mongorules config
-app.js config, nginx option - configure load balancer and asset cache.
-templating
-how do u write a resource that loads and sends a static asset like a jpg.
-hooks - how to manage a bunch of hooks for a bunch of apps.
-custom helpers (./config/helpers.js)
-upload more than one ssh key to server
-
-http://blog.bitfinex.com/tutorial/bitfinex-loves-microservices-grenache/
-https://www.youtube.com/watch?v=kR06NoSzAXY - this looks good. talks about setting up lets encrypt.
-https://www.youtube.com/watch?v=BJZZnhGtR4A&t=322s
-https://www.npmjs.com/package/vultr
-https://jream.com/blog/post/time-saving-digital-ocean-vultr-startup-script
-https://www.youtube.com/watch?v=FJrs0Ar9asY
-https://www.nginx.com/blog/mitigating-ddos-attacks-with-nginx-and-nginx-plus/
+- @todo
+- if we have config in a dbs dir - dbs isnt exactly a standard resource,
+so it wont exist as load.dbs(), so we need a generic way to load stuff
+(see if the config can take config format or resources format)
 
 ---
 
@@ -54,14 +51,7 @@ needed functionality
 - need to know how route matches are handled when there are matching multiple endpoints.
 - debug integration? (tj's npm module)
 - sitemap?
-- a way to steam logs of remote servers like heroku allows.
-- generate local ssl certs via command line command? - maybe its a `generate` integration.
 - reading deploy output. u could be deploying 10 apps at a time, buffer the logs, and only show one app at a time.
-
----
-
-commands
-- register w/ vorpal by calling a `register` method, passed into their main file.
 
 ---
 
@@ -73,6 +63,9 @@ cli (endpoint method)
 ---
 
 plugins
+- brahma-template-jsx
+- brahma-library-essentials
+  - request -> axios, adds as an injectable (@todo document adding an injectable)
 - plugins hook into status to talk about their system dependencies. e.g. brahma-database-mongodb wants mongod running - need to check (database-mongond integrates w/ serve which integreate w/ status to add a check for mongod).
 - plugins document via API how theyre goning to modify your project. so they can say that their going to ad a dir in root or add a config file.
 - docs - "integration" or "config"?
@@ -172,11 +165,6 @@ e.g. environment. might want to do type checking.
 auth
 - this is a very common problem. find a way to modularize and contribute.
 
-config files
-- package.js (u can add decription and other fields for some reason, dep versions?)
-- helpers.js (adds helper commands to `helpers`) OR PUT IT IN PLUGINS
-
-
 static analyisis
 - can check and make sure people are passing the proper number of params to functions
 either when using $ctx, or when using pre() and post({}, args)
@@ -193,20 +181,20 @@ Renaming shit
   - would be awesome if we could identify the dependencies either though static analysis or otherwise
   - think what else do u rename and how to help w/ that.
 
-front end apps
-- I really dont want to cater to front end apps since i plan on building my own webgl webapp framework
-- headless browser testing
-
 ---
 
 apps to build
-- *like plugins, you can plug in another brahma app. it will go to build, and takes config so it can be sorta dynamic.
-- website (make it functionally eq to rails).
-- realtime
-- worker
-- cron
-- smtp
-- router
+- brahma-website (make it functionally eq to rails).
+  - templating integration
+  - pulls docs dir from brahma github repo and builds static site. simple cli command to update site.
+- brahma-example-simple
+- brahma-example-advanced
+  - worker
+  - router
+  - cron
+  - smtp
+  - realtime
+  - ...all plugins and config
 
 ---
 
@@ -224,6 +212,8 @@ youtube videos
 ---
 
 make sure...
+- varnish cache (w. nginx) web pages.
+- we can load and send (stream too) a static asset
 - api route prefix w/ version. - give a general way for them to modify koa - via start hook.
 - the apps should be able to start themselves given an app.js file and other configs.
 dont compile too much. the idea is for redeployment we want to just upload the configs and resources.

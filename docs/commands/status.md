@@ -21,6 +21,7 @@ Privacy
 
 
 `status`
+- shows u what libraries/middleware/decorators you have, if u have installed packages like middlewear-essentials u wont know exactly what u have installed.
 - make sure no one is using require or import statements.
 - if you are using any of the http properties make sure the location has http enabled.
 - `brahma status resources`

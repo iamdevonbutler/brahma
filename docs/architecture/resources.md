@@ -60,3 +60,9 @@ Endpoint properties
 Test properties
 - ...resourceProperties
 - location
+
+Resources entry points
+- restful HTTP interface
+- response to zmq task
+- cron
+* since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
