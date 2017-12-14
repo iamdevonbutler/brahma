@@ -95,6 +95,8 @@ https://github.com/iwantmyname/iwmn-js helper integration
 
 
 
+vultur
+- status: makes sure ssh access works and that we have a valid api key.
 
 
 `deploy`
