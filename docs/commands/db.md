@@ -12,6 +12,10 @@ $brahma db connect
 $brahma db custom (extended by database plugins)
 
 ```
+
+`db`
+- run `db` - choose database (mongodb (pluginName)) -> view commands provided by plugin.
+
 @todo strategies can be custom (?) or registered by plugins (database plugins)
 
 @todo database backups - scheduling them? could use cron.

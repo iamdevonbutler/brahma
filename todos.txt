@@ -20,6 +20,24 @@ Convention
 
 ---
 
+test SSH!
+
+remote
+- mayeb theres a `remote` command that manages ur deployments. u can kill servers, regardless of deployment strategy
+
+build
+- may only need to build a single app and deploy everywhere. maybe there is no build.
+- if we dont do build have a way, via deploy, to add files to apps.
+
+brahma-proxy-nginx proxy: true?
+- hooks into generate and writes a nginx.conf in merge as well as other shit.
+
+want a way to checkout a different versions of the site, u should be able to upload a new version but not have it take effect until u manually check it out. so u can put up commits for site maintaince
+
+ssh into node process? how to run `app status`.
+
+how would a website load CSS and JS (@todo for brahma-website). get fast css reloads working.
+
 resources architecture docs
 
 bring deploy/build/,... todos back here.
@@ -63,6 +81,8 @@ cli (endpoint method)
 ---
 
 plugins
+- brahma-database-mongodb
+- plugin that registers w/ the deploy pre hook to make sure u did a git tag before updating. can abort deploy.
 - brahma-template-jsx
 - brahma-library-essentials
   - request -> axios, adds as an injectable (@todo document adding an injectable)
@@ -81,6 +101,9 @@ plugins
 - app plugin: brahma-app-documentation hooks into status and registers a command to make sure a docs dir exists
 
 ---
+
+config
+- modules need a way to respond to cahnges in config.
 
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
@@ -188,13 +211,14 @@ apps to build
   - templating integration
   - pulls docs dir from brahma github repo and builds static site. simple cli command to update site.
 - brahma-example-simple
+  - loads plugins via plugins.js
 - brahma-example-advanced
   - worker
   - router
   - cron
   - smtp
   - realtime
-  - ...all plugins and config
+  - ...requires all plugins and config (plugins are local in ./plugins)
 
 ---
 

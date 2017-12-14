@@ -26,6 +26,9 @@ Server config
 
 @todo
 
+deploy should return info about servers so users can login and easily configure them e.g. resize router load balancer.
+
+private data?
 
 Info
 https://www.youtube.com/watch?v=kR06NoSzAXY - lets encrypt.

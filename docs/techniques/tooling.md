@@ -1,4 +1,4 @@
-# Tooling list
+# Tooling
 
 A collection of helpful tools used in app development:
 
