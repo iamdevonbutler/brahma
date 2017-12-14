@@ -7,8 +7,8 @@ Here is a list of core "plugins" created and supported by Brahma:
 ## Database
 - [brahma-database-mongodb](@todo)
 
-## Deploy
-- [brahma-deploy-vultr](@todo)
+## Remote
+- [brahma-remote-vultr](@todo)
 
 ## Template
 - [brahma-template-jsx](@todo)

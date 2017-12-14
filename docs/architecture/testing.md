@@ -1,5 +1,7 @@
 # Testing
 
+talk about why we dont need CI
+
 `testing`
 - in ./tests, u should be able to write a test, that is used by multiple apps. in app config, pull in tests, do some wildcard path shit idk.
 - @todo for resources/middleware/decorators/services and other shit? see if i can implement some of my new testing style

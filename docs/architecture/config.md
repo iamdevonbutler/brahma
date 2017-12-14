@@ -8,9 +8,11 @@
 
 ### Project config
 - `apps.js`
-- `deploy.js`
-- `plugins.js`
+- `env.js`
+- `variables.js`
 - `settings.js`
+- `plugins.js`
+- `remote.js`
 - `dbs.js`
 - `helpers.js`?
 - `build.js`?

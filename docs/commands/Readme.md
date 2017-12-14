@@ -3,7 +3,7 @@
 - [`new`](@todo)
 - [`status`](@todo)
 - [`serve`](@todo)
-- [`deploy`](@todo)
+- [`remote`](@todo)
 - [`update`](@todo)
 - [`generate`](@todo)
 - [`helpers`](@todo)

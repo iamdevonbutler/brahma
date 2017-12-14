@@ -1,4 +1,27 @@
-## brahma `deploy`
+## brahma `remote`
+
+```
+$brahma remote list
+$brahma remote add
+$brahma remote remove
+$brahma remote update [--hold] [--checkout]
+$brahma remote checkout [--hold]
+
+$brahma remote stop
+$brahma remote start
+$brahma remote restart
+```
+
+what to do if u add/remove a server.
+
+
+
+
+
+
+
+
+
 
 ```
 $brahma remote add
@@ -19,7 +42,7 @@ A `remote` is a collection of integreated servers.
 
 
 ## Plugins
-- [brahma-deploy-vultr](@todo)
+- [brahma-remote-vultr](@todo)
 
 Required config:
 - SSH key(s)

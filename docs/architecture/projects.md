@@ -5,7 +5,7 @@
 - ./config
   - apps.js
   - env.js
-  - deploy.js
+  - remote.js
   - plugins.js
   - variables.js
   - settings.js

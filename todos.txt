@@ -20,10 +20,14 @@ Convention
 
 ---
 
-test SSH!
+docs
+- ssh docs setup is wrong and incomplete
+- resources architecture
 
-remote
-- remote theres a `remote` command that manages ur deployments. u can kill servers, regardless of deployment strategy
+@tobuild
+- core plugins
+
+test SSH!
 
 build
 - may only need to build a single app and deploy everywhere. maybe there is no build.
@@ -37,10 +41,6 @@ want a way to checkout a different versions of the site, u should be able to upl
 ssh into node process? how to run `app status`.
 
 how would a website load CSS and JS (@todo for brahma-website). get fast css reloads working.
-
-resources architecture docs
-
-build core plugins
 
 generate
 - if u run generate, there is some yeoman questionair type shit. have forsm that are fixed, and forms that repeat (useful for mongorules)
@@ -211,6 +211,9 @@ command queue/buffer
 apps.js
 - updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
 
+naming
+- stage and production. wish i had better names.
+
 Renaming shit
 - renaming a server (how does it affect the rest of your code - does the updating suck?)
   - would be awesome if we could identify the dependencies either though static analysis or otherwise
@@ -222,6 +225,7 @@ apps to build
 - brahma-website (make it functionally eq to rails).
   - templating integration
   - pulls docs dir from brahma github repo and builds static site. simple cli command to update site.
+  - how to do links for shit in our markdown files?
 - brahma-example-simple
   - loads plugins via plugins.js
 - brahma-example-advanced
@@ -309,3 +313,9 @@ Upgrading w/ breaking changes.
 create a new GH repos called brahma-1 and bramha-0.
 bramha is the same as bramha-0.
 after a while make bramha eql to bramha-1
+
+---
+
+jsmoves
+- Infinity
+- mention does not support symbols
