@@ -20,6 +20,10 @@ Convention
 
 ---
 
+abilities
+- i like the idea of plugging shit it and getting abilities because of it.
+so if u plugged in a cron thing, u have the ability to rotate logs.
+
 docs
 - ssh docs setup is wrong and incomplete
 - resources architecture
@@ -28,6 +32,17 @@ docs
 - core plugins
 
 test SSH!
+
+vultr
+- ubuntu 16 is LTS (document)
+
+where do prod apps write to?
+- need to write logs, cache, and other information on running apps.
+  - distibuted apps should avoid writing to server for continunity.
+- would perfer to use s3 exculsivly for file writes
+  - add s3 config to project setup if its necessary.
+  - document why we dont like to handle static assets w/ node.
+  - if not, need a local dir to write to.
 
 build
 - may only need to build a single app and deploy everywhere. maybe there is no build.
@@ -112,6 +127,7 @@ plugins
 ---
 
 static
+- readonly by convention?
 - @todo s3 integration
 
 config

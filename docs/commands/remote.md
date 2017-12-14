@@ -1,5 +1,6 @@
-## brahma `remote`
+# brahma `remote`
 
+## Commands
 ```
 $brahma remote list
 $brahma remote add
@@ -12,24 +13,27 @@ $brahma remote start
 $brahma remote restart
 ```
 
+### `remote list`
+Lists all remote environments.
+
+### `remote add`
+Adds a remote environment.
+
+Args
+- `[--environment=name]`
+
+If you run add w/o any args, it will add every environment in your `env.js` config.
+
+### `remote start`
+### `remote stop`
+Stops all apps running in the remove environment, while keeping the servers running. To stop the underlying servers run `remote remove ENV`.
+
+
+
+
 what to do if u add/remove a server.
 
 
-
-
-
-
-
-
-
-
-```
-$brahma remote add
-$brahma remote remove
-```
-
-A `remote` is a collection of integreated servers.
-`remote add`
 
 
 
