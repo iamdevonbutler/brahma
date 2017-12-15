@@ -1,5 +1,8 @@
 # Philosophies
 
+## Heavy handed "dependency injection" workflow
+@todo talk about DI and how we are pass in all the data we can. flexility
+
 ## As above so below
 The fractal pattern of recurring architecture and design.
 

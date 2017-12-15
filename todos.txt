@@ -20,8 +20,239 @@ Convention
 
 ---
 
-Pathing
-- how would u write to ./var in a endpoint
+env
+- default { overwrite: true, refresh: true }
+  - constants are opt in. JS paradigm.
+  - performance is opt in, predictability takes precedent here.
+
+env = {
+  router: {
+    local: {
+      'key.a': 'value',
+      'key.b': 'value',
+    },
+    remote0: {},
+  },
+  worker: {
+    local: {},
+    remote0: {},
+  },
+};
+
+{
+  data,
+  raw, // original object.
+
+  forEach() {},
+  every() {},
+  filter() {},
+  some() {},
+  find() {},
+
+  clone() {},
+  assign() {},
+
+  select(...args) {}, // .select() w/ no params returns this.data (whole obj)
+  get() {},
+  set() {}, // set w/ property specific validation.
+}
+
+env = createInterface(env, {
+  depth: 2,
+  wrapValues: true,
+  filterData(obj) {
+    return obj.connections;
+  },
+  defaults(key, value, parents = null) {
+    return {
+     name: key,
+      ...(value || {}),
+    };
+  },
+  validate(key, value, parents) {}, // validates each item.
+  transform(key, value, parents = null) {},
+  select(...args) {
+    return args ? args.reduce((obj, arg) => obj[arg], this.data) : this.data;
+  }
+});
+
+env.select('router', 'local') // return local.
+env.select('router', 'remote0') // return remote0.
+
+env.get('key.a');
+env.set('key.a', 'value');
+env.select('router', 'remote0').get('key.a'); // can use this to get types such as endpoint, service.
+env.forEach(item => {
+
+});
+env
+  .type('local')
+  .filter((obj, key) => key[key.length - 1] === 'a')
+  .forEach();
+
+---
+
+schema
+(nestedKey1, nestedKey2, ...) => {
+  // appName === nestedKey1;
+  'http.port': {
+    default: '',
+    validate() {},
+    transform() {},
+  },
+}
+
+---
+
+@todo data structure for all configs and resources.
+@todo when u get a env, (the value is an obj, but we want to filter and just return the value property, have it be an interface feature)
+@todo if a value is updated, make sure we can have update() callbacks, if someone updates the refresh value we want to react to that.
+- all values for resources and config have update callbacks, and when updated, it runs validation first, returns errors if shitty, 
+
+schema
+- need to validate keys - make sure our env.js keys point to valid apps
+- validate values w/ obj above
+- sometimes apply the schema to all properties and othertimes apply different schemas
+
+// env.js - this is something that the env module exports to brahma.
+createSchema({
+  depth: 0,
+  keys: {
+    deferred: {
+      each(key, value, {apps}) {
+      return {
+        error: Object.keys(apps).indexOf(key) > -1 ? null : 'invalid appname', // validate w/ error
+        value: undefined, // transform
+      };
+    },
+    },
+  },
+  values: {},
+}, {
+  depth: 1,
+  keys: {
+    all(keys) {
+      return {
+        error: keys.indexOf('local') > -1 ? null : 'must include local'
+      }
+    }
+  }
+}, {
+  depth: 2,
+  keys: {
+    needs: ['port'],
+  },
+  values: {
+   schema: createSchema({
+     depth: 0,
+     fields: {
+       value: {
+         required: {
+           true,
+           error() {}
+         },
+         transform() {
+
+         }
+       },
+       refresh: {
+
+       }
+     }
+   }),
+  },
+  // and port
+});
+
+
+resources = {
+  endpoints: {
+    key: {},
+  },
+  services: {
+    key: {},
+  },
+  decorators: {},
+};
+
+resources = createInterface(resources, {
+  depth: 1,
+  schema,
+})
+
+resources.forEach(resource => {});
+resources.select('endpoints', 'router').forEach(resource => {});
+
+---
+
+required: false,
+notNull: false,
+default: undefined,
+type: null,
+minLength: [null, null],
+maxLength: [null, null],
+validate: [null, null],
+trim: false,
+lowercase: false,
+uppercase: false,
+sanitize: false,
+denyXSS: false,
+filterNulls: false,
+transform: [null, null],
+
+---
+
+config
+- injectables (loaded in this order)
+  - settings.js (nothing)
+  - variables.js: settings (no env, its static)
+  - env.js: settings, variables,
+  - apps.js: env, variables, settings
+  - remote.js: env, variables, settings, apps (apps for the hell of it)
+  - dbs.js: env, variables, settings, apps, remote
+  - plugins.js: env, variables, settings, apps, remote, dbs
+- @todo document injectables for each config.
+
+---
+
+theres a generic object interface and a resource interface.
+
+resource adaptors npm library? 'resource-adaptor'?
+if i build a good resource adaport thing, w/ built in testing, it will be easy to
+abstract out the attach itterators functionality and have it follow the adaptor format
+it should do testing w/o needing to locally install mocha and shit.
+itterator functionality is resource-collection resource-interface
+
+const {
+  applyInterface,
+  createCollection,
+  initResources,
+} = require('brahma-resource');
+
+var resource = load('resource');
+resource = interface(resource);
+var array = collection(resource, resource);
+
+applyResourceInterface
+// validation
+// defaults
+// wraps resource
+// api to interact w/ resource
+
+
+resources = resources.map(resource => applyResourceInterface(resource));
+resources = createResourceCollection(resources);
+- or -
+resources = initResources(resources);
+resources.forEach(resource => {
+  resource.name = 'a'; // updates name.
+})
+resources.data = [];
+
+
+---
+
+echo brahma version
 
 complex data
 - should have an api to itterate and do anythine else u wanna do
@@ -55,6 +286,7 @@ vultr
 - ubuntu 16 is LTS (document)
 
 where do prod apps write to?
+- ./tmp - called tmp because once that remote server gets destroyed when u downscaled ur env, the data is gone.
 - need to write logs, cache, and other information on running apps.
   - distibuted apps should avoid writing to server for continunity.
 - would perfer to use s3 exculsivly for file writes
@@ -108,7 +340,15 @@ needed functionality
 
 ---
 
+apps.js
+- each property can have custom validation. e.g. ipv6 validates address.
+- build process needs to DI data into our configs. by default we build for local, but `remote update` --env=remote0 will set activeEnv to remote0
+- modules: http is a module, proxy is a module. modules define their data e.g. validate, defaults, and transform config. it does other shit too, idk rifht now tho.
+
+---
+
 cli (endpoint method)
+- @todo ssh into remote node app.
 - ssh calls ~/brahma/appName/bin/cli.js
 - cli.js uses phone.local (ipc unix socket) to call resource endpoint lisitener (listen via decorator implementation when `cli` property is configured)
 - how would this test locally?
@@ -139,7 +379,7 @@ plugins
   - they should have the ability to add commands for shit like database queries?
 - i wanna see if i can do some fractal recursive architecture shit for app plugins.
 - plugin updates? should we install a new version, run tests, install next plugin, tests, itteate? maybe new plugin version have update instructions. that could be a feature of resources, some update integration functionality.
-- [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config.
+- [brahma-build-humans](@todo) - hooks into build and adds a humans.txt w/ data from config. maybe make more generic, a project asset router - can add a humans from merge.
 - for each recomended plugin, do an example in ./docs/plugins/examples/XXX and reference the example on the recomended plugins page.
 - build plugin: brahma-build-packj
 - app plugin: brahma-app-documentation hooks into status and registers a command to make sure a docs dir exists
@@ -323,6 +563,7 @@ functionality looking for use cases:
 - pre() post() ???
 - different file names and object name.
 - custom brahma command.
+- passing "apps" into remote.js and other config injectables
 
 ---
 
@@ -340,6 +581,7 @@ Brahma website
 ---
 
 long todos
+- use the word paradigm more in docs. paradigm shifting framework.
 - if ur writing a rails type app, and u go to a URL, and theres errors, send down one of those pretty error templates
 - how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
 - unit tests (objAssignDeep)

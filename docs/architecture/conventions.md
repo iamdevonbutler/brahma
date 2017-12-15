@@ -2,6 +2,21 @@
 
 It's called "Node" for a reason. Our projects deploy as a collection of distributed servers, a single app running running on each server, all communicating w/ eachother over TCP (and SSL over TCP). This architecture begets a series of "conventions", some of which differ from Node tradition.
 
+## Argument destructuring
+@todo show examples
+
+## Env
+
+### namming
+@todo
+Node precedent suggests naming your local `NODE_ENV` "development", your testing environment "test", and your production environment "production".
+- names kinda long.
+- stage is not specific enough. rarely do u stage changes on stage. it turns into the not dev branch.
+use remote0 remote1
+
+### values
+any valid js type
+
 ## Decorators
 @todo
 

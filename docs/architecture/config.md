@@ -67,6 +67,7 @@ All types allowed.
 Grouped per app.
 
 Methods
-- `config.env.get(key)`
+- `config.env.get(key, [env])` by default `env` will be the active environment.
+- `config.env.set(key, value)` @todo can return false if value is readonly.
 
 ### Integrating private ("sensative") data.
