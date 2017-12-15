@@ -6,7 +6,9 @@ $brahma remote list
 $brahma remote add [--environment=]
 $brahma remote remove
 $brahma remote update [--hold] [--checkout=]
-$brahma remote checkout [--hold]
+$brahma remote checkout [--version=]
+$brahma remote scale --appName= --environment= --count=
+$brahma remote cycle --appName= --environment= --count=
 
 $brahma remote stop
 $brahma remote start
@@ -19,8 +21,43 @@ Lists all remote environments.
 ### `remote add`
 Adds a remote environment.
 
+
+how would u deploy your documentation site to s3 and everything else to vultr.
+
+ok so u could update once.
+make code changes, add a new worker Lworker, then want to update again
+update needs to create a new server.
+
+what if u wanna add a node
+what if u wanna remove a node
+what if u wanna to upgrade boxes
+need to store server data somewhere but if multiple people doing deploys at the same time
+how to redirect http and messaging traffic after an update
+- add a node
+- remove a node
+- upgrade a box
+- downgrade a box
+
+store
+- env ip appName clusterIndex
+
+brahma.lock {
+  remote0: [
+    {ip: '333.21.2.3.0', appName: 'router', instanceId: 'sadfsfas', hostingId: '', state: 'active' },
+    {ip: '333.21.2.3.1', appName: 'router', instanceId: 'sadasdfd', hostingId: '', state: 'active' },
+    {ip: '333.21.2.3.2', appName: 'worker', instanceId: 'adfssdff', hostingId: '', state: 'active' },
+  ],
+  remote1: {
+
+  }
+}
+
+
+
+
+
 Options
-- `[--environment=]`
+- `[--environment=]` - env name
 
 If you run `add` w/o any args, it will add every environment in your `env.js` config.
 
@@ -28,7 +65,7 @@ If you run `add` w/o any args, it will add every environment in your `env.js` co
 Removes a remote environment.
 
 Options
-- `< --environment= >`
+- `--environment=` - env name
 
 ### `remote start`
 Starts a stopped environment.
@@ -158,3 +195,8 @@ vultur
 
 @note
 the server config is tested on "Ubuntu 16" - and although the OS version can be changed, do so at your own risk.
+
+make a commit hash - make sure we cant' update when everything is up to date.
+
+
+todo - terminal progress when doing adding a remote. log the steps its doing then show progress.

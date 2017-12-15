@@ -2,6 +2,9 @@
 
 It's called "Node" for a reason. Our projects deploy as a collection of distributed servers, a single app running running on each server, all communicating w/ eachother over TCP (and SSL over TCP). This architecture begets a series of "conventions", some of which differ from Node tradition.
 
+## Decorators
+@todo
+
 ## File handling
 Node excels at handling lot's of concurrent request asynchronously. Unfortunately it makes a lackluster file server. Given a distributed server architecture, file IO add complications, mandating the use of a distributed file systems such as [Amazon S3](https://aws.amazon.com/s3). Don't fret, like all core Brahma plugins, there's a free tier.
 

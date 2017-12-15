@@ -37,3 +37,5 @@ module.exports = () => ({
 
 @todo
 - if helpers are provided by plugins, display an "owner" field in the helper listing.
+- vultr registers w/ helper openVultr
+- s3 registers openS3

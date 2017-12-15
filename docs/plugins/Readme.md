@@ -16,11 +16,16 @@ e.g. developers looking to build a integration w/ "ejs" should check out the [br
 
 ### Naming plugins
 ```javascript
-brahma-${type}-${name}
+brahma-${pluginType}-${pluginName}
 ```
 
-"type" must be a valid ["plugin" type](@todo)
-"name" can be anything. 
+"pluginType" must be a valid ["plugin" type](@todo)
+"pluginName" can be anything - separate multiple words using camelCase.
+
+"App" plugins can have plugins themselves. Naming app plugin plugins follows the convention:
+```javascript
+brahma-${pluginType}-${pluginName}-plugin-${name}
+```
 
 ### Featuring plugins
 Email me, at jpescione@gmail.com, to feature your plugin [here](@todo ./list).

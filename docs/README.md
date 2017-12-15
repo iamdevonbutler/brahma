@@ -14,8 +14,6 @@
 module.exports = ({}) => ({
   appName
 });
-
-};
 ```
  edit [`./config/env`](@todo)
  [./config/variables](@todo)

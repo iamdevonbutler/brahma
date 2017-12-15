@@ -7,7 +7,7 @@
 
 The omniservices framework that doesn't give a fuck.
 
-A command line application - given a singular source of ambigious "resources" it creates a integrated collection of nodejs microservices.
+A command line application - given a singular source of ambigious "resources" it creates a integrated collection of NodeJS microservices.
 
 Koa isn't really a framework, it's more of a library. It wraps `req` and `res`, introduces a middleware system, and provides basic helpers to handle things like cookies and serving static assets; but it doesn't provide much frame to work w/ to be classified as a traditional framework.
 

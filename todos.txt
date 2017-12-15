@@ -20,6 +20,22 @@ Convention
 
 ---
 
+Pathing
+- how would u write to ./var in a endpoint
+
+complex data
+- should have an api to itterate and do anythine else u wanna do
+- resources have a manifest that we create beforehand, for times when properties accept
+multiple values we dont wanna have to run typechecking a million tinmes, so create a manifest
+and have it accessible on the API
+
+remote
+- helper - get bandwidth - bandwidth analysis page
+
+thinking we might have to force git.
+git commits and tagging for deployments should probably be a best practive.
+idk. still want streaming updates.
+
 review nodes strengths and weakenssses on google.
 
 abilities
@@ -75,9 +91,6 @@ mongorules config
 so it wont exist as load.dbs(), so we need a generic way to load stuff
 (see if the config can take config format or resources format)
 
-http
-- optionally enables ipv6. checks server to make sure its enabled.
-
 deploy API (deploy plugins must have these methods)
 - addSSHKeys
 - removeSSHKeys
@@ -103,6 +116,11 @@ cli (endpoint method)
 ---
 
 plugins
+- brahma-proxy-nginx
+  - installs on same system if node === and newNode === true
+- https://github.com/matt-major/do-wrapper
+- app plugins can have plugins.
+- brahma-app-cron has a plugin for server refreshes - brahma-app-cron-plugin-refresh
 - plugin status. run a status command, and view information about the plugin. e.g. if it registers helpers, what are these helpers.
 - build all plugin interfaces
 - brahma-database-mongo
@@ -127,6 +145,13 @@ plugins
 - app plugin: brahma-app-documentation hooks into status and registers a command to make sure a docs dir exists
 
 ---
+
+http
+- optionally enables ipv6. checks server to make sure its enabled.
+
+vorpal
+- https://github.com/SBoudrias/Inquirer.js
+- prompt
 
 static
 - readonly by convention?
@@ -197,6 +222,7 @@ contrib
 - @todo document naming conventions
 
 documentation
+- cmd+shift+p search, bookmarking (localstorage), config accepts multiple sites, deploys to S3 (plugin)
 - we want the ability for plugins to create their own site for documentation
 or github repo at least.
 - plugins can implement a docs property on our resource, but docs should be more than just
@@ -217,6 +243,8 @@ e.g. environment. might want to do type checking.
 
 auth
 - this is a very common problem. find a way to modularize and contribute.
+- confirm email functionality and email
+- forgot password functionality and email
 
 static analyisis
 - can check and make sure people are passing the proper number of params to functions
@@ -270,6 +298,7 @@ youtube videos
 ---
 
 make sure...
+- update the technologies list in the Readme.
 - varnish cache (w. nginx) web pages.
 - we can load and send (stream too) a static asset
 - api route prefix w/ version. - give a general way for them to modify koa - via start hook.
@@ -310,11 +339,6 @@ Brahma website
 
 ---
 
-Maya
-- you want your routes local to your maya project, but that data is also needed by
-your API server -> maya can locally integrate w/ brahma, give it data, and brahma makes
-http route endpoints.
-
 long todos
 - if ur writing a rails type app, and u go to a URL, and theres errors, send down one of those pretty error templates
 - how would u write a front-end app like react or something? (not super important - maybe there should be a way to build a framework for shit like this that integrates w/ brahma!)
@@ -325,12 +349,23 @@ long todos
 - handling video and audio streams.
 - remove brahma-documenation repo? (if were not gonna use it)
 - find a way to keep your code DRY across multiple brahma projects.
+- vultr API has methods like /server/start that restart a box - can we disable this?
+
+---
 
 Upgrading w/ breaking changes.
 - when we create a 1.x if there are breaking changes do this:
 create a new GH repos called brahma-1 and bramha-0.
 bramha is the same as bramha-0.
 after a while make bramha eql to bramha-1
+
+---
+
+Maya
+- you want your routes local to your maya project, but that data is also needed by
+your API server -> maya can locally integrate w/ brahma, give it data, and brahma makes
+http route endpoints.
+- creates mobile app...somehow
 
 ---
 

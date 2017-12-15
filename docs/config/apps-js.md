@@ -1,4 +1,4 @@
-# Apps.js
+# `Apps.js` config
 
 The "apps.js" file is the main configuration file for Brahma.
 

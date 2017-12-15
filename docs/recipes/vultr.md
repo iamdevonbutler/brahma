@@ -5,7 +5,7 @@
 This doc is intended to get you up and running on Vultr:
 
 ## 1) Create account and/or login
-Here's the [create account link](https://www.vultr.com/register).
+Here's the [create account page](https://www.vultr.com/register) and [login page](https://my.vultr.com).
 
 It is recommended that you create a new Vultr account for each project. The Vultr UI will be less cluttered; but more importantly, shared data, such as "startup scripts" (used by `brahma-remote-vultr`), need to be isolated on a per project basis (e.g. a startup script from an old project will conflict w/ our new project).
 
