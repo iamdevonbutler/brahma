@@ -107,7 +107,7 @@ schema
 @todo data structure for all configs and resources.
 @todo when u get a env, (the value is an obj, but we want to filter and just return the value property, have it be an interface feature)
 @todo if a value is updated, make sure we can have update() callbacks, if someone updates the refresh value we want to react to that.
-- all values for resources and config have update callbacks, and when updated, it runs validation first, returns errors if shitty, 
+- all values for resources and config have update callbacks, and when updated, it runs validation first, returns errors if shitty,
 
 schema
 - need to validate keys - make sure our env.js keys point to valid apps
@@ -323,11 +323,20 @@ mongorules config
 so it wont exist as load.dbs(), so we need a generic way to load stuff
 (see if the config can take config format or resources format)
 
-deploy API (deploy plugins must have these methods)
+`remote` API (remote plugins must have these methods)
 - addSSHKeys
 - removeSSHKeys
 - listSSHKeys must return an Oject w/ required properties such as ID so we can remove key.
 
+---
+
+Server config.
+
+https://support.rackspace.com/how-to/checking-listening-ports-with-netstat/
+
+ufw
+- https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04
+- https://www.youtube.com/watch?v=fEwuvSbMImk
 
 ---
 
@@ -356,11 +365,16 @@ cli (endpoint method)
 ---
 
 plugins
+cron
+- brahma-remote-digitalocean
+- brahma-app-logs
+ - like logdna. has database config.
 - brahma-proxy-nginx
   - installs on same system if node === and newNode === true
 - https://github.com/matt-major/do-wrapper
 - app plugins can have plugins.
-- brahma-app-cron has a plugin for server refreshes - brahma-app-cron-plugin-refresh
+- brahma-app-cron
+  - has a plugin for server refreshes - brahma-app-cron-plugin-refresh. the plugin basically adds endpoints (somehow) and probably a little config too. recursive architecture.
 - plugin status. run a status command, and view information about the plugin. e.g. if it registers helpers, what are these helpers.
 - build all plugin interfaces
 - brahma-database-mongo
