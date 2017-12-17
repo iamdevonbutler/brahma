@@ -1,12 +1,63 @@
+remember
+- jsmoves cant send closure state.
+  - if this is a design challenge, try currying. the incomplete function returns a closure state map. when args are passed it becomes complete.
+- when building cli framework
+  - design it to be implemented by a plugin ecosystem.
+
+---
+
+todos
+- build all configs.
+- build all resources.
+  - services: export data
+  - ...
+- build all plugin interfaces
+- build dharma
+- env
+  - when u get a env, (the value is an obj, but we want to filter and just return the value property, have it be an interface feature)
+  - if a value is updated, make sure we can have update() callbacks, if someone updates the refresh value we want to react to that.
+    - all values for resources have update callbacks, and when updated, it runs validation first, returns errors if shitty.
+- resources.md
+- all docs
+- brahma cli framework
+- how to ship env specific private data to remote. e.g. ur prod api secret keys.
+- how to connect to a remote, and run `dharma status`
+  - test SSH!
+- adding brahma commands. how to do it? see settings - might want to do it somewhere else.
+
+---
+
+Complex data interface API
+
+{
+  data, // where the wrapped obj (interface) lives // accessed via select.
+  raw, // original object.
+  api, // somehow explains to developers how to use the obj.
+
+  forEach() {},
+  every() {},
+  filter() {},
+  some() {},
+  find() {},
+
+  clone() {},
+
+  select(...args) {}, // .select() w/ no params returns this.data (whole obj)
+  get() {},
+  set() {}, // set w/ property specific validation.
+}
+
+---
+
 API
-- load
+- load // load loads resources
   - load.private()
   - load.resource()
   - load.config()
   - load.merge(path, {data})
   - clear require cache param?
 - readStream
-- read
+- read  // read reads data
   - read.static();
   - read.private('', true);
 - env
@@ -20,190 +71,32 @@ Convention
 
 ---
 
+env = createInterface(env, schema // see schema);
 
-- build all plugin interfaces
-
-
-
-env
-- default { overwrite: true, refresh: true }
-  - constants are opt in. JS paradigm.
-  - performance is opt in, predictability takes precedent here.
-
-env = {
-  router: {
-    local: {
-      'key.a': 'value',
-      'key.b': 'value',
-    },
-    remote0: {},
-  },
-  worker: {
-    local: {},
-    remote0: {},
-  },
-};
-
-{
-  data,
-  raw, // original object.
-
-  forEach() {},
-  every() {},
-  filter() {},
-  some() {},
-  find() {},
-
-  clone() {},
-  assign() {},
-
-  select(...args) {}, // .select() w/ no params returns this.data (whole obj)
-  get() {},
-  set() {}, // set w/ property specific validation.
-}
-
-env = createInterface(env, {
-  depth: 2,
-  wrapValues: true,
-  filterData(obj) {
-    return obj.connections;
-  },
-  defaults(key, value, parents = null) {
-    return {
-     name: key,
-      ...(value || {}),
-    };
-  },
-  validate(key, value, parents) {}, // validates each item.
-  transform(key, value, parents = null) {},
-  select(...args) {
-    return args ? args.reduce((obj, arg) => obj[arg], this.data) : this.data;
-  }
-});
+interface API
+- .select()
+- .get()
+- .set()
+- .info() // works at all levels.
+- .location() // @todo new name // basically pwd.
+- ... all interface methods
 
 env.select('router', 'local') // return local.
 env.select('router', 'remote0') // return remote0.
+env = env.select('router', 'remote0');
+env.location() // ['router', 'remote0'] router/remote0
+env = env.select('../remote1') or env.select('..', 'remote1')
+env = env.select('router', 'remote0')
 
 env.get('key.a');
 env.set('key.a', 'value');
+env.info('key.a') // {refresh: true, writeable: true}
 env.select('router', 'remote0').get('key.a'); // can use this to get types such as endpoint, service.
-env.forEach(item => {
-
-});
+env.forEach(item => {});
 env
-  .type('local')
+  .select('local')
   .filter((obj, key) => key[key.length - 1] === 'a')
   .forEach();
-
----
-
-schema
-(nestedKey1, nestedKey2, ...) => {
-  // appName === nestedKey1;
-  'http.port': {
-    default: '',
-    validate() {},
-    transform() {},
-  },
-}
-
----
-
-@todo data structure for all configs and resources.
-@todo when u get a env, (the value is an obj, but we want to filter and just return the value property, have it be an interface feature)
-@todo if a value is updated, make sure we can have update() callbacks, if someone updates the refresh value we want to react to that.
-- all values for resources and config have update callbacks, and when updated, it runs validation first, returns errors if shitty,
-
-schema
-- need to validate keys - make sure our env.js keys point to valid apps
-- validate values w/ obj above
-- sometimes apply the schema to all properties and othertimes apply different schemas
-
-// env.js - this is something that the env module exports to brahma.
-createSchema({
-  depth: 0,
-  keys: {
-    deferred: {
-      each(key, value, {apps}) {
-      return {
-        error: Object.keys(apps).indexOf(key) > -1 ? null : 'invalid appname', // validate w/ error
-        value: undefined, // transform
-      };
-    },
-    },
-  },
-  values: {},
-}, {
-  depth: 1,
-  keys: {
-    all(keys) {
-      return {
-        error: keys.indexOf('local') > -1 ? null : 'must include local'
-      }
-    }
-  }
-}, {
-  depth: 2,
-  keys: {
-    needs: ['port'],
-  },
-  values: {
-   schema: createSchema({
-     depth: 0,
-     fields: {
-       value: {
-         required: {
-           true,
-           error() {}
-         },
-         transform() {
-
-         }
-       },
-       refresh: {
-
-       }
-     }
-   }),
-  },
-  // and port
-});
-
-
-resources = {
-  endpoints: {
-    key: {},
-  },
-  services: {
-    key: {},
-  },
-  decorators: {},
-};
-
-resources = createInterface(resources, {
-  depth: 1,
-  schema,
-})
-
-resources.forEach(resource => {});
-resources.select('endpoints', 'router').forEach(resource => {});
-
----
-
-required: false,
-notNull: false,
-default: undefined,
-type: null,
-minLength: [null, null],
-maxLength: [null, null],
-validate: [null, null],
-trim: false,
-lowercase: false,
-uppercase: false,
-sanitize: false,
-denyXSS: false,
-filterNulls: false,
-transform: [null, null],
 
 ---
 
@@ -217,43 +110,6 @@ config
   - dbs.js: env, variables, settings, apps, remote
   - plugins.js: env, variables, settings, apps, remote, dbs
 - @todo document injectables for each config.
-
----
-
-theres a generic object interface and a resource interface.
-
-resource adaptors npm library? 'resource-adaptor'?
-if i build a good resource adaport thing, w/ built in testing, it will be easy to
-abstract out the attach itterators functionality and have it follow the adaptor format
-it should do testing w/o needing to locally install mocha and shit.
-itterator functionality is resource-collection resource-interface
-
-const {
-  applyInterface,
-  createCollection,
-  initResources,
-} = require('brahma-resource');
-
-var resource = load('resource');
-resource = interface(resource);
-var array = collection(resource, resource);
-
-applyResourceInterface
-// validation
-// defaults
-// wraps resource
-// api to interact w/ resource
-
-
-resources = resources.map(resource => applyResourceInterface(resource));
-resources = createResourceCollection(resources);
-- or -
-resources = initResources(resources);
-resources.forEach(resource => {
-  resource.name = 'a'; // updates name.
-})
-resources.data = [];
-
 
 ---
 
@@ -281,23 +137,6 @@ so if u plugged in a cron thing, u have the ability to rotate logs.
 docs
 - ssh docs setup is wrong and incomplete
 - resources architecture
-
-@tobuild
-- core plugins
-
-test SSH!
-
-vultr
-- ubuntu 16 is LTS (document)
-
-where do prod apps write to?
-- ./tmp - called tmp because once that remote server gets destroyed when u downscaled ur env, the data is gone.
-- need to write logs, cache, and other information on running apps.
-  - distibuted apps should avoid writing to server for continunity.
-- would perfer to use s3 exculsivly for file writes
-  - add s3 config to project setup if its necessary.
-  - document why we dont like to handle static assets w/ node.
-  - if not, need a local dir to write to.
 
 build
 - may only need to build a single app and deploy everywhere. maybe there is no build.
@@ -345,17 +184,17 @@ ufw
 
 ---
 
-file storage
+static asset / file storage
 - i think s3 has private file storage.
-
----
-
-needed functionality
-- want a way to prefix all routes w/ api version or whatever.
-- need to know how route matches are handled when there are matching multiple endpoints.
-- debug integration? (tj's npm module)
-- sitemap?
-- reading deploy output. u could be deploying 10 apps at a time, buffer the logs, and only show one app at a time.
+- where do prod apps write to?
+  - ./tmp - called tmp because once that remote server gets destroyed when u downscaled ur env, the data is gone.
+  - need to write logs, cache, and other information on running apps.
+    - apps should avoid writing to server for continunity - they are distributed.
+  - would perfer to use s3 exculsivly for file writes
+    - add s3 config to project setup if its necessary.
+    - document why we dont like to handle static assets w/ node.
+    - if not, need a local dir to write to.
+- server file API - make sure ./tmp exists.
 
 ---
 
@@ -366,11 +205,18 @@ apps.js
 
 ---
 
-cli (endpoint method)
-- @todo ssh into remote node app.
-- ssh calls ~/brahma/appName/bin/cli.js
-- cli.js uses phone.local (ipc unix socket) to call resource endpoint lisitener (listen via decorator implementation when `cli` property is configured)
-- how would this test locally?
+core utils
+- provide utility functions for common things. build as i build hashcore.
+- methods
+  - ...methods from brahma utils
+  - sanitize
+
+---
+
+env
+- default propertie { overwrite: true, refresh: true }
+  - constants are opt in. JS paradigm, data is mutateable by default.
+  - performance is opt in, predictability and DX takes precedent here.
 
 ---
 
@@ -418,13 +264,14 @@ plugins
 
 ---
 
-http
-- optionally enables ipv6. checks server to make sure its enabled.
-
-vorpal
+cli framework
 - @todo gonna roll my own cli.
 - https://github.com/SBoudrias/Inquirer.js
-- prompt
+
+---
+
+http
+- optionally enables ipv6. checks server to make sure its enabled.
 
 static
 - readonly by convention? write to 'tmp'.
@@ -583,6 +430,7 @@ youtube videos
 ---
 
 make sure...
+- DX. devs should be able to know how to use an api w/ a simple console.log. e.g. console.log(obj.api)
 - update the technologies list in the Readme.
 - varnish cache (w. nginx) web pages.
 - we can load and send (stream too) a static asset
@@ -615,6 +463,7 @@ functionality looking for use cases:
 Brahma dev todos
 
 make a logs and errors file full of functions for consistent formatting.
+- outputs logs and errors given messages.
 
 ---
 
@@ -622,6 +471,15 @@ Brahma website
 
 - built w/ brahma
 - https://codepen.io/john052/pen/KzIfb?page=4
+
+---
+
+needed functionality
+- want a way to prefix all routes w/ api version or whatever.
+- need to know how route matches are handled when there are matching multiple endpoints.
+- debug integration? (tj's npm module)
+- sitemap?
+- reading deploy output. u could be deploying 10 apps at a time, buffer the logs, and only show one app at a time.
 
 ---
 
@@ -637,6 +495,7 @@ long todos
 - remove brahma-documenation repo? (if were not gonna use it)
 - find a way to keep your code DRY across multiple brahma projects.
 - vultr API has methods like /server/start that restart a box - can we disable this?
+- how would u distribute brahma across multiple data centers, e.g. deploy project to a US East and US West infastructure.
 
 ---
 

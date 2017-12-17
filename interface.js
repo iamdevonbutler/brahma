@@ -1,3 +1,6 @@
+// name require('resource-interface')
+// @todo there should be an inherit schema option. so u can inherit a base resource schema but do
+// ur own shit. child schemas cant override parent schema rules.
 module.exports = () => {
   var envSchema = createSchema(0, 1, 2);
   var fieldSchema = createSchema(0);
