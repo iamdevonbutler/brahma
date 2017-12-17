@@ -150,6 +150,10 @@ Resources entry points
 - cron
 * since we are wrapping the "handler" and triggering other functions, they should be able to declare the triggers. e.g. you may only want to trigger an action after handler was called from cron and not when it's accessed via http.
 
+resource versions (endpoints, services, utils, decorators, middleware, plugins)
+- should have a helper function to identify what resource has multiple versions
+and what code is requiring each version.
+
 ---
 
 resources

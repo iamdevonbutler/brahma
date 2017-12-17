@@ -7,6 +7,7 @@ $brahma helper eol
 $brahma helper iwantmyname
 $brahma helper latestDependencies
 $brahma helper looseEnds
+
 ```
 
 
@@ -39,3 +40,4 @@ module.exports = () => ({
 - if helpers are provided by plugins, display an "owner" field in the helper listing.
 - vultr registers w/ helper openVultr
 - s3 registers openS3
+- helper - get bandwidth - bandwidth analysis page - hook from remote plugin

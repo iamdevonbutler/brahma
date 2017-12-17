@@ -7,7 +7,10 @@ remember
 ---
 
 todos
+- how does our apps file look given a dharma architecture.
 - build all configs.
+ - dbs config w/ mongorules - make sure u can configure other db strategies.
+ - ....
 - build all resources.
   - services: export data
   - ...
@@ -27,46 +30,20 @@ todos
 - refactor remote.md in the context of an autoscaling dharma environment. do after i build dharma.
 - how to install, and update, dependency versions. require a contrib dependency, where is the version stored, and how to update remote if we update the version.
   - what happens if an app plugin has a conflicting dependency.
+- voice memos
 
 ---
 
-`info` command
-- seems like we are doing a lot w/ status.
-- modules hook into info like the hook into status. dynamic, takes params.
-- like `helpers`, is organized into categories, each category is the name of the module that hooks into it.
-  - u dont want to see a big list of helpers w/o some classification. group into modules. i want to see all the helpers for this plugin and that plugin.
-- would be useful to log API details. all types of APIs, e.g. file helper API, resource API, load API,
 remote
-- helper - get bandwidth - bandwidth analysis page
 
-abilities
-- i like the idea of plugging shit it and getting abilities because of it.
-so if u plugged in a cron thing, u have the ability to rotate logs.
-
-docs
-- ssh docs setup is wrong and incomplete
-- resources architecture
-
-build
-- may only need to build a single app and deploy everywhere. maybe there is no build, and we just pipe a read stream from core to our remotes.
-- have a way to add files to apps. e.g. add humans.txt in app root (merge integration).
-
-generate
-- if u run generate, there is some yeoman questionair type shit. have forsm that are fixed, and forms that repeat (useful for mongorules)
-
-./docs
-- general project documentation. can be integrated w/ by brahma-app-documenation
-
-mongorules config
-- @todo
-- if we have config in a dbs dir - dbs isnt exactly a standard resource,
-so it wont exist as load.dbs(), so we need a generic way to load stuff
-(see if the config can take config format or resources format)
-
-`remote` API (remote plugins must have these methods)
+remote plugins must have these methods (remote API)
 - addSSHKeys
 - removeSSHKeys
 - listSSHKeys must return an Oject w/ required properties such as ID so we can remove key.
+
+info command
+- run via SSH
+- logs: dependencies and versions, app.js config, server info, confirms security shit, ipv6
 
 ---
 
@@ -120,6 +97,7 @@ apps.js
 - each property can have custom validation. e.g. ipv6 validates address.
 - build process needs to DI data into our configs. by default we build for local, but `remote update` --env=remote0 will set activeEnv to remote0
 - modules: http is a module, proxy is a module. modules define their data e.g. validate, defaults, and transform config. it does other shit too, idk rifht now tho.
+- updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
 
 ---
 
@@ -139,6 +117,8 @@ env
 ---
 
 plugins
+
+- brahma-app-documenation
 
 - brahma-remote-digitalocean
   - https://github.com/matt-major/do-wrapper
@@ -180,13 +160,21 @@ plugins
 - build plugin: brahma-build-packj
 - app plugin: brahma-app-documentation hooks into status and registers a command to make sure a docs dir exists
 
+plugin abilities
+- plugins register abilites, view abilites w/ the info command.
+so if u are using the cron plugin, it provides the ability to rotate logs, it just needs config.
+
+- each plugin type has it's own interace / API - @todo build and document.
+
 ---
 
-cli framework
+CLI framework
 
 functionality
 - echo brahma version on startup
 - helpers and generate and status group subcommands by module (modules hook into eachother and register subcommands)
+- command queue/buffer
+  - when ur downloading dependencies, users may want to take other actions, need to queue them.
 
 dependencies
 - https://github.com/SBoudrias/Inquirer.js
@@ -194,7 +182,7 @@ dependencies
 ---
 
 http
-- optionally enables ipv6. checks server to make sure its enabled.
+- optionally enables ipv6. checks server to make sure its enabled (we should try to do this alot, confirm remote server env and info).
 
 ---
 
@@ -250,6 +238,29 @@ proxy
 
 ---
 
+info command
+- seems like we are doing a lot w/ status.
+- modules hook into info. callbacks are dynamic, takes params.
+- like `helpers`, is organized into categories, each category is the name of the module that hooks into it.
+  - u dont want to see a big list of helpers w/o some classification. group into modules. i want to see all the helpers for this plugin and that plugin.
+- would be useful to log API details. all types of APIs, e.g. file helper API, resource API, load API,
+remote
+- i want the ability to identify a resource, and for each property, know what is injected.
+
+---
+
+generate command
+- JSON form functionality - for mongorules, we need a repeating form - each schema item is a form, and it repeats until ur done.
+  - mongorules needs to be able to hook into generate @todo
+
+---
+
+build
+- may only need to build a single app and deploy everywhere. maybe there is no build, and we just pipe a read stream from core to our remotes.
+- have a way to add files to apps. e.g. add humans.txt in app root (merge integration).
+
+---
+
 Dependency Pathing
 - abs paths...
 - 'a1': './services/a1'
@@ -261,18 +272,15 @@ Dependency Pathing
 Route pathing
 - endpoint "route" property to override default.
 
+---
+
 settings
 - nodeVersion - not implemented, check to make sure node is of the proper version.
 - require using 'const' - if we have a `require` field in our utils and resources
 and we are importing a npm module, we are going to make it var by default, because
 people will want to mutate data and if we dont there will be errors.
 
-contrib
-- apps, decorators, middleware, endpoints, utils (make everything contribable)
-- `brahma-${type}-${name}`
-- types = [decorator, decorators, middleware, middlewares ...]
-- namspace contrib. e.g. iamdevonbutler/decoratorName
-- @todo document naming conventions
+---
 
 documentation
 - cmd+shift+p search, bookmarking (localstorage), config accepts multiple sites, deploys to S3 (plugin)
@@ -282,38 +290,32 @@ or github repo at least.
 an explination of resources. how do u contribute a general comment on the architecture.
 - integrate w/ gitbook
 
-DI & status (or could there be an `info` command)
-- i want the ability to identify a resource, and for each property, know what is injected.
-
-resource versions (endpoints, services, utils, decorators, middleware, plugins)
-- should have a helper function identify what resource has multiple versions
-and what code is requiring each version.
-
-validation
-- kinda a edge case, but u should be able to write custom validators for your configs.
-e.g. environment. might want to do type checking.
-- put custom validators in lib
+---
 
 auth
 - this is a very common problem. find a way to modularize and contribute.
 - confirm email functionality and email
 - forgot password functionality and email
 
+---
+
 static analyisis
 - can check and make sure people are passing the proper number of params to functions
 either when using $ctx, or when using pre() and post({}, args)
 - { main(null, param) } // make sure u dont pass null. will error normally but the message sucks.
 
-command queue/buffer
-- when ur downloading dependencies, users may want to take other actions, need to queue them.
+---
 
-apps.js
-- updating ur apps file, e.g. you enable cors, we need a way to download koa-cors when in watch mode
+env
 
-naming
-- stage and production. wish i had better names.
+- naming
+  - remote0
+  - remote1
+  - local
 
-Renaming shit
+---
+
+Renaming shit (@todo is this still relevant w/ dharma?)
 - renaming a server (how does it affect the rest of your code - does the updating suck?)
   - would be awesome if we could identify the dependencies either though static analysis or otherwise
   - think what else do u rename and how to help w/ that.
