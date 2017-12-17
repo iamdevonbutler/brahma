@@ -7,15 +7,6 @@ const chalk = require('chalk');
 const chokidar = require('chokidar');
 const {EOL} = require('os');
 
-
-
-
-// todos.
-// run brahma outside a brahma app. make sure the message is appropiate.
-
-
-
-
 // Error handling.
 process.on('unhandledRejection', console.error);
 
@@ -26,10 +17,10 @@ if (majorVersion < 9) {
   return;
 }
 
-// const configs = [
-//   'settings',
-//   'apps',
-// ];
+const configs = [
+  'settings',
+  'apps',
+];
 //
 // configs.forEach(name => {
 //   const setting = loadConfig('settings', configDirPath);
@@ -86,7 +77,22 @@ state.apps = loadAppsConfig(configPath, state.env);
 
 // Load env.
 const envPath = path.join(process.cwd(), 'config/env.js');
-state.env = loadEnv(envPath, state.apps);
+// state.env = loadEnv(envPath, state.apps);
+
+
+
+
+
+// does the resource encapsulate update functionality - hooks that respond to update activty?
+var resourceIterface = require('../lib/resource-interface');
+state.env = resourceIterface(loadEnv(envPath, state.apps), require('../lib/config/env'));
+console.log(state.env);
+return;
+
+
+
+
+
 
 // Load variables.
 const variablesPath = path.join(process.cwd(), 'config/variables.js');

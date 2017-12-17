@@ -1,11 +1,13 @@
 ## brahma `generate`
 
+Generates project files.
 
 ## Commands
 - writeLocalCert
 - writeEslintrc
 - private?
-
+- resource
+  - -e exportOnly -r addsRequire -n name [...]
 
 `generate`
 - resource

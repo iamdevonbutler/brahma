@@ -5,3 +5,6 @@ the Object key problem
 - knowing an objects key can be very important, and u know if, if ur doing a loop,
 but if your passing objects around the value of the key can be absent. each object
 should have a name property which is the name of its key.
+
+Fixed dep versions
+- do fixed dep versions ensure your dependencies deps are always pulling in the same version. i think not.

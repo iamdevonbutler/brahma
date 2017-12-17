@@ -1,13 +1,15 @@
 remember
 - jsmoves cant send closure state.
   - if this is a design challenge, try currying. the incomplete function returns a closure state map. when args are passed it becomes complete.
-- when building cli framework
-  - design it to be implemented by a plugin ecosystem.
+- when building cli framework "commands" module
+  - design helpers, generate, status, info, test, to be implemented by a plugin ecosystem.
 
 ---
 
 todos
+- loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
 - how does our apps file look given a dharma architecture.
+- how to ship env specific private data to remote. e.g. ur prod api secret keys.
 - build all configs.
  - dbs config w/ mongorules - make sure u can configure other db strategies.
  - ....
@@ -22,7 +24,6 @@ todos
     - all values for resources have update callbacks, and when updated, it runs validation first, returns errors if shitty.
 - resources.md
 - brahma cli framework
-- how to ship env specific private data to remote. e.g. ur prod api secret keys.
 - how to connect to a remote, and run `dharma status`
   - test SSH!
 - adding brahma commands. how to do it? see settings - might want to do it somewhere else.
@@ -31,6 +32,8 @@ todos
 - how to install, and update, dependency versions. require a contrib dependency, where is the version stored, and how to update remote if we update the version.
   - what happens if an app plugin has a conflicting dependency.
 - voice memos
+- test functionality
+- brahma-command-essentials. how to load more command plugins?
 
 ---
 
@@ -169,6 +172,7 @@ so if u are using the cron plugin, it provides the ability to rotate logs, it ju
 ---
 
 CLI framework
+- run brahma outside a brahma app. make sure the message is appropiate.
 
 functionality
 - echo brahma version on startup
@@ -188,10 +192,7 @@ http
 
 private
 - in .gitignore
-- explain how to integrate private data w/ env.
-- @todo need a way to let users who clone the repo know what to put in here
-- maybe have some deploy integration, post deploy, make it easy for users to create their private dir.
-solves the problem of how to get private shit on remote servers.
+- see ./config/private.js
 
 ---
 
@@ -376,6 +377,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - u can upload images from a website and throw it in S3
 - it has a good way to reuse common functionality across projects like forgot password functionality
 - i can write have an app create a rails site and use custom routing, custom index page, custom about page.
+- check remote file permissions for app files.
 
 ---
 

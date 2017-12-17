@@ -2,7 +2,7 @@
 
 Maybe make everything a resource somehow?
 
-Resouce rules
+Resource rules
 - needs a name property. all objects should have a name property === key.see notes.txt
 
 Complex data interface API

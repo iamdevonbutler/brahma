@@ -8,7 +8,7 @@ Brahma projects can be deconstructed into:
 - "static assets"
 - "dependencies"
 
-> If you want to find the secrets of the Brahma, think in terms of `resources`, `assets`, and resource `dependencies` - Thomas Edison
+> If you want to find the secrets of the Brahma, think in terms of `resources`, `static assets`, and resource `dependencies` - Thomas Edison
 
 ## Resources
 This term is deliberately vague as it generally refers to
