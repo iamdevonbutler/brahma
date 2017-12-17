@@ -198,5 +198,6 @@ the server config is tested on "Ubuntu 16" - and although the OS version can be 
 
 make a commit hash - make sure we cant' update when everything is up to date.
 
+@todo want a way to checkout a different versions of the site, u should be able to upload a new version but not have it take effect until u manually check it out. so u can put up commits for site maintaince
 
 todo - terminal progress when doing adding a remote. log the steps its doing then show progress.

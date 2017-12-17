@@ -2,6 +2,8 @@
 
 How to read and write files using Brahma.
 
+@todo talk about ./static - what is it used for if we are using s3.
+
 ## File storage
 There are two types of files of concern here:
 - Shared files

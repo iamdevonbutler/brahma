@@ -2,6 +2,67 @@
 
 Maybe make everything a resource somehow?
 
+Resouce rules
+- needs a name property. all objects should have a name property === key.see notes.txt
+
+Complex data interface API
+
+{
+  data, // where the wrapped obj (interface) lives // accessed via select.
+  raw, // original object.
+  api, // somehow explains to developers how to use the obj.
+
+  forEach() {},
+  every() {},
+  filter() {},
+  some() {},
+  find() {},
+
+  clone() {},
+
+  select(...args) {}, // .select() w/ no params returns this.data (whole obj)
+  get() {},
+  set() {}, // set w/ property specific validation.
+}
+
+---
+
+env = createInterface(env, schema // see schema);
+
+interface API
+- .select()
+- .get()
+- .set()
+- .info() // works at all levels.
+- .location() // @todo new name // basically pwd.
+- ... all interface methods
+
+env.select('router', 'local') // return local.
+env.select('router', 'remote0') // return remote0.
+env = env.select('router', 'remote0');
+env.location() // ['router', 'remote0'] router/remote0
+env = env.select('../remote1') or env.select('..', 'remote1')
+env = env.select('router', 'remote0')
+
+env.get('key.a');
+env.set('key.a', 'value');
+env.info('key.a') // {refresh: true, writeable: true}
+env.select('router', 'remote0').get('key.a'); // can use this to get types such as endpoint, service.
+env.forEach(item => {});
+env
+  .select('local')
+  .filter((obj, key) => key[key.length - 1] === 'a')
+  .forEach();
+
+
+
+complex data
+- should have an api to itterate and do anythine else u wanna do
+- resources have a manifest that we create beforehand, for times when properties accept
+multiple values we dont wanna have to run typechecking a million tinmes, so create a manifest
+and have it accessible on the API
+
+
 ## Rules
 - A resource is a ALWAYS a JS Object.
 - A resource NEVER uses `this`

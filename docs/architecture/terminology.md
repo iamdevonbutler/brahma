@@ -5,20 +5,16 @@ terms to later apply a lower-level understanding.
 
 Brahma projects can be deconstructed into:
 - "resources"
-- "config"
 - "static assets"
 - "dependencies"
 
-> If you want to find the secrets of the Brahma, think in terms of `resources`, `config`, `assets`, and resource `dependencies` - Thomas Edison
+> If you want to find the secrets of the Brahma, think in terms of `resources`, `assets`, and resource `dependencies` - Thomas Edison
 
 ## Resources
 This term is deliberately vague as it generally refers to
 Resource definition
 - @todo
 link to resources page.
-
-## Config
-@todo
 
 ## Static assets
 @todo
