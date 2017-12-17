@@ -1,2 +1,7 @@
 https://github.com/yeoman/update-notifier
 - not using - would sacrifice consistency for users of the cli.
+
+the Object key problem
+- knowing an objects key can be very important, and u know if, if ur doing a loop,
+but if your passing objects around the value of the key can be absent. each object
+should have a name property which is the name of its key.

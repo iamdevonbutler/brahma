@@ -12,6 +12,9 @@ Maybe make everything a resource somehow?
 
 export?
 
+resources should have a "meta" property
+- maybe change name, but it needs to include the datatypes of each property for performance,
+u dont want to typecheck each property before interacting w/ it.
 
 Resource structure
 - resources do not have a strictly defined folder structure (structure here, at scale, can lead to disorganization) but there are some rules.

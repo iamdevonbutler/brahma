@@ -20,6 +20,11 @@ Convention
 
 ---
 
+
+- build all plugin interfaces
+
+
+
 env
 - default { overwrite: true, refresh: true }
   - constants are opt in. JS paradigm.
@@ -340,6 +345,11 @@ ufw
 
 ---
 
+file storage
+- i think s3 has private file storage.
+
+---
+
 needed functionality
 - want a way to prefix all routes w/ api version or whatever.
 - need to know how route matches are handled when there are matching multiple endpoints.
@@ -365,25 +375,33 @@ cli (endpoint method)
 ---
 
 plugins
-cron
+
 - brahma-remote-digitalocean
+  - https://github.com/matt-major/do-wrapper
+
 - brahma-app-logs
  - like logdna. has database config.
+
 - brahma-proxy-nginx
   - installs on same system if node === and newNode === true
-- https://github.com/matt-major/do-wrapper
-- app plugins can have plugins.
+
 - brahma-app-cron
+  - https://github.com/kelektiv/node-cron
+    - write custom wrapper over cronttab? i want to but how do u get it to work locally.
   - has a plugin for server refreshes - brahma-app-cron-plugin-refresh. the plugin basically adds endpoints (somehow) and probably a little config too. recursive architecture.
-- plugin status. run a status command, and view information about the plugin. e.g. if it registers helpers, what are these helpers.
-- build all plugin interfaces
-- brahma-database-mongo
-  - needs to hook into `generate` and register createSchema. fractal architecute?
+
 - brahma-database-mongodb
-- plugin that registers w/ the deploy pre hook to make sure u did a git tag before updating. can abort deploy.
+  - needs to hook into `generate` and register createSchema. fractal architecute?
+
 - brahma-template-jsx
+
 - brahma-library-essentials
   - request -> axios, adds as an injectable (@todo document adding an injectable)
+
+- plugin status (or info?). run a status command, and view information about the plugin. e.g. if it registers helpers, what are these helpers.
+- app plugins can have plugins.
+- plugin that registers w/ the deploy pre hook to make sure u did a git tag before updating. can abort deploy.
+  - not doing because tagging is going to be in core. but leave to make sure this would still be possible.
 - plugins hook into status to talk about their system dependencies. e.g. brahma-database-mongodb wants mongod running - need to check (database-mongond integrates w/ serve which integreate w/ status to add a check for mongod).
 - plugins document via API how theyre goning to modify your project. so they can say that their going to ad a dir in root or add a config file.
 - docs - "integration" or "config"?
@@ -404,15 +422,25 @@ http
 - optionally enables ipv6. checks server to make sure its enabled.
 
 vorpal
+- @todo gonna roll my own cli.
 - https://github.com/SBoudrias/Inquirer.js
 - prompt
 
 static
-- readonly by convention?
+- readonly by convention? write to 'tmp'.
+  - how to handle profile pic uploads, and updates to that upload?
+    - s3. easy.
+    - u couldn't write it to /tmp or anything local.
 - @todo s3 integration
 
 config
 - modules need a way to respond to cahnges in config.
+- config might need its own injectables. what if u wanna use path?
+- should config be a resource.
+   - wont need config.js
+   - will be more consistent
+   - resources should be flexible, they are currently designed around functions, but should
+   consider the importance of exporting other types of data.
 
 assets
 - asset config file. i like the idea of creating a map for assets, the obj can have props for static caching, like a cache id and shit.? a method that passes in a asset name and some other data and u return the path.
@@ -546,6 +574,9 @@ youtube videos
 - beginner screencast - very detailed?
 - how to build a simple website - inspired by rails
 - how to build some complex shit
+- small videos
+  - how we manage private data
+  - ... @todo
 - * make a bunch of little videos so people can easily find out how to do shit. can also make a big video too and cut clips out from it.
 - * videos do that zoom in shit, like they zoom in on close shit. not essential.
 
@@ -619,9 +650,9 @@ after a while make bramha eql to bramha-1
 
 Maya
 - you want your routes local to your maya project, but that data is also needed by
-your API server -> maya can locally integrate w/ brahma, give it data, and brahma makes
-http route endpoints.
-- creates mobile app...somehow
+your API server -> maya can locally integrate w/ brahma, and using the data in the maya project,
+it creates a custom app plugin for Mayas API.
+-
 
 ---
 

@@ -39,11 +39,14 @@ module.exports = () => {
     }
    }
   });
+  fieldSchema.require.keys(['value', 'refresh', 'overwrite']);
   fieldSchema.validate.every.field(schema {
-    needs: ['value', 'refresh', 'overwrite'], // needs keys. i dont think we need to list values here, we do that w/ the other props.
     required() {}, // required will never be called if we only itterate over the fields they give us.
     // @todo, need an actual schema.
   });
-  envSchema.values.schema(fieldSchema);
+  envSchema.attachSchema(fieldSchema);
   return envSchema;
 };
+
+// obj verb ?
+// schemaObj.[validate|assign|require]

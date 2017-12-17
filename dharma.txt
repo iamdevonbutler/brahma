@@ -1,0 +1,68 @@
+Dharma
+
+---
+
+@todo how to integrate a realtime server
+
+overrides
+- special config that overides some default behavior intented for safty. e.g. response time target ceiling.
+
+configurations
+- reconfigure (see if it needs to scale) every: 60 seconds
+- response time target: // deploy, test, load test, take the average response time data, and use it as ur beginning target
+- cost data: max spending. // if exceeded, we stop scaling, and email whoever is on the list
+
+
+EVERY SERVER KNOWS EVERYTHING. anybody can be everybody.
+
+@todo there is some recursive handshake that happens when agreeing on scaling.
+@todo delegating worker tasks out among workers
+@todo how to handle updates.
+- config updates?
+- dependency updates?
+- resource updates?
+- static asset updates?
+
+
+All handlers are timed, and they all share their handler times w/ their requesters.
+if you microtime a http endpoint, part of the request time will include the time workers and
+other apis spend doing work. so all system endpoints microtime themselves, and when they are called
+upon from another part of the system, they appned their handler time in the reponse. so we know, exactly
+how long each component of the system spend doing work.
+- OR -
+BETTER
+EVERYONE IS RESPONSIBLE FOR THEMSELVES
+
+
+
+- monitor http response time, have a default target (@todo just test a real app).
+  - if an unreasonably low target is given, one that cant be attained, we scale up until diminishing
+  returns are met (@todo quantify).
+  - if an unreasonably high target is given, there is a brahma threashold to prevent u from being a funcking dunce. (@todo are threasholds a hack)
+  - what is the workflow like?
+    - how often do u review data. what data...each handled request is decorated and microtimed. we check
+    to see the average response time for the previous X seconds: (@todo when do u check and why)
+      - if we are to slow, we add nodes:
+        - @todo how many?
+        - is there a grace window? no, servers are cheap.
+        - @todo what do u do on failure?
+
+---
+
+system expectations.
+- there will be http requests from various clients (laptops, phones)
+rendering text, images, streaming audio and video. Expected response time (> X).
+  - these requests are routed to a node, of type 'router'...
+
+start w/ a router and an worker
+- why
+  - it is assumed that there will be work tasks, and work tasks block the thread,
+  and we cant have that, so if 1 doesn't work, we see if 2 works, and it does.
+
+explain how the system works.
+
+if a worker gets busy
+- what happens
+
+if a router gets busy
+- what happens
