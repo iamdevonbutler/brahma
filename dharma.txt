@@ -2,7 +2,22 @@ Dharma
 
 ---
 
-@todo how to integrate a realtime server
+sytstem architecture
+- would be nice if there didnt need to be threasholds and static values. keep to a minimun.
+
+HA (high availability)
+- 2 load balancers (active, and passive in case of failure)
+  - https://www.digitalocean.com/community/tutorials/how-to-use-floating-ips-on-digitalocean
+  - https://www.digitalocean.com/community/tutorials/how-to-create-a-high-availability-setup-with-heartbeat-and-floating-ips-on-ubuntu-14-04
+  - when the passive LB becomes active, we spin up another passive and place it in queue.
+- could assign odd ips to workers and even ips to routers. have a system for finding people to communicate w/.
+- we should extend this concept, and have failure backup servers ready for every server type. if a router goes down, we should be able to spin one back up in like 10 seconds.
+
+when u update dependencies, we just clone the cluster and add new files. we use a remote1 config,
+so that means different (mirror) databases, and we load balanace requests over to this enviornment
+but these are just copys of requeests, the original request still gets handled by the remote0 cluster.
+we make sure the results are identical for however long (@todo)
+- need a way to not fuck shit up, like inserting duplicate files and db entries.
 
 overrides
 - special config that overides some default behavior intented for safty. e.g. response time target ceiling.
@@ -66,3 +81,8 @@ if a worker gets busy
 
 if a router gets busy
 - what happens
+
+---
+
+long todos
+- how to integrate a realtime server that maintains persistent connections w/ clients over time.
