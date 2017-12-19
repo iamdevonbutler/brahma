@@ -13,12 +13,7 @@
 - `readStream()`
 
 API
-- load // load loads resources
-  - load.private()
-  - load.resource()
-  - load.config()
-  - load.merge(path, {data})
-  - clear require cache param?
+- load
 - readStream
 - read  // read reads data
   - read.static();
@@ -32,6 +27,29 @@ API
 Convention
 - all reads via read are async?
 
----
 
-@todo
+## `load()` API
+
+- `load.node(path)`
+- `load.npm(path)`
+- `load.github(path)`
+- `load.resource(resourceName/path)`
+- `load.private(path)`
+
+By default, `load()` uses "absolute" pathing.
+
+"Relative" pathing is possible w/ the `./` prefix.
+
+Example:
+```javascript
+module.exports = ({load}) => {
+  import: {
+    'fs': load.node('fs'),
+    'npmmodule': load.npm('npmmodule'),
+    'githubrepo': load.github('username/reponame'),
+    'googleApiKey': load.resource('private/keys').google,     
+    'relativeResource': load.resource('./path'),     
+    'googleApiKey': load.private('keys').google,
+  }
+};
+```

@@ -300,6 +300,14 @@ auth
 - this is a very common problem. find a way to modularize and contribute.
 - confirm email functionality and email
 - forgot password functionality and email
+- certain actions require reenter password. e.g. github delete repo. make sure there is either
+a decorator or a plugin that does this.
+
+---
+
+load
+- needs a way to load from private github repos.
+
 
 ---
 
