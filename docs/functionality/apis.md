@@ -1,19 +1,12 @@
 # APIs
 
-## Brahma core APIs
-- `resources`
-- `static assets`
-- `dependencies`
-
-
-
 `utils` a resource. how does this work. what if users want their own utils. maybe they just replace methods. idk.
 - `load()`
 - `read()`
 - `readStream()`
 
 API
-- load
+- load (for js only)
 - readStream
 - read  // read reads data
   - read.static();

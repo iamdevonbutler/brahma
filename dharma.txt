@@ -4,6 +4,14 @@ Dharma
 
 sytstem architecture
 - would be nice if there didnt need to be threasholds and static values. keep to a minimun.
+- idk if we will need to do this, but u create a cluster and load balance to the nodes. what if
+we created multiple clusters, load balanced btw the clusters, which load balance to the nodes,
+so that the equation can balance out. so each cluster would have a slightly different config,
+and each cluster communicates to one another.
+
+there is unpredicatable traffic, and predictable traffic.
+- predictable traffic are cron tasks. when u fire off a cron task, have there be a way to
+tell dharma that this task will be run again in the future so dharma can configure itself in anticipation (might be a hack)
 
 HA (high availability)
 - 2 load balancers (active, and passive in case of failure)

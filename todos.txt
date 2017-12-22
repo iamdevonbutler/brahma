@@ -306,8 +306,9 @@ a decorator or a plugin that does this.
 ---
 
 load
-- needs a way to load from private github repos.
-
+- @todo needs a way to load from private github repos. theres the auth thing.
+  - use SSH method (https://stackoverflow.com/questions/28728665/how-to-use-private-github-repo-as-npm-dependency)
+- @todo build out resource methods (private, endpoint) // do at end after resources are built out.
 
 ---
 
@@ -389,6 +390,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - it has a good way to reuse common functionality across projects like forgot password functionality
 - i can write have an app create a rails site and use custom routing, custom index page, custom about page.
 - check remote file permissions for app files.
+- database pattern - put decoupled data in its own DB for scaling. w/ mongo u dont do joins, so take advantage of this.
 
 ---
 
@@ -459,7 +461,3 @@ it creates a custom app plugin for Mayas API.
 -
 
 ---
-
-jsmoves
-- Infinity
-- mention does not support symbols

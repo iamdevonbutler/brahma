@@ -121,6 +121,7 @@ Resource properties
 * a big thing w/ neo is extending functionality - so there can be more properties. @todo provide examples of extending a resource e.g. "cron" integration.
 
 Resource types
+- utils (pure functions - your pipefittings)
 - endpoint
 - plugin
 - util (not dependent on other resources. "resource pure")
