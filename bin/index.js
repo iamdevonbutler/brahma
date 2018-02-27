@@ -6,6 +6,7 @@ const {fileExists, forEach, map, reduce, logArray} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const {EOL} = require('os');
+const objectInterface = require('js-object-interface');
 
 // Error handling.
 process.on('unhandledRejection', console.error);
@@ -82,10 +83,8 @@ const envPath = path.join(process.cwd(), 'config/env.js');
 
 
 
-
 // does the resource encapsulate update functionality - hooks that respond to update activty?
-var resourceIterface = require('../lib/resource-interface');
-state.env = resourceIterface(loadEnv(envPath, state.apps), require('../lib/config/env'));
+state.env = objectInterface(loadEnv(envPath, state.apps), require('../lib/config/env'));
 console.log(state.env);
 return;
 

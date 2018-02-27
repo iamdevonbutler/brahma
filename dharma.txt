@@ -2,6 +2,10 @@ Dharma
 
 ---
 
+make sure i build things for the right byte order (big/little endian)
+
+---
+
 sytstem architecture
 - would be nice if there didnt need to be threasholds and static values. keep to a minimun.
 - idk if we will need to do this, but u create a cluster and load balance to the nodes. what if
@@ -89,6 +93,103 @@ if a worker gets busy
 
 if a router gets busy
 - what happens
+
+---
+
+Spec
+
+1 active LB and 1 passive LB deployed on d.o (*1)
+we deploy 2 nodes for redundancy (*2)
+
+1 request comes in, and based on the URL, we know the appropriate node route handler (*3)
+forward request to first node in set (*4)
+node handles the request, and replys to LB, which then replys to the client. (*5)
+LB calculates request duration and adds it to the route map. {endpointName: '', route: '', perfAvg: '', durations: []}
+
+another request comes in (w/o any open requests) - which server to choose and when to scale up/down?
+- nodes {nodeIP, wait: adds up request duration} chooses the node w/ the smallest wait. (*6, *7)
+how to segregate long infrequent tasks to a subset of nodes? need to track endpoint frequency.
+
+Appendix
+*1 HA setup. each node pings the active LB every 5 (configurable, arbitrary) seconds, and on error, it activates the backup LB.
+*2 each node route defines a test. on deploy, we test each route and gather a perf benchmark to be used by LB.
+*3 route parsing done in C. create a map, {endpointName: '', route: ''} and forward the request
+to a node server. C also forces https, prevents DDoS, ratelimits, letsencrypt, and forwards asset requests to s3 w/ static caching.
+*4 c keeps IPs of all available nodes. need to hot reload when we add/remove nodes.
+*5 https://softwareengineering.stackexchange.com/questions/312956/what-does-a-load-balancer-return
+*6 all incoming requests increment the nodes {wait: ''} and finished requests decrement.
+*7 finished requests compare the perfAvg to actual duration and decide to add/remove nodes.
+when to add more nodes? lets not be arbitrary. i think you can set config value which for waitMultiplier.
+so if an endpoint is 10ms perfAvg, w/ a waitMultiplier of 2x, u dont scale until that endpoint's actual
+duration (find median across all nodes) is > 20ms. this is how u regulate cost.
+
+delegation. an equation takeIng:
+- droplet spinup time
+- perfAvg (relative to other endpoints),
+- actual perf (realtive to other endpoints)
+- endpoint call frequency
+- #nodes,
+- cron tasks
+
+say a endpoint is called (perf === 50ms)
+LB to a medium node. nodes can be small, medium, large, or ...
+
+3 4 4 5 5 6 6 7 9
+10 17 20 20 20
+34
+50 50
+63
+200
+
+function waitTime(interval = 10000ms, frequency = 1 req/ms, time per request = 10ms) {
+  return (requestDuration * interval) - (frequency * interval); // 9000 ms after a 1 minute interval
+}
+
+// over the next 15 seconds, 30 seconds, ...., highest perfAvg.
+function predictTraffic() {
+
+};
+
+function groupWaitTime([3,4,4,5,5,6,6,7,9]) {
+  return obj.reduce((p, c) => {
+    return p+c;
+  }, 0);
+};
+
+0-9   groupWaitTime(predictTraffic(obj, 1000*15))
+10-19 groupWaitTime(predictTraffic(obj, 1000*15))
+20-29 groupWaitTime(predictTraffic(obj, 1000*15))
+
+[1,2,...29,30]
+function optimizeGroups(groups) {
+  var matrix = possibilities(groups);
+  var waits = matrix.map((row, i) => {
+    return {key, time: groupWaitTime(row), numNodes: getNumNodes(groupWaitTime(row), waitMultiplier)}
+  })
+  waits = orderAsc(waits);
+  var fastestConfig = waits.find(wait => {
+    if (perfAvg * waitMultiplier < wait) return wait;
+  });
+  return fastestConfig;
+}
+
+function getNumNodes(time, waitMultiplier, averagePerf) {
+
+};
+
+
+Notes
+If there is the need to tie a client to a particular application server — in other words,
+make the client’s session “sticky” or “persistent” in terms of always trying to select a
+particular server — the ip-hash load balancing mechanism can be used.
+- how do cookies work?
+- how does realtime work?
+C has hot reloading of config.
+if the LB communicates using http can we be sure there are no man in the middle attacks?
+maybe set a DDoS limit, which can be changed during perf testing.
+How to handle cron? we may need to simulate cron jobs by first capturing normal traffic
+and applying the cron load over time.
+for priming and testing we need a way to spin up a test DB on mongo and redis.
 
 ---
 

@@ -1,10 +1,7 @@
-remember
-- jsmoves cant send closure state.
-  - if this is a design challenge, try currying. the incomplete function returns a closure state map. when args are passed it becomes complete.
-- when building cli framework "commands" module
-  - design helpers, generate, status, info, test, to be implemented by a plugin ecosystem.
+open and opinonated
 
----
+resources have built in unit testing, do perf testing too. have a way to compare different versions of function.
+look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
 
 todos
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
@@ -360,15 +357,40 @@ youtube videos
 - beginner screencast - very detailed?
 - how to build a simple website - inspired by rails
 - how to build some complex shit
+- server performance - compare my server setup to a nginx round robbin setup for perf.
+- security
+show the results in the beginning then after show low-level how each server env is configured.
 - small videos
   - how we manage private data
   - ... @todo
 - * make a bunch of little videos so people can easily find out how to do shit. can also make a big video too and cut clips out from it.
 - * videos do that zoom in shit, like they zoom in on close shit. not essential.
+- * spongebob X days later
+- * play elevator music when im writing code.
+- * for each demo app, do a creation montage each w/ a cool song. (slow burn, ...)
+---
+
+Most likely going to need built in perf testing.
+- need to calc perfAvg for load balancer
+- need to calibrate the server system (can also fork requests from active LB to new but offline LB)
+
+---
+
+Local functionality vs third party
+
+third party
+- serving assets (s3)
+- smtp relay (mailgun)
+- logs (logdna)
+- db (mongo)
+- key value cache (redis)
+- ...
 
 ---
 
 make sure...
+- when building cli framework "commands" module
+  - design helpers, generate, status, info, test, to be implemented by a plugin ecosystem.
 - how would a website load CSS and JS (@todo for brahma-website). get fast css reloads working.
 - DX. devs should be able to know how to use an api w/ a simple console.log. e.g. console.log(obj.api)
 - update the technologies list in the Readme.
@@ -391,6 +413,7 @@ dont compile too much. the idea is for redeployment we want to just upload the c
 - i can write have an app create a rails site and use custom routing, custom index page, custom about page.
 - check remote file permissions for app files.
 - database pattern - put decoupled data in its own DB for scaling. w/ mongo u dont do joins, so take advantage of this.
+- theres a way to write streaming services. e.g. streaming audio and video.
 
 ---
 
