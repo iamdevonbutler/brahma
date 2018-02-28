@@ -367,7 +367,7 @@ show the results in the beginning then after show low-level how each server env 
 - * videos do that zoom in shit, like they zoom in on close shit. not essential.
 - * spongebob X days later
 - * play elevator music when im writing code.
-- * for each demo app, do a creation montage each w/ a cool song. (slow burn, ...)
+- * for each demo app, do a creation montage each w/ a cool song. (slow burn, mr crowley, )
 ---
 
 Most likely going to need built in perf testing.

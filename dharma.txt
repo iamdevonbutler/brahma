@@ -2,7 +2,10 @@ Dharma
 
 ---
 
-make sure i build things for the right byte order (big/little endian)
+make sure...
+- i build things for the right byte order (big/little endian)
+- ddos attack from multiple ips
+- email alerts when scaling up or down. send out through node, have a _system/... endpoint.
 
 ---
 
@@ -164,7 +167,15 @@ function groupWaitTime([3,4,4,5,5,6,6,7,9]) {
 function optimizeGroups(groups) {
   var matrix = possibilities(groups);
   var waits = matrix.map((row, i) => {
-    return {key, time: groupWaitTime(row), numNodes: getNumNodes(groupWaitTime(row), waitMultiplier)}
+    var numNodes = 0;
+    while (numNodes++) {
+      // @todo
+    }
+    return {
+      key,
+      time: groupWaitTime(row),
+      numNodes: getNumNodes(groupWaitTime(row), waitMultiplier)
+    }
   })
   waits = orderAsc(waits);
   var fastestConfig = waits.find(wait => {
