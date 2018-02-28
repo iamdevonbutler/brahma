@@ -389,6 +389,7 @@ third party
 ---
 
 make sure...
+- i test the JS LB vs the C router and publish the perf results.
 - when building cli framework "commands" module
   - design helpers, generate, status, info, test, to be implemented by a plugin ecosystem.
 - how would a website load CSS and JS (@todo for brahma-website). get fast css reloads working.

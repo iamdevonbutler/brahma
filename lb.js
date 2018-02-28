@@ -1,21 +1,3 @@
-// delegation. an equation takeIng:
-// - droplet spinup time
-// - perfAvg (relative to other endpoints),
-// - actual perf (realtive to other endpoints)
-// - endpoint call frequency
-// - #nodes,
-// - cron tasks
-//
-// say a endpoint is called (perf === 50ms)
-// LB to a medium node. nodes can be small, medium, large, or ...
-//
-// 3 4 4 5 5 6 6 7 9
-// 10 17 20 20 20
-// 34
-// 50 50
-// 63
-// 200
-
 function waitTime(interval = 10000ms, frequency = 1 req/ms, time per request = 10ms) {
   return (requestDuration * interval) - (frequency * interval); // 9000 ms after a 1 minute interval
 }
@@ -59,25 +41,36 @@ function optimizeGroups(groups) {
 function getNumNodes(time, waitMultiplier, averagePerf) {};
 
 ////////////////////////////////////////////////////////////////
+
+// @todo C also forces https, prevents DDoS, ratelimits, letsencrypt, and forwards asset requests to s3 w/ static caching.
+// @todo make it easy to change the nodeUpdateInterval. if ur twitter and ur expecting a superbowl spike u may want to change it to like 5 seconds.
+// @note node group ip selection is a round robin. viable strat because working w/ requests of similar durations.
+
 var lastNodeUpdate;
 var nodeUpdateInterval = 1000*60;
 
 var endpoints = {
   'employees.getThing': {
-    ips: [127.0.0.1, 127.0.0.2, 127.0.0.3],
+    nodeGroup: 0,
     perfAvg: 5,
     perfHistory: [],
   },
   'employees.updateThing': {
-    ips: [127.0.0.1, 127.0.0.2, 127.0.0.3],
+    nodeGroup: 0,
     perfAvg: 10,
     perfHistory: [],
   },
 };
 
-var nodes = {
+var nodeGroupIPs = [
+  [127.0.0.1, 127.0.0.2, 127.0.0.3],
+  [127.0.0.4, 127.0.0.5],
+];
 
-};
+var nodeGroups = [
+  ['name', 'name1'], // group0
+  ['name2', 'name3'], // group0
+];
 
 async function sendResponse(res) {};
 
@@ -85,19 +78,11 @@ async function executeRequest(req, node) {
   return await request(req, node.ip)
 };
 
-// function getRequestHandler(req) {
-//   return {
-//     endpointName: 'name',
-//     perfAvg: 10, // ms
-//     perHistory: [1519830352, 18, 1519830352, 22],
-//   };
-// };
-
 function selectNode(req) {
   for (let name in endpoints) {
     if (name === req.name) {
-      let ip = endpoints[name].ips.pop(); // round robin, works here because working w/ requests of similar
-      endpoints[name].ips.unshift(ip);
+      let ip = nodeGroupIPs[endpoints[name].nodeGroup].shift();
+      nodeGroupIPs[endpoints[name].nodeGroup].push(ip);
       return ip;
     }
   }
@@ -115,7 +100,19 @@ function updateEndpointHistory(req, startTime) {
 // - endpoint call frequency
 // - #nodes,
 // - cron tasks
+
+// 3 4 4 5 5 6 6 7 9
+// 10 17 20 20 20
+// 34
+// 50 50
+// 63
+// 200
+var x = [
 function updateNodes() {
+  for (let name in endpoints) {
+
+  }
+
   lastNodeUpdate = Date.now();
 };
 
@@ -124,11 +121,17 @@ async function handleRequest(req) {
   var node = selectNode(req);
   var res = await executeRequest(req, node);
   updateEndpointHistory(req, startTime);
-  if (startTime - lastNodeUpdate > nodeUpdateInterval) {
+  if (startTime - lastNodeUpdate >= nodeUpdateInterval) {
     updateNodes();
   };
   sendResponse(res);
 };
+
+//////////////// init
+
+initializeNodeGroups(); // @todo
+
+//////////////// test
 
 handleRequest({
   name: '',
