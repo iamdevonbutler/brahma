@@ -30,6 +30,8 @@ Commands
 - build
 - deploy
 
+maintain a single repo vs microservices w/ 5-10 repos.
+
 cron and realtime? for free
 
 Documentation built in.

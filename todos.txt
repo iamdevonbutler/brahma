@@ -293,6 +293,11 @@ an explination of resources. how do u contribute a general comment on the archit
 
 ---
 
+router
+if multiple routes match, display conflict in terminal and get user to add a priority property.
+
+---
+
 auth
 - this is a very common problem. find a way to modularize and contribute.
 - confirm email functionality and email
@@ -368,6 +373,8 @@ show the results in the beginning then after show low-level how each server env 
 - * spongebob X days later
 - * play elevator music when im writing code.
 - * for each demo app, do a creation montage each w/ a cool song. (slow burn, mr crowley, )
+- * splice in a lot of trump quotes.
+
 ---
 
 Most likely going to need built in perf testing.
@@ -389,7 +396,7 @@ third party
 ---
 
 make sure...
-- i test the JS LB vs the C router and publish the perf results.
+- people can attach perf monitoring and other stuff on each remote box.
 - when building cli framework "commands" module
   - design helpers, generate, status, info, test, to be implemented by a plugin ecosystem.
 - how would a website load CSS and JS (@todo for brahma-website). get fast css reloads working.

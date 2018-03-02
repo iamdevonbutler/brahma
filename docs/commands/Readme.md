@@ -1,14 +1,15 @@
 # Commands
 
-- [`new`](@todo)
 - [`status`](@todo)
-- [`serve`](@todo)
-- [`remote`](@todo)
-- [`update`](@todo)
-- [`generate`](@todo)
 - [`helpers`](@todo)
-- [`build`](@todo)
+- [`generate`](@todo)
+- [`serve`](@todo)
 - [`test`](@todo)
 - [`db`](@todo)
+- [`remote`](@todo)
+
 - [`logs`](@todo)
+- [`update`](@todo)
+- [`build`](@todo)
 - [`ssh`](@todo)
+- [`new`](@todo)
