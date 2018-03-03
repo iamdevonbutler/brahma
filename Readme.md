@@ -7,6 +7,22 @@
 
 The omniservices framework that doesn't give a fuck.
 
+opinonated yet open
+
+dependencies use save-exact = true. update versions w/ updateDependencies helper.
+dependiences use yarn, not npm. yarn allows us to install deps in custom directories
+needed to update our remotes w/o downtime.
+encourage you to use github for project specific non community contrib dependencies.
+it's more reliable and easier.
+dependencies are resolved locally, download and tested prior to deployments, and rsynced
+for reliablitiy and speed.
+justify ./config/dependencies.js object value - yes it's more verbose but the syntax for installing
+private github packages sucks. brahma is optimized for reliablitiy as to minimize bugs and shit not working.
+
+the goal is to have your local env most closely resemble your remote. OS will be different,
+but that should be about it. @todo need a way to sync databases from remote0 to local and
+dev servers.
+
 A command line application - given a singular source of ambigious "resources" it creates a integrated collection of NodeJS microservices.
 
 Koa isn't really a framework, it's more of a library. It wraps `req` and `res`, introduces a middleware system, and provides basic helpers to handle things like cookies and serving static assets; but it doesn't provide much frame to work w/ to be classified as a traditional framework.
@@ -168,7 +184,7 @@ links to all thinks Brahma.
 - [awesome brahma](@todo)
 
 ## Support Maya
-Maya is the companion project to Brahma. It's basically Brahma for front-end development. A WebGL webapp framework architecturally inspired by Brahma. At present, Maya is in need to development resources, aka some free time. To support Maya send me an email at jpescione@gmail.com.
+Maya is the companion project to Brahma. Maya is "the illusion" - a WegGL webapp framework inspired by Brahma. At present, Maya is in need to development resources, aka some free time. To support Maya send me an email at jpescione@gmail.com.
 
 # License
 MIT

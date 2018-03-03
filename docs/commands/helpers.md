@@ -1,4 +1,4 @@
-## brahma `helper`
+## brahma `helpers`
 
 ```
 $brahma helper (lists all helpers w/ owner field)
@@ -10,9 +10,8 @@ $brahma helper looseEnds
 
 ```
 
-
 ## Commands
-- sslVerify - open browser w/ link to (https://www.ssllabs.com/ssltest/)
+- sslVerify - open browser w/ link to (https://www.ssllabs.com/ssltest/analyze.html?d=www.google.com)
 - eol - \n -> eol.
 - iwantmynameDomain - https://github.com/iwantmyname/iwmn-js
 - latestDependencies - updates pack.j w/ latest versions of packages.

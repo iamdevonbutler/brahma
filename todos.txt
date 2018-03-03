@@ -1,10 +1,9 @@
-open and opinonated
-
 resources have built in unit testing, do perf testing too. have a way to compare different versions of function.
 look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
 
 todos
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
+  - use yarn to install updated modules into "imports" dir. symlink node_modules.
 - how does our apps file look given a dharma architecture.
 - how to ship env specific private data to remote. e.g. ur prod api secret keys.
 - build all configs.
@@ -180,9 +179,6 @@ functionality
 - command queue/buffer
   - when ur downloading dependencies, users may want to take other actions, need to queue them.
 
-dependencies
-- https://github.com/SBoudrias/Inquirer.js
-
 ---
 
 http
@@ -193,6 +189,20 @@ http
 private
 - in .gitignore
 - see ./config/private.js
+
+---
+
+dependencies
+
+- @totest
+  - install from npm
+  - install from npm at particular version
+  - install scoped package from npm, w/ and w/o a specific version
+  - install from github
+  - install from github at particular version - handle failure condition
+  - install private from github, w/ and w/o specific version
+  - delegating dependencies to local services
+  - deploying deps to remotes w/ zero downtime.
 
 ---
 
@@ -245,7 +255,6 @@ info command
 - like `helpers`, is organized into categories, each category is the name of the module that hooks into it.
   - u dont want to see a big list of helpers w/o some classification. group into modules. i want to see all the helpers for this plugin and that plugin.
 - would be useful to log API details. all types of APIs, e.g. file helper API, resource API, load API,
-remote
 - i want the ability to identify a resource, and for each property, know what is injected.
 
 ---
@@ -374,6 +383,9 @@ show the results in the beginning then after show low-level how each server env 
 - * play elevator music when im writing code.
 - * for each demo app, do a creation montage each w/ a cool song. (slow burn, mr crowley, )
 - * splice in a lot of trump quotes.
+- * either trance music or post-hardore.
+- * build the entire brahma website in a video, use the status first technique (would status on save be a good feature),
+and make the screen go black w/ void imagery (flower of life animations, ...) w/ text overlay to intorduce each brahma command and feature.
 
 ---
 
@@ -396,6 +408,7 @@ third party
 ---
 
 make sure...
+- streaming example
 - people can attach perf monitoring and other stuff on each remote box.
 - when building cli framework "commands" module
   - design helpers, generate, status, info, test, to be implemented by a plugin ecosystem.

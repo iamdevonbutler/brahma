@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const {fileExists, forEach, map, reduce, logArray} = require('../lib/utils');
+const {fileExists, logArray, cols} = require('../lib/utils');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const {EOL} = require('os');
-const objectInterface = require('js-object-interface');
+// const objectInterface = require('js-object-interface');
 
-const loadAppsConfig = require('../lib/load/loadAppsConfig');
-const loadSettings = require('../lib/load/loadSettings');
-const loadVariables = require('../lib/load/loadVariables');
-const loadEnv = require('../lib/load/loadEnv');
+// const loadAppsConfig = require('../lib/load/loadAppsConfig');
+// const loadSettings = require('../lib/load/loadSettings');
+// const loadVariables = require('../lib/load/loadVariables');
+// const loadEnv = require('../lib/load/loadEnv');
 
 // const status = require('../lib/commands/status');
 // const serve = require('../lib/commands/serve');
@@ -33,17 +33,39 @@ if (majorVersion < 9) {
   return;
 }
 
+const loadCommands = require('../lib/load/loadCommands');
+// const objectInterface = require('js-object-interface');
+
+var commandsPath = path.resolve(__dirname, '../lib/commands');
+var commands = loadCommands(commandsPath);
+
+function getHelpText(commands) {
+  var obj = Object.keys(commands).map(key => ([
+    '    ' + commands[key].name,
+    '    ' + commands[key].description,
+  ]));
+  return `\n  Commands:\n\n${cols(obj, 15)}`;
+};
+
+// if you just type in a command it prints the help for that command, same for all subcommands.
+// Infinant number of subcommands.
+// command plugins and subcommand extensions need a way to hook into help
+// breadcrumbs $brahma: | $brahma.helpers | $brahma.helpers.doThing and maybe a way to navigate back (cmd+left) @todo document
+// autocomplete functionality
+// load commands needs to load project commands too. let user overwrite brahma commands, so they can make their own remote command for instance.
+// how does help work w. subcommands
+
+process.stdin.setEncoding('utf8');
+// process.stdin.on('data', function (data) {
+//   console.log(data);
+// });
+
+// process.stdout.write();
+console.log(getHelpText(commands));
+process.stdout.write('$brahma: ');
 
 
 
-process.stdin.on('data', function (chunk, key) {
-  console.log(chunk);
-  process.stdin.pause();
-  process.stdin.on('data', function (chunk, key) {
-    console.log(chunk);
-  });
-
-});
 
 
 
@@ -53,11 +75,6 @@ process.stdin.on('data', function (chunk, key) {
 
 
 
-
-
-
-
-console.log('ok good');
 return;
 
 
