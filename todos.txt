@@ -408,6 +408,8 @@ third party
 ---
 
 make sure...
+- yarn lockfile wont cause bugs. i think it may.
+- replace all \n w/ EOL
 - streaming example
 - people can attach perf monitoring and other stuff on each remote box.
 - when building cli framework "commands" module

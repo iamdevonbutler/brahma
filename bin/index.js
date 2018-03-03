@@ -26,6 +26,9 @@ const state = {};
 // Error handling.
 process.on('unhandledRejection', console.error);
 
+// Set encoding for when we read from stdin.
+process.stdin.setEncoding('utf8');
+
 // Node version check.
 const majorVersion = +process.version.slice(1).split('.')[0];
 if (majorVersion < 9) {
@@ -33,9 +36,18 @@ if (majorVersion < 9) {
   return;
 }
 
+
+
+
+
+
+
+
+
 const loadCommands = require('../lib/load/loadCommands');
 // const objectInterface = require('js-object-interface');
 
+var breadcrumbs = [];
 var commandsPath = path.resolve(__dirname, '../lib/commands');
 var commands = loadCommands(commandsPath);
 
@@ -44,8 +56,12 @@ function getHelpText(commands) {
     '    ' + commands[key].name,
     '    ' + commands[key].description,
   ]));
-  return `\n  Commands:\n\n${cols(obj, 15)}`;
+  return `${EOL}  Commands:${EOL}${EOL}${cols(obj, 25)}`;
 };
+
+function cr() {
+  process.stdout.write(`${EOL}$brahma${breadcrumbs.length ? '.' : ''}${chalk.dim(breadcrumbs.join('.'))}: `);
+}
 
 // if you just type in a command it prints the help for that command, same for all subcommands.
 // Infinant number of subcommands.
@@ -55,15 +71,29 @@ function getHelpText(commands) {
 // load commands needs to load project commands too. let user overwrite brahma commands, so they can make their own remote command for instance.
 // how does help work w. subcommands
 
-process.stdin.setEncoding('utf8');
-// process.stdin.on('data', function (data) {
-//   console.log(data);
-// });
+process.stdin.on('data', function (data) {
+  var command = data.replace(EOL, '');
+  var commandNames = Object.keys(commands);
+  if (commandNames.indexOf(command) > -1) {
+    breadcrumbs.push(command);
+    let subcommandsPath = path.join(commandsPath, command, 'commands');
+    let subcommands = loadCommands(subcommandsPath);
+    process.stdout.write(getHelpText(subcommands));
+    cr();
+  }
+  else if (command.split('/').every(item => '..')) {
+    breadcrumbs.splice(-command.split('/').length);
+    cr();
+  }
+  else {
+    process.stdout.write(`Invalid command (${command})`);
+    cr();
+  }
+});
 
 // process.stdout.write();
-console.log(getHelpText(commands));
-process.stdout.write('$brahma: ');
-
+process.stdout.write(getHelpText(commands) + '\n');
+cr();
 
 
 
