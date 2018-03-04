@@ -97,22 +97,12 @@ function write(data, incrementCursor = true) {
   term(data);
 };
 
-// function addHistory(obj) {
-//   history = history
-//     .filter(item => item !== obj)
-//     .push(obj);
-// };
-//
-// function getHistoryItem(str) {
-//   var obj = history.find(item => item.indexOf(str) === 0);
-//   return obj;
-// };
-
 function cr() {
   buffer = '';
+  cursorXIndex = getDelimiterLength()
   var delimiter = getDelimiter();
   write(EOL, false);
-  write(delimiter);
+  write(delimiter, false);
 };
 
 function stripData(data) {
@@ -125,6 +115,17 @@ function stripData(data) {
   }
   return data || null;
 }
+
+// function addHistory(obj) {
+//   history = history
+//     .filter(item => item !== obj)
+//     .push(obj);
+// };
+//
+// function getHistoryItem(str) {
+//   var obj = history.find(item => item.indexOf(str) === 0);
+//   return obj;
+// };
 
 process.stdin.on('data', function (data) {
   data = stripData(data);
@@ -141,10 +142,10 @@ process.stdin.on('keypress', function (ch, key) {
   }
   else if (key && key.name === 'up') {
     term.down(1);
-    let item = getHistoryItem(buffer);
-    if (item) {
-      term(item);
-    }
+    // let item = getHistoryItem(buffer);
+    // if (item) {
+    //   term(item);
+    // }
   }
   else if (key && key.name === 'down') {
     // term();
@@ -178,6 +179,7 @@ process.stdin.on('keypress', function (ch, key) {
     }
   }
   else if (key && key.name === 'backspace') {
+    // console.log(cursorXIndex, getDelimiterLength());
     if (cursorXIndex > getDelimiterLength()) {
       let pos = getDelimiterLength() + buffer.length - cursorXIndex;
       if (pos === 0) {
@@ -213,10 +215,10 @@ function handleReturn() {
     breadcrumbs.push(command);
     let subcommandsPath = path.join(commandsPath, command, 'commands');
     let subcommands = loadCommands(subcommandsPath);
-    write(getHelpText(subcommands));
+    write(getHelpText(subcommands), false);
     cr();
   }
-  else if (command.split('/').every(item => '..')) {
+  else if (command.split('/').every(item => item === '..')) {
     breadcrumbs.splice(-command.split('/').length);
     cr();
   }
@@ -226,7 +228,7 @@ function handleReturn() {
 };
 
 var commands = loadCommands(commandsRootPath);
-// write(getHelpText(commands), false);
+write(getHelpText(commands), false);
 cr();
 
 
