@@ -34,7 +34,6 @@ process.on('unhandledRejection', console.error);
 process.stdin.setEncoding('utf8');
 process.stdin.setRawMode(true);
 keypress(process.stdin);
-// keypress.enableMouse(process.stdout);
 
 // Node version check.
 const majorVersion = +process.version.slice(1).split('.')[0];
@@ -131,8 +130,8 @@ function handleReturn() {
 var buffer = '';
 process.stdin.on('data', function (data) {
   data = stripAnsi(data);
-  console.log(999, data);
-  if (data && data !== '\n' && data !== '\r' && data !== '\r\n') { // @todo for some reason 'return' appends a '\r'.
+  var asciiCode = data.charCodeAt(0)
+  if (data && asciiCode !== 127 && asciiCode !== 13) {
     buffer += data;
     write(data);
   }
@@ -166,22 +165,39 @@ process.stdin.on('keypress', function (ch, key) {
       cursorXIndex += 1
     }
   }
-  else if (key && key.name === 'backspace') {
-    if (cursorXIndex <= delimiter.length) {
-      console.log(2);
-      // term.left(0);
+  else if (key && key.name === 'space') {
+    cursorXIndex += 1;
+  }
+  else if (key && key.name === 'delete') { // rev delete (fn + backspace).
+    let pos = delimiter.length + buffer.length - cursorXIndex;
+    if (pos > 0) {
+      if (pos === 1) {
+        buffer = buffer.slice(0, -1);
+      }
+      else {
+        buffer = buffer.slice(0, buffer.length - pos) + buffer.slice(buffer.length - pos + 1);
+      }
+      term.delete(-1);
     }
-    else {
-      console.log(1);
-      let spaces = buffer.length - cursorXIndex - delimiter.length;
-      console.log(cursorXIndex);
-      buffer = buffer.slice(0, -spaces);
-      term.delete(spaces);
-      term.left(-1);
+  }
+  else if (key && key.name === 'backspace') {
+    if (cursorXIndex > delimiter.length) {
+      let pos = delimiter.length + buffer.length - cursorXIndex;
+      if (pos === 0) {
+        buffer = buffer.slice(0, -1);
+      }
+      else {
+        buffer = buffer.slice(0, pos - 1) + buffer.slice(pos);
+      }
+      term.left(1);
+      term.delete();
+      cursorXIndex -= 1;
     }
   }
   else if (key && key.name === 'tab') {
     console.log('tab');
+    console.log(buffer);
+
   }
   else if (key && key.name === 'return') {
     handleReturn();
