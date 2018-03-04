@@ -72,7 +72,7 @@ function getHelpText(commands) {
     '    ' + commands[key].name,
     '    ' + commands[key].description,
   ]));
-  return `${EOL}  Commands:${EOL}${EOL}${cols(obj, 25)}`;
+  return `  Commands:${EOL}${EOL}${cols(obj, 25)}`;
 };
 
 function getDelimiterLength() {
@@ -116,16 +116,22 @@ function stripData(data) {
   return data || null;
 }
 
-// function addHistory(obj) {
-//   history = history
-//     .filter(item => item !== obj)
-//     .push(obj);
-// };
-//
-// function getHistoryItem(str) {
-//   var obj = history.find(item => item.indexOf(str) === 0);
-//   return obj;
-// };
+function addHistoryItem(obj) {
+  history = history.filter(item => item !== obj);
+  history.push(obj);
+};
+
+
+function getHistoryItem(str) {
+  var obj;
+  if (str) {
+    obj = history.find(item => item.indexOf(str) === 0);
+  }
+  else {
+    obj = history[history.length - 1];
+  }
+  return obj;
+};
 
 process.stdin.on('data', function (data) {
   data = stripData(data);
@@ -142,10 +148,10 @@ process.stdin.on('keypress', function (ch, key) {
   }
   else if (key && key.name === 'up') {
     term.down(1);
-    // let item = getHistoryItem(buffer);
-    // if (item) {
-    //   term(item);
-    // }
+    let item = getHistoryItem(buffer);
+    if (item) {
+      term(item);
+    }
   }
   else if (key && key.name === 'down') {
     // term();
@@ -215,7 +221,10 @@ function handleReturn() {
     breadcrumbs.push(command);
     let subcommandsPath = path.join(commandsPath, command, 'commands');
     let subcommands = loadCommands(subcommandsPath);
+    write(EOL, false);
+    write(EOL, false);
     write(getHelpText(subcommands), false);
+    addHistoryItem(command);
     cr();
   }
   else if (command.split('/').every(item => item === '..')) {
@@ -228,6 +237,7 @@ function handleReturn() {
 };
 
 var commands = loadCommands(commandsRootPath);
+write(EOL, false);
 write(getHelpText(commands), false);
 cr();
 
