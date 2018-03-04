@@ -56,51 +56,149 @@ if (majorVersion < 9) {
 // autocomplete functionality
 // load commands needs to load project commands too. let user overwrite brahma commands, so they can make their own remote command for instance.
 // how does help work w. subcommands
-// abstract out terminal UI. make functional and pure, no closure.
+// abstract out terminal UI. make functional and pure, no closure. use singleton object pattern to allow access to data vars.
 
 const loadCommands = require('../lib/load/loadCommands');
 // const objectInterface = require('js-object-interface');
 
 var breadcrumbs = [];
 var history = [];
-var delimiter = '$brahma: ';
+var buffer = '';
 var cursorXIndex = 0;
 var commandsRootPath = path.resolve(__dirname, '../lib/commands');
-
-function getLineLength() {
-  var length = delimiter.length + buffer.length;
-  return length;
-};
-
-function write(obj, incrementCursor = true) {
-  if (incrementCursor) {
-    cursorXIndex += obj.length;
-  }
-  term(obj);
-};
-
-function addHistory(obj) {
-  history = history
-    .filter(item => item !== obj)
-    .push(obj);
-};
-
-function getHistoryItem(str) {
-  var obj = history.find(item => item.indexOf(str) === 0);
-  return obj;
-};
 
 function getHelpText(commands) {
   var obj = Object.keys(commands).map(key => ([
     '    ' + commands[key].name,
     '    ' + commands[key].description,
   ]));
-  return `${EOL}  Commands:${EOL}${EOL}${cols(obj, 25)}${EOL}`;
+  return `${EOL}  Commands:${EOL}${EOL}${cols(obj, 25)}`;
 };
 
+function getDelimiterLength() {
+  var length = '$brahma'.length + (breadcrumbs.length ? breadcrumbs.join('.').length + 3 : 2);
+  return length;
+};
+
+function getDelimiter() {
+  var delimiter = `$brahma${breadcrumbs.length ? '.' : ''}${chalk.dim(breadcrumbs.join('.'))}: `;
+  return delimiter;
+};
+
+function getLineLength() {
+  var length = getDelimiterLength() + buffer.length;
+  return length;
+};
+
+function write(data, incrementCursor = true) {
+  if (incrementCursor) {
+    cursorXIndex += data.length;
+  }
+  term(data);
+};
+
+// function addHistory(obj) {
+//   history = history
+//     .filter(item => item !== obj)
+//     .push(obj);
+// };
+//
+// function getHistoryItem(str) {
+//   var obj = history.find(item => item.indexOf(str) === 0);
+//   return obj;
+// };
+
 function cr() {
-  write(`$brahma${breadcrumbs.length ? '.' : ''}${chalk.dim(breadcrumbs.join('.'))}: `);
+  buffer = '';
+  var delimiter = getDelimiter();
+  write(EOL, false);
+  write(delimiter);
+};
+
+function stripData(data) {
+  data = stripAnsi(data) + '';
+  if (data) {
+    let asciiCode = data.charCodeAt(0);
+    if ([127, 13].indexOf(asciiCode) > -1) {
+      return null;
+    }
+  }
+  return data || null;
 }
+
+process.stdin.on('data', function (data) {
+  data = stripData(data);
+  if (data) {
+    buffer += data;
+    write(data);
+  }
+});
+
+process.stdin.on('keypress', function (ch, key) {
+  if (key && key.ctrl && key.name === 'c') {
+    buffer = '';
+    process.stdin.pause();
+  }
+  else if (key && key.name === 'up') {
+    term.down(1);
+    let item = getHistoryItem(buffer);
+    if (item) {
+      term(item);
+    }
+  }
+  else if (key && key.name === 'down') {
+    // term();
+  }
+  else if (key && key.name === 'left') {
+    if (cursorXIndex > getDelimiterLength()) {
+      cursorXIndex -= 1;
+      term.left(1);
+    }
+  }
+  else if (key && key.name === 'right') {
+    let length = getLineLength();
+    if (cursorXIndex < length) {
+      term.right(1);
+      cursorXIndex += 1
+    }
+  }
+  else if (key && key.name === 'space') {
+    cursorXIndex += 1;
+  }
+  else if (key && key.name === 'delete') { // rev delete (fn + backspace).
+    let pos = getDelimiterLength() + buffer.length - cursorXIndex;
+    if (pos > 0) {
+      if (pos === 1) {
+        buffer = buffer.slice(0, -1);
+      }
+      else {
+        buffer = buffer.slice(0, buffer.length - pos) + buffer.slice(buffer.length - pos + 1);
+      }
+      term.delete(-1);
+    }
+  }
+  else if (key && key.name === 'backspace') {
+    if (cursorXIndex > getDelimiterLength()) {
+      let pos = getDelimiterLength() + buffer.length - cursorXIndex;
+      if (pos === 0) {
+        buffer = buffer.slice(0, -1);
+      }
+      else {
+        buffer = buffer.slice(0, pos - 1) + buffer.slice(pos);
+      }
+      term.left(1);
+      term.delete();
+      cursorXIndex -= 1;
+    }
+  }
+  else if (key && key.name === 'tab') {
+    console.log(buffer);
+
+  }
+  else if (key && key.name === 'return') {
+    handleReturn();
+  }
+});
 
 function handleReturn() {
   var command = buffer;
@@ -127,95 +225,9 @@ function handleReturn() {
   }
 };
 
-var buffer = '';
-process.stdin.on('data', function (data) {
-  data = stripAnsi(data);
-  var asciiCode = data.charCodeAt(0)
-  if (data && asciiCode !== 127 && asciiCode !== 13) {
-    buffer += data;
-    write(data);
-  }
-});
-
-process.stdin.on('keypress', function (ch, key) {
-  if (key && key.ctrl && key.name === 'c') {
-    buffer = '';
-    process.stdin.pause();
-  }
-  else if (key && key.name === 'up') {
-    term.down(1);
-    let item = getHistoryItem(buffer);
-    if (item) {
-      term(item);
-    }
-  }
-  else if (key && key.name === 'down') {
-    // term();
-  }
-  else if (key && key.name === 'left') {
-    if (cursorXIndex > delimiter.length) {
-      cursorXIndex -= 1;
-      term.left(-1);
-    }
-  }
-  else if (key && key.name === 'right') {
-    let length = getLineLength();
-    if (cursorXIndex < length) {
-      term.right(1);
-      cursorXIndex += 1
-    }
-  }
-  else if (key && key.name === 'space') {
-    cursorXIndex += 1;
-  }
-  else if (key && key.name === 'delete') { // rev delete (fn + backspace).
-    let pos = delimiter.length + buffer.length - cursorXIndex;
-    if (pos > 0) {
-      if (pos === 1) {
-        buffer = buffer.slice(0, -1);
-      }
-      else {
-        buffer = buffer.slice(0, buffer.length - pos) + buffer.slice(buffer.length - pos + 1);
-      }
-      term.delete(-1);
-    }
-  }
-  else if (key && key.name === 'backspace') {
-    if (cursorXIndex > delimiter.length) {
-      let pos = delimiter.length + buffer.length - cursorXIndex;
-      if (pos === 0) {
-        buffer = buffer.slice(0, -1);
-      }
-      else {
-        buffer = buffer.slice(0, pos - 1) + buffer.slice(pos);
-      }
-      term.left(1);
-      term.delete();
-      cursorXIndex -= 1;
-    }
-  }
-  else if (key && key.name === 'tab') {
-    console.log('tab');
-    console.log(buffer);
-
-  }
-  else if (key && key.name === 'return') {
-    handleReturn();
-    write(EOL);
-    cr();
-    buffer = '';
-  }
-});
-
-// process.stdin.on('mousepress', function (info) {
-//   console.log('got "mousepress" event at %d x %d', info.x, info.y);
-// });
-
-
 var commands = loadCommands(commandsRootPath);
-write(getHelpText(commands), false);
+// write(getHelpText(commands), false);
 cr();
-
 
 
 
