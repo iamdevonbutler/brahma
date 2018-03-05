@@ -65,6 +65,9 @@ const loadCommands = require('../lib/load/loadCommands');
 const History = require('../lib/utils/history');
 // const objectInterface = require('js-object-interface');
 
+
+// @note this is basically a bunch of hacks needed to fix the kludge like terminal UI
+// when in rawMode.
 var breadcrumbs = [];
 var buffer = '';
 var cursorXIndex = 0;
@@ -103,7 +106,7 @@ function write(data, incrementCursor = true) {
 
 function cr() {
   buffer = '';
-  cursorXIndex = getDelimiterLength()
+  cursorXIndex = getDelimiterLength();
   var delimiter = getDelimiter();
   write(EOL, false);
   write(delimiter, false);
@@ -113,7 +116,7 @@ function stripData(data) {
   data = stripAnsi(data) + '';
   if (data) {
     let asciiCode = data.charCodeAt(0);
-    if ([127, 13].indexOf(asciiCode) > -1) {
+    if (asciiCode < 32 || asciiCode > 126) {
       return null;
     }
   }
@@ -169,7 +172,7 @@ process.stdin.on('keypress', function (ch, key) {
     }
   }
   else if (key && key.name === 'space') {
-    cursorXIndex += 1;
+
   }
   else if (key && key.name === 'delete') { // rev delete (fn + backspace).
     let pos = getDelimiterLength() + buffer.length - cursorXIndex;
@@ -198,9 +201,18 @@ process.stdin.on('keypress', function (ch, key) {
     }
   }
   else if (key && key.name === 'tab') {
-    console.log(buffer);
-    // https://github.com/cronvel/terminal-kit/blob/master/doc/high-level.md#ref.gridMenu
-
+    if (buffer) {
+      let items = Object.keys(commands);
+      let items1 = items.filter(item => item.startsWith(buffer));
+      if (items1.length === 1) {
+        term.deleteLine(buffer.length);
+        term.left(cursorXIndex);
+        cursorXIndex = 0;
+        buffer = items1[0];
+        write(getDelimiter());
+        write(items1[0]);
+      }
+    }
   }
   else if (key && key.name === 'return') {
     handleReturn();
