@@ -58,98 +58,18 @@ if (majorVersion < 9) {
 // how does help work w. subcommands
 // abstract out terminal UI. make functional and pure, no closure. use singleton object pattern to allow access to data vars.
 
+
+// bug. if u hit space a lot, and backaspace, u delete the delimiter.
+
 const loadCommands = require('../lib/load/loadCommands');
+const History = require('../lib/utils/history');
 // const objectInterface = require('js-object-interface');
 
-var lastkey;
 var breadcrumbs = [];
-// var history = {};
 var buffer = '';
 var cursorXIndex = 0;
 var commandsRootPath = path.resolve(__dirname, '../lib/commands');
-
-// @todo make destructable.
-// cache history. delete commands cache. document.
-class History {
-  constructor() {
-    this.history = {};
-  }
-  reset() {
-    var keys = Object.keys(this.history);
-    keys.forEach(key => {
-      this.history[key].index = 0;
-    });
-  }
-  incrementIndex(key) {
-    var {index, items} = this.history[key];
-    if (this.history[key] && index < items.length) {
-      index += 1;
-    }
-  }
-  decrementIndex(key) {
-    var {index} = this.history[key];
-    if (this.history[key] && index > 0) {
-      index -= 1;
-    }
-  }
-  add(keys, item) {
-    var history = this.history;
-    var key = [].concat(keys).join(".");
-    console.log(key);
-    if (!history[key]) {
-      history[key] = {index: 0, items: []};
-    }
-    else {
-      history[key].items = history[key].items.filter(item1 => item1 !== item);
-    }
-    console.log(history[key]);
-    history[key].items.push(item);
-  }
-  next(keys, str = null) {
-    var history = this.history;
-    var key = keys.join(".");
-    if (history[key]) {
-      let {index, items} = history[key];
-      let item = items[items.length - 1 - index]
-      if (!item) return null;
-      this.incrementIndex(key);
-      if (str) {
-        if (item.startsWith(str)) {
-          return item;
-        }
-        else {
-          return this.next(keys, str);
-        }
-      }
-      else {
-        return item;
-      }
-    }
-  }
-  previous(keys, str = null) {
-    var history = this.history;
-    var key = keys.join(".");
-    if (history[key]) {
-      let {index, items} = history[key];
-      let item = items[items.length - index]
-      if (!item) return null;
-      this.decrementIndex(key);
-      if (str) {
-        if (item.startsWith(str)) {
-          return item;
-        }
-        else {
-          return this.previous(keys, str);
-        }
-      }
-      else {
-        return item;
-      }
-    }
-  }
-};
 var history = new History();
-
 
 function getHelpText(commands) {
   var obj = Object.keys(commands).map(key => ([
@@ -285,7 +205,6 @@ process.stdin.on('keypress', function (ch, key) {
   else if (key && key.name === 'return') {
     handleReturn();
   }
-  // lastKey = key && key.name;
 });
 
 function handleReturn() {
@@ -307,7 +226,7 @@ function handleReturn() {
     write(getHelpText(subcommands), false);
     cr();
   }
-  else if (command.split('/').filter(Boolean).every(item => item === '..')) {
+  else if (command.split('/').every(item => item === '..')) {
     breadcrumbs.splice(-command.split('/').filter(Boolean).length);
     cr();
   }

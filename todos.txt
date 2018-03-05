@@ -1,6 +1,7 @@
 resources have built in unit testing, do perf testing too. have a way to compare different versions of function.
 look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
 
+
 todos
 - scaling node https://www.youtube.com/watch?v=w1IzRF6AkuI
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
@@ -31,6 +32,13 @@ todos
 - voice memos
 - test functionality
 - brahma-command-essentials. how to load more command plugins?
+
+---
+
+commands
+
+command names cannot have "." in them
+"exit" command
 
 ---
 
@@ -173,7 +181,7 @@ so if u are using the cron plugin, it provides the ability to rotate logs, it ju
 
 CLI framework
 - run brahma outside a brahma app. make sure the message is appropiate.
-- status driven development 
+- status driven development
 
 functionality
 - echo brahma version on startup
