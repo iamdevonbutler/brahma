@@ -61,11 +61,95 @@ if (majorVersion < 9) {
 const loadCommands = require('../lib/load/loadCommands');
 // const objectInterface = require('js-object-interface');
 
+var lastkey;
 var breadcrumbs = [];
-var history = [];
+// var history = {};
 var buffer = '';
 var cursorXIndex = 0;
 var commandsRootPath = path.resolve(__dirname, '../lib/commands');
+
+// @todo make destructable.
+// cache history. delete commands cache. document.
+class History {
+  constructor() {
+    this.history = {};
+  }
+  reset() {
+    var keys = Object.keys(this.history);
+    keys.forEach(key => {
+      this.history[key].index = 0;
+    });
+  }
+  incrementIndex(key) {
+    var {index, items} = this.history[key];
+    if (this.history[key] && index < items.length) {
+      index += 1;
+    }
+  }
+  decrementIndex(key) {
+    var {index} = this.history[key];
+    if (this.history[key] && index > 0) {
+      index -= 1;
+    }
+  }
+  add(keys, item) {
+    var history = this.history;
+    var key = [].concat(keys).join(".");
+    console.log(key);
+    if (!history[key]) {
+      history[key] = {index: 0, items: []};
+    }
+    else {
+      history[key].items = history[key].items.filter(item1 => item1 !== item);
+    }
+    console.log(history[key]);
+    history[key].items.push(item);
+  }
+  next(keys, str = null) {
+    var history = this.history;
+    var key = keys.join(".");
+    if (history[key]) {
+      let {index, items} = history[key];
+      let item = items[items.length - 1 - index]
+      if (!item) return null;
+      this.incrementIndex(key);
+      if (str) {
+        if (item.startsWith(str)) {
+          return item;
+        }
+        else {
+          return this.next(keys, str);
+        }
+      }
+      else {
+        return item;
+      }
+    }
+  }
+  previous(keys, str = null) {
+    var history = this.history;
+    var key = keys.join(".");
+    if (history[key]) {
+      let {index, items} = history[key];
+      let item = items[items.length - index]
+      if (!item) return null;
+      this.decrementIndex(key);
+      if (str) {
+        if (item.startsWith(str)) {
+          return item;
+        }
+        else {
+          return this.previous(keys, str);
+        }
+      }
+      else {
+        return item;
+      }
+    }
+  }
+};
+var history = new History();
+
 
 function getHelpText(commands) {
   var obj = Object.keys(commands).map(key => ([
@@ -76,12 +160,12 @@ function getHelpText(commands) {
 };
 
 function getDelimiterLength() {
-  var length = '$brahma'.length + (breadcrumbs.length ? breadcrumbs.join('.').length + 3 : 2);
+  var length = '$brahma'.length + (breadcrumbs.length ? breadcrumbs.join(' ').length + 2 : 1);
   return length;
 };
 
 function getDelimiter() {
-  var delimiter = `$brahma${breadcrumbs.length ? '.' : ''}${chalk.dim(breadcrumbs.join('.'))}: `;
+  var delimiter = `$brahma${breadcrumbs.length ? ' ' + chalk.dim(breadcrumbs.join(' ')) : ''} `;
   return delimiter;
 };
 
@@ -116,23 +200,6 @@ function stripData(data) {
   return data || null;
 }
 
-function addHistoryItem(obj) {
-  history = history.filter(item => item !== obj);
-  history.push(obj);
-};
-
-
-function getHistoryItem(str) {
-  var obj;
-  if (str) {
-    obj = history.find(item => item.indexOf(str) === 0);
-  }
-  else {
-    obj = history[history.length - 1];
-  }
-  return obj;
-};
-
 process.stdin.on('data', function (data) {
   data = stripData(data);
   if (data) {
@@ -142,19 +209,31 @@ process.stdin.on('data', function (data) {
 });
 
 process.stdin.on('keypress', function (ch, key) {
+  if (!key || !(key.name === 'up' || key.name === 'down')) history.reset();
   if (key && key.ctrl && key.name === 'c') {
     buffer = '';
     process.stdin.pause();
   }
   else if (key && key.name === 'up') {
     term.down(1);
-    let item = getHistoryItem(buffer);
+    let item = history.next(breadcrumbs, buffer);
     if (item) {
-      term(item);
+      term.deleteLine();
+      term.left(cursorXIndex);
+      buffer = item;
+      cursorXIndex = 0;
+      write(getDelimiter());
+      write(item);
     }
   }
   else if (key && key.name === 'down') {
-    // term();
+    let item = history.previous(breadcrumbs, buffer) || '';
+    term.deleteLine();
+    term.left(cursorXIndex);
+    buffer = item;
+    cursorXIndex = 0;
+    write(getDelimiter());
+    write(item);
   }
   else if (key && key.name === 'left') {
     if (cursorXIndex > getDelimiterLength()) {
@@ -185,7 +264,6 @@ process.stdin.on('keypress', function (ch, key) {
     }
   }
   else if (key && key.name === 'backspace') {
-    // console.log(cursorXIndex, getDelimiterLength());
     if (cursorXIndex > getDelimiterLength()) {
       let pos = getDelimiterLength() + buffer.length - cursorXIndex;
       if (pos === 0) {
@@ -201,11 +279,13 @@ process.stdin.on('keypress', function (ch, key) {
   }
   else if (key && key.name === 'tab') {
     console.log(buffer);
+    // https://github.com/cronvel/terminal-kit/blob/master/doc/high-level.md#ref.gridMenu
 
   }
   else if (key && key.name === 'return') {
     handleReturn();
   }
+  // lastKey = key && key.name;
 });
 
 function handleReturn() {
@@ -218,17 +298,17 @@ function handleReturn() {
   var commands = loadCommands(commandsPath);
   var commandNames = Object.keys(commands);
   if (commandNames.indexOf(command) > -1) {
+    history.add(breadcrumbs, command);
     breadcrumbs.push(command);
     let subcommandsPath = path.join(commandsPath, command, 'commands');
     let subcommands = loadCommands(subcommandsPath);
     write(EOL, false);
     write(EOL, false);
     write(getHelpText(subcommands), false);
-    addHistoryItem(command);
     cr();
   }
-  else if (command.split('/').every(item => item === '..')) {
-    breadcrumbs.splice(-command.split('/').length);
+  else if (command.split('/').filter(Boolean).every(item => item === '..')) {
+    breadcrumbs.splice(-command.split('/').filter(Boolean).length);
     cr();
   }
   else {
