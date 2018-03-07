@@ -61,14 +61,16 @@ if (majorVersion < 9) {
 
 // bug. if u hit space a lot, and backaspace, u delete the delimiter.
 
-const loadCommands = require('../lib/load/loadCommands');
+const {loadCommands, loadCommandMetadata} = require('../lib/load/loadCommands');
 const History = require('../lib/utils/history');
 const objectInterface = require('js-object-interface');
 const commandsRootPath = path.resolve(__dirname, '../lib/commands');
 
 var commands = loadCommands(commandsRootPath);
-console.log(commands);
+var commandMetadata = loadCommandMetadata(commandsRootPath);
+
 commands = objectInterface(commands);
+commandMetadata = objectInterface(commandMetadata);
 
 // @note this is basically a bunch of hacks needed to fix the kludge-like terminal UI
 // when in rawMode.
@@ -269,8 +271,9 @@ function runCommand() {
   }
 };
 
+var helpObj = commandMetadata.filter((item, key) => key.split('.').length === 1, false);
 write(EOL, false);
-// write(getHelpText(commands), false);
+write(getHelpText(helpObj), false);
 cr();
 
 
