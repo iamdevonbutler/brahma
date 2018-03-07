@@ -63,15 +63,18 @@ if (majorVersion < 9) {
 
 const loadCommands = require('../lib/load/loadCommands');
 const History = require('../lib/utils/history');
-// const objectInterface = require('js-object-interface');
+const objectInterface = require('js-object-interface');
+const commandsRootPath = path.resolve(__dirname, '../lib/commands');
 
+var commands = loadCommands(commandsRootPath);
+console.log(commands);
+commands = objectInterface(commands);
 
-// @note this is basically a bunch of hacks needed to fix the kludge like terminal UI
+// @note this is basically a bunch of hacks needed to fix the kludge-like terminal UI
 // when in rawMode.
 var breadcrumbs = [];
 var buffer = '';
 var cursorXIndex = 0;
-var commandsRootPath = path.resolve(__dirname, '../lib/commands');
 var history = new History();
 
 function getHelpText(commands) {
@@ -201,55 +204,73 @@ process.stdin.on('keypress', function (ch, key) {
     }
   }
   else if (key && key.name === 'tab') {
-    if (buffer) {
-      let items = Object.keys(commands);
-      let items1 = items.filter(item => item.startsWith(buffer));
-      if (items1.length === 1) {
-        term.deleteLine(buffer.length);
-        term.left(cursorXIndex);
-        cursorXIndex = 0;
-        buffer = items1[0];
-        write(getDelimiter());
-        write(items1[0]);
-      }
+    if (!buffer) return
+    let items = Object.keys(commands);
+    let items1 = items.filter(item => item.startsWith(buffer));
+    if (items1.length === 1) {
+      term.deleteLine(buffer.length);
+      term.left(cursorXIndex);
+      cursorXIndex = 0;
+      buffer = items1[0];
+      write(getDelimiter());
+      write(items1[0]);
     }
   }
   else if (key && key.name === 'return') {
-    handleReturn();
+    runCommand();
   }
 });
 
-function handleReturn() {
-  var command = buffer;
-  var commandsPath = path.join(commandsRootPath, ...breadcrumbs.reduce((p, c) => {
-    p.push(c);
-    p.push('commands');
-    return p;
-  }, []));
-  var commands = loadCommands(commandsPath);
-  var commandNames = Object.keys(commands);
-  if (commandNames.indexOf(command) > -1) {
-    history.add(breadcrumbs, command);
-    breadcrumbs.push(command);
-    let subcommandsPath = path.join(commandsPath, command, 'commands');
+function registerCommand(command) {
+  breadcrumbs.push(command);
+  history.add(breadcrumbs, command);
+};
+
+function commandExists(command) {
+  var commands, path1, exists;
+  path1 = path.join(commandsRootPath, ...breadcrumbs);
+  commands = loadCommands(path1);
+  if (!commands) return false;
+  exists = Object.keys(commands).indexOf(command) > -1;
+  return exists;
+};
+
+function runCommand() {
+  var commands = buffer.split(' ').filter(Boolean);
+  if (!buffer) {
+    return;
+  }
+  // .. | ../[../]
+  else if (buffer.split('/').every(item => item === '..')) {
+    breadcrumbs.splice(-buffer.split('/').filter(Boolean).length);
+    cr();
+    return;
+  }
+  // subcommand
+  else if (commands.length === 1) {
+    if (!commandExists(commands[0])) {
+      cr();
+      return;
+    }
+    registerCommand(commands[0]);
+    let subcommandsPath = path.join(commandsRootPath, commands[0], 'commands');
     let subcommands = loadCommands(subcommandsPath);
-    write(EOL, false);
-    write(EOL, false);
-    write(getHelpText(subcommands), false);
+    if (subcommands) {
+      write(EOL, false);
+      write(EOL, false);
+      write(getHelpText(subcommands), false);
+    }
     cr();
+    return;
   }
-  else if (command.split('/').every(item => item === '..')) {
-    breadcrumbs.splice(-command.split('/').filter(Boolean).length);
-    cr();
-  }
+  // subcommand value | subcommand [subcommand] value [value] [--flags]
   else {
-    cr();
+
   }
 };
 
-var commands = loadCommands(commandsRootPath);
 write(EOL, false);
-write(getHelpText(commands), false);
+// write(getHelpText(commands), false);
 cr();
 
 

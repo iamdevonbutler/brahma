@@ -3,7 +3,6 @@ look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols
 
 
 todos
-- scaling node https://www.youtube.com/watch?v=w1IzRF6AkuI
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
   - use yarn to install updated modules into "imports" dir. symlink node_modules.
 - how does our apps file look given a dharma architecture.
