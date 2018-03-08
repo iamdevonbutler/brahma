@@ -8,22 +8,16 @@ const {EOL} = require('os');
 const keypress = require('keypress');
 const term = require( 'terminal-kit' ).terminal;
 const stripAnsi = require('strip-ansi');
-
-// const objectInterface = require('js-object-interface');
+const minimist = require('minimist');
+const objectInterface = require('js-object-interface');
+const {loadCommands, loadCommandMetadata} = require('../lib/load/loadCommands');
+const History = require('../lib/utils/history');
+const commandsRootPath = path.resolve(__dirname, '../lib/commands');
 
 // const loadAppsConfig = require('../lib/load/loadAppsConfig');
 // const loadSettings = require('../lib/load/loadSettings');
 // const loadVariables = require('../lib/load/loadVariables');
 // const loadEnv = require('../lib/load/loadEnv');
-
-// const status = require('../lib/commands/status');
-// const serve = require('../lib/commands/serve');
-// const build = require('../lib/commands/build');
-// const remote = require('../lib/commands/remote');
-// const newProject = require('../lib/commands/new');
-// const test = require('../lib/commands/test');
-// const add = require('../lib/commands/add');
-// const helpers = require('../lib/commands/helpers');
 
 const state = {};
 
@@ -48,23 +42,15 @@ if (majorVersion < 9) {
 
 
 
-
+// caching.
 // if you just type in a command it prints the help for that command, same for all subcommands.
-// Infinant number of subcommands.
+// Infinant number of subcommands. test.
 // command plugins and subcommand extensions need a way to hook into help
 // breadcrumbs $brahma: | $brahma.helpers | $brahma.helpers.doThing and maybe a way to navigate back (cmd+left) @todo document
 // autocomplete functionality
 // load commands needs to load project commands too. let user overwrite brahma commands, so they can make their own remote command for instance.
 // how does help work w. subcommands
 // abstract out terminal UI. make functional and pure, no closure. use singleton object pattern to allow access to data vars.
-
-
-// bug. if u hit space a lot, and backaspace, u delete the delimiter.
-
-const {loadCommands, loadCommandMetadata} = require('../lib/load/loadCommands');
-const History = require('../lib/utils/history');
-const objectInterface = require('js-object-interface');
-const commandsRootPath = path.resolve(__dirname, '../lib/commands');
 
 var commands = loadCommands(commandsRootPath);
 var commandMetadata = loadCommandMetadata(commandsRootPath);
@@ -79,7 +65,7 @@ var buffer = '';
 var cursorXIndex = 0;
 var history = new History();
 
-function getHelpText(commands) {
+function formatHelpText(commands) {
   var obj = Object.keys(commands).map(key => ([
     '    ' + commands[key].name,
     '    ' + commands[key].description,
@@ -223,11 +209,6 @@ process.stdin.on('keypress', function (ch, key) {
   }
 });
 
-function registerCommand(command) {
-  breadcrumbs.push(command);
-  history.add(breadcrumbs, command);
-};
-
 function commandExists(command) {
   var commands, path1, exists;
   path1 = path.join(commandsRootPath, ...breadcrumbs);
@@ -237,43 +218,63 @@ function commandExists(command) {
   return exists;
 };
 
+// find matching command from CLI input considering breadcrumbs.
+function getCommandKey(input) {
+  let commandKey = commands.find((command, key) => {
+    var str = breadcrumbs.join('.');
+    for (let key1 of input) {
+      str += str ? '.' + key1 : key1;
+      if (key === str) return true;
+    }
+  });
+  return commandKey;
+};
+
 function runCommand() {
-  var commands = buffer.split(' ').filter(Boolean);
+  var input = buffer.split(' ').filter(Boolean);
   if (!buffer) {
     return;
   }
-  // .. | ../[../]
+  // cd back via: .. | ../[../]
   else if (buffer.split('/').every(item => item === '..')) {
     breadcrumbs.splice(-buffer.split('/').filter(Boolean).length);
     cr();
     return;
   }
-  // subcommand
-  else if (commands.length === 1) {
-    if (!commandExists(commands[0])) {
-      cr();
-      return;
-    }
-    registerCommand(commands[0]);
-    let subcommandsPath = path.join(commandsRootPath, commands[0], 'commands');
-    let subcommands = loadCommands(subcommandsPath);
-    if (subcommands) {
+  // cd into command.
+  else if (input.length === 1) {
+    // @todo abstract out.
+    let commandKey = breadcrumbs.concat(input[0]).join('.');
+    let isMetaKey = commandMetadata.get(commandKey);
+    if (isMetaKey) {
+      let helpObj = commands.filter((item, commandName) => {
+        return commandKey.split('.').length + 1 === commandName.split('.').length && commandName.startsWith(commandKey);
+      });
+      history.add(breadcrumbs, input[0]);
+      breadcrumbs.push(input[0]);
       write(EOL, false);
       write(EOL, false);
-      write(getHelpText(subcommands), false);
+      write(formatHelpText(helpObj), false);
     }
     cr();
     return;
   }
-  // subcommand value | subcommand [subcommand] value [value] [--flags]
+  // command value | command [command] value [value] [--flags]
   else {
-
+    // history.add(breadcrumbs, input[0]);
+    let commandKey = getCommandKey(input);
+    console.log(998, commandKey);
+    if (commandKey) {
+      let length = commandKey.split('.').length - breadcrumbs.length;
+      let values = input.slice(length);
+      commands.get(commandKey).main.call(null, minimist(values));
+    }
   }
 };
 
-var helpObj = commandMetadata.filter((item, key) => key.split('.').length === 1, false);
+var helpObj = commandMetadata.filter((item, key) => key.split('.').length === 1);
 write(EOL, false);
-write(getHelpText(helpObj), false);
+write(formatHelpText(helpObj), false);
 cr();
 
 

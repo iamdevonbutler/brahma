@@ -38,6 +38,7 @@ commands
 
 command names cannot have "." in them
 "exit" command
+document minimist 
 
 ---
 
