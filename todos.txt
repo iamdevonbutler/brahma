@@ -38,7 +38,7 @@ commands
 
 command names cannot have "." in them
 "exit" command
-document minimist 
+document minimist
 
 ---
 
@@ -517,3 +517,7 @@ it creates a custom app plugin for Mayas API.
 -
 
 ---
+
+resume
+
+- custom cli UI (raw mode conqured)

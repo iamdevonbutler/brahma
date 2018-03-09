@@ -1,1 +1,1 @@
-module.exports={"":{"index":0,"items":["remote","install","helpers"]},"remote":{"index":0,"items":[".."]}}
+module.exports={"":{"index":0,"items":["install","helpers","remote"]},"remote":{"index":0,"items":[".."]},"helpers":{"index":0,"items":[".."]}}
