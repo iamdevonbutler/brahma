@@ -520,4 +520,4 @@ it creates a custom app plugin for Mayas API.
 
 resume
 
-- custom cli UI (raw mode conqured)
+- custom cli UI (raw mode behavior normalization conquest)
