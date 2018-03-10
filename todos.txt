@@ -1,6 +1,6 @@
 resources have built in unit testing, do perf testing too. have a way to compare different versions of function.
 look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
-
+uncaught wxception email, last try catch.
 
 todos
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.

@@ -6,7 +6,7 @@ const path = require('path');
 // const chokidar = require('chokidar');
 // const objectInterface = require('js-object-interface');
 
-const {loadCommands, loadCommandMetadata} = require('../lib/load/loadCommands');
+const {loadCommands, loadMetaCommands} = require('../lib/load/loadCommands');
 const commandsRootPath = path.resolve(__dirname, '../lib/commands');
 const {initTerminal} = require('../lib/cli/ui');
 
@@ -28,9 +28,9 @@ if (majorVersion < 9) {
 }
 
 var commands = loadCommands(commandsRootPath);
-var commandMetadata = loadCommandMetadata(commandsRootPath);
+var metaCommands = loadMetaCommands(commandsRootPath);
 var cacheFilename = path.resolve(__dirname, '../cache/cli-history.js');
-initTerminal(commands, commandMetadata, cacheFilename);
+initTerminal(commands, metaCommands, cacheFilename);
 
 return;
 
