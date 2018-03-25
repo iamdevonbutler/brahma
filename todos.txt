@@ -3,6 +3,8 @@ look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols
 uncaught wxception email, last try catch.
 
 todos
+- redirects 301 302
+- site maintainance page
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
   - use yarn to install updated modules into "imports" dir. symlink node_modules.
 - how does our apps file look given a dharma architecture.
