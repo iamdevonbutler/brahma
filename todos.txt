@@ -191,6 +191,9 @@ functionality
 - command queue/buffer
   - when ur downloading dependencies, users may want to take other actions, need to queue them.
 
+@document
+- u can change the metaPath for a command but using the name field in your meta commands index.js 
+
 ---
 
 http
