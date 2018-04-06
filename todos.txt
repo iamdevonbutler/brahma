@@ -38,9 +38,18 @@ todos
 
 commands
 
-command names cannot have "." in them
 "exit" command
-document minimist
+"clear" command
+cd functionality w/ ../../
+help command. --verbose. @todo document help fields (e.g. name, description, examples, notes)
+
+@todo document minimist
+
+vaidation
+- @todo create tests
+- command names cannot have "." in them
+- names need to be unique
+
 
 ---
 
@@ -192,7 +201,7 @@ functionality
   - when ur downloading dependencies, users may want to take other actions, need to queue them.
 
 @document
-- u can change the metaPath for a command but using the name field in your meta commands index.js 
+- u can change the metaPath for a command but using the name field in your meta commands index.js
 
 ---
 
