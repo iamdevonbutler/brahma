@@ -1,8 +1,17 @@
+fix di, dont inject main() do the closure.
+mergeIntoBreacrumbs
+config hot reload
+server
+commands docs
+we can still use "this" for our endopoints so as long as we decorate each property w/ the proper value of this.
+
+route order. how to order /:pathName vs /pathName. multi location, so {location: ['api', 'email']}
 resources have built in unit testing, do perf testing too. have a way to compare different versions of function.
 look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
 uncaught wxception email, last try catch.
 
 todos
+- https://www.youtube.com/watch?v=K8spO4hHMhg
 - redirects 301 302
 - site maintainance page
 - loading dependencies // they come from github, npm, locally, as resources and node modules, and we need a way to keep multiple versions of them.
@@ -16,14 +25,12 @@ todos
   - services: export data
   - ...
 - build all plugin interfaces
-- build dharma
 - env
   - when u get a env, (the value is an obj, but we want to filter and just return the value property, have it be an interface feature)
   - if a value is updated, make sure we can have update() callbacks, if someone updates the refresh value we want to react to that.
     - all values for resources have update callbacks, and when updated, it runs validation first, returns errors if shitty.
 - resources.md
-- brahma cli framework
-- how to connect to a remote, and run `dharma status`
+- how to connect to a remote, and run `status`
   - test SSH!
 - adding brahma commands. how to do it? see settings - might want to do it somewhere else.
 - merge functionality
