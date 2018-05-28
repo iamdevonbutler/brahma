@@ -1,4 +1,3 @@
-fix di, dont inject main() do the closure.
 mergeIntoBreacrumbs
 config hot reload
 server
@@ -11,6 +10,7 @@ look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols
 uncaught wxception email, last try catch.
 
 todos
+- a die() injectable for plugins and modules?
 - https://www.youtube.com/watch?v=K8spO4hHMhg
 - redirects 301 302
 - site maintainance page

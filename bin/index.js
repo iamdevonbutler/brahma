@@ -2,6 +2,9 @@
 
 const path = require('path');
 const initTerminal = require('../lib/cli');
+const loadConfig = require('../lib/load/loadConfig');
+
+state = {};
 
 // Error handling.
 process.on('unhandledRejection', console.error);
@@ -19,3 +22,17 @@ const cachePath = path.resolve(__dirname, '../cache/cli-history.js');
 initTerminal(commandsPath, cachePath);
 
 // Load config.
+// live update `state` during runtime.
+const configRoot = path.join(process.cwd(), 'config');
+state.config = loadConfig('/Users/jay/dev/brahma/brahma-example-advanced/config', 'status.js');
+console.log(state.config);
+return;
+configs.forEach((state) => {
+  state.config.forEach(configName => {
+    chokidar
+    .watch(path.join(process.cwd(), `config/${configName}.js`))
+    .on('change', () => {
+      state.config[configName] = loadConfig(configRoot, configName);
+    });
+  });
+});
