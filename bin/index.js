@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const path = require('path'); 
+const path = require('path');
 const initTerminal = require('../lib/cli');
 const loadConfig = require('../lib/load/loadConfig');
 
