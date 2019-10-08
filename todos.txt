@@ -4,6 +4,9 @@ server
 commands docs
 we can still use "this" for our endopoints so as long as we decorate each property w/ the proper value of this.
 
+brahma intellisence atom integration
+
+
 route order. how to order /:pathName vs /pathName. multi location, so {location: ['api', 'email']}
 resources have built in unit testing, do perf testing too. have a way to compare different versions of function.
 look in to symbols (https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
